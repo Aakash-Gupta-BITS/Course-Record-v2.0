@@ -38,8 +38,6 @@ namespace ConsoleAppEngine
         }
         private void Verify()
         {
-            if (finalDateTime.DayOfWeek != dateTime.DayOfWeek)
-                throw new ArgumentException("Both time limits must belong to same day");
             if (finalDateTime < dateTime)
                 throw new ArgumentException(string.Format("Initial time : {0} is greater than Final time : {1}", Hour + ":" + Minute, EndHour + ":" + EndMinute));
         }
@@ -54,12 +52,26 @@ namespace ConsoleAppEngine
                 finalDateTime.AddDays(1);
             }
         }
-        public void ShiftHoursToRight(int hours_to_shift_right) => throw new NotImplementedException();
+        public void ShiftHoursToRight(int hours_to_shift_right)
+        {
+            dateTime.AddHours(hours_to_shift_right);
+            finalDateTime.AddHours(hours_to_shift_right);
+        }
 
-        public bool Intersect(DayTime dt) => throw new NotImplementedException();
+        public bool Intersect(DayTime dt)
+        {
+            if (DayOfWeek != dt.DayOfWeek)
+                return false;
+
+            if ((dateTime < dt.finalDateTime && dateTime > dt.dateTime) || (finalDateTime < dt.finalDateTime && finalDateTime > dt.dateTime))
+                return true;
+
+            return false;
+        }
+
         public static bool Intersect(DayTime lhs, DayTime rhs) => lhs.Intersect(rhs);
 
-        public static bool operator<(DayTime lhs, DayTime rhs) => throw new NotImplementedException();
-        public static bool operator>(DayTime lhs, DayTime rhs) => throw new NotImplementedException();
+        public static bool operator <(DayTime lhs, DayTime rhs) => lhs.dateTime < rhs.dateTime;
+        public static bool operator>(DayTime lhs, DayTime rhs) => lhs.dateTime > rhs.dateTime;
     }
 }
