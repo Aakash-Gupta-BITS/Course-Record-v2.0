@@ -130,7 +130,6 @@
     <Compile Include="TimeTable\TimeEntry\CourseTimeEntry.cs" />
     <Compile Include="TimeTable\TimeEntry\AbstractTimeEntry.cs" />
     <Compile Include="TimeTable\TimeTable.cs" />
-    <Compile Include="TimeTable\TimeTableNode.cs" />
     <EmbeddedResource Include="Properties\ConsoleAppEngine.rd.xml" />
   </ItemGroup>
   <ItemGroup>

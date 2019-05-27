@@ -8,6 +8,7 @@ namespace ConsoleAppEngine
 {
     public enum EBuildingNames
     {
+        NA,
         FD1,
         FD2,
         FD3,
@@ -18,11 +19,18 @@ namespace ConsoleAppEngine
         IPC
     }
 
-    public struct RoomLocation
+    public class RoomLocation
     {
-        public EBuildingNames BuildingName { get; set; }
-        public int RoomNo { get; set; }
-        public char RoomSuffix { get; set; }
+        public readonly EBuildingNames BuildingName;
+        public readonly int RoomNo;
+        public readonly char RoomSuffix;
+
+        public RoomLocation()
+        {
+            BuildingName = EBuildingNames.NA;
+            RoomNo = 0;
+            RoomSuffix = '\0';
+        }
 
         public bool Equals(RoomLocation loc) => BuildingName == loc.BuildingName && RoomNo == loc.RoomNo && RoomSuffix.ToString().ToLower() == loc.RoomSuffix.ToString().ToLower();
 

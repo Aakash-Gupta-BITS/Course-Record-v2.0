@@ -6,18 +6,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppEngine
 {
-    class CourseTimeEntry : AbstractTimeEntry
+    public class CourseTimeEntry : AbstractTimeEntry
     {
-        public readonly LinkedList<Teacher> Teachers;
-        public readonly Course Course;
-        public readonly RoomLocation Location;
-
-        public CourseTimeEntry(Course s, RoomLocation location)
-        {
-            Location = location;
-            Course = s;
-        }
-        public void AddTeacher(Teacher teacher) => Teachers.AddLast(teacher);
-        
+        public LinkedList<Teacher> TeacherList { get; set; }
+        public Course Course { get; set; }
+        public CourseEntryType CourseEntryType { get; set; }
+        public RoomLocation RoomLocation { get; set; }
     }
 }

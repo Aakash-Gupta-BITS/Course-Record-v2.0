@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppEngine
 {
-    abstract class AbstractTimeEntry
+    public abstract class AbstractTimeEntry
     {
+        public DayTime DayTime { get; set; }
     }
 }

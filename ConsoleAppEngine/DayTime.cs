@@ -10,12 +10,12 @@ namespace ConsoleAppEngine
     {
         private readonly DateTime dateTime;
         private readonly DateTime finalDateTime;
-
         public DayOfWeek DayOfWeek => dateTime.DayOfWeek;
-        public int Hour => dateTime.Hour;
-        public int Minute => dateTime.Minute;
+        public int StartHour => dateTime.Hour;
+        public int StartMinute => dateTime.Minute;
         public int EndHour => (finalDateTime).Hour;
         public int EndMinute => finalDateTime.Minute;
+
 
         public DayTime(DateTime dt, TimeSpan sp)
         {
@@ -36,14 +36,14 @@ namespace ConsoleAppEngine
             dateTime = dt1;
             finalDateTime = dt2;
         }
+        public DayTime Copy() => new DayTime(dateTime, finalDateTime);
         private void Verify()
         {
             if (finalDateTime < dateTime)
-                throw new ArgumentException(string.Format("Initial time : {0} is greater than Final time : {1}", Hour + ":" + Minute, EndHour + ":" + EndMinute));
+                throw new ArgumentException(string.Format("Initial time : {0} is greater than Final time : {1}", StartHour + ":" + StartMinute, EndHour + ":" + EndMinute));
         }
 
-        public DayTime Copy() => new DayTime(dateTime, finalDateTime);
-
+        // Changes
         public void ChangeDay(DayOfWeek newDayOfWeek)
         {
             while (DayOfWeek != newDayOfWeek)
@@ -58,20 +58,52 @@ namespace ConsoleAppEngine
             finalDateTime.AddHours(hours_to_shift_right);
         }
 
+        // Comparison
         public bool Intersect(DayTime dt)
         {
             if (DayOfWeek != dt.DayOfWeek)
                 return false;
 
-            if ((dateTime < dt.finalDateTime && dateTime > dt.dateTime) || (finalDateTime < dt.finalDateTime && finalDateTime > dt.dateTime))
+            if ((dateTime < dt.finalDateTime && dateTime > dt.dateTime) ||
+                (finalDateTime < dt.finalDateTime && finalDateTime > dt.dateTime) ||
+                (dt.dateTime < finalDateTime && dt.dateTime > dateTime) ||
+                (dt.finalDateTime < finalDateTime && dt.finalDateTime > dateTime))
                 return true;
 
             return false;
         }
-
         public static bool Intersect(DayTime lhs, DayTime rhs) => lhs.Intersect(rhs);
-
         public static bool operator <(DayTime lhs, DayTime rhs) => lhs.dateTime < rhs.dateTime;
         public static bool operator>(DayTime lhs, DayTime rhs) => lhs.dateTime > rhs.dateTime;
+        public static bool operator ==(DayTime lhs, DayTime rhs) => lhs.Equals(rhs);
+        public static bool operator !=(DayTime lhs, DayTime rhs) => !lhs.Equals(rhs);
+
+
+        public override string ToString() =>
+            string.Format("{0}\t{1}:{2}\t{3}:{4}",
+                DayOfWeek,
+                StartHour < 10 ? "0" + StartHour : StartHour.ToString(),
+                StartMinute < 10 ? "0" + StartMinute : StartMinute.ToString(),
+                EndHour < 10 ? "0" + EndHour : EndHour.ToString(),
+                EndMinute < 10 ? "0" + EndMinute : EndMinute.ToString());
+        public override bool Equals(object obj)
+        {
+            return obj is DayTime time &&
+                   DayOfWeek == time.DayOfWeek &&
+                   StartHour == time.StartHour &&
+                   StartMinute == time.StartMinute &&
+                   EndHour == time.EndHour &&
+                   EndMinute == time.EndMinute;
+        }
+        public override int GetHashCode()
+        {
+            var hashCode = -60057006;
+            hashCode = hashCode * -1521134295 + DayOfWeek.GetHashCode();
+            hashCode = hashCode * -1521134295 + StartHour.GetHashCode();
+            hashCode = hashCode * -1521134295 + StartMinute.GetHashCode();
+            hashCode = hashCode * -1521134295 + EndHour.GetHashCode();
+            hashCode = hashCode * -1521134295 + EndMinute.GetHashCode();
+            return hashCode;
+        }
     }
 }

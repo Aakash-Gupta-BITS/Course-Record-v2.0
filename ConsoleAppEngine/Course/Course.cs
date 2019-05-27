@@ -6,8 +6,139 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppEngine
 {
-    class Course
+    public enum CourseEntryType
+    {
+        Lecture,
+        Tutorial,
+        Lab,
+        Quiz,
+        MidSem,
+        Compre,
+        ExamDistribution
+    }
+    public static partial class Extensions
+    {
+        public static LinkedList<T> RemoveDuplicates<T>(this LinkedList<T> abcd) where T : class
+        {
+            var x = abcd.ToArray();
+            abcd.Clear();
+            foreach (T val in x)
+                if (!abcd.Contains(val))
+                    abcd.AddLast(val);
+            return abcd;
+        }
+        public static LinkedList<T> AddLast<T>(this LinkedList<T> abcd, LinkedList<T> ToAdd) where T : class
+        {
+            abcd.AddLast(ToAdd.First);
+            return abcd;
+        }
+    }
+
+    public class Course
     {
         public readonly string Id;
+        public readonly string Name;
+        private readonly LinkedList<(LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime)> Entries 
+            = new LinkedList<(LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime)>();
+        private readonly AllCourses CoursesList;
+
+        // Local Lists
+        private readonly LinkedList<Teacher> teachers = new LinkedList<Teacher>();
+        private readonly LinkedList<RoomLocation> roomLocations = new LinkedList<RoomLocation>();
+        private readonly LinkedList<(DayTime Timing, CourseEntryType EntryType)> timings = new LinkedList<(DayTime Timing, CourseEntryType EntryType)>();
+        public LinkedList<Teacher> Teachers
+        {
+            get
+            {
+                teachers.Clear();
+
+                foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) tempi in Entries)
+                    foreach (Teacher tempj in tempi.Teachers)
+                        teachers.AddLast(tempj);
+
+                return teachers.RemoveDuplicates();
+            }
+        }
+        public LinkedList<RoomLocation> RoomLocations
+        {
+            get
+            {
+                roomLocations.Clear();
+                foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+                    roomLocations.AddLast(temp.Location);
+
+                return roomLocations.RemoveDuplicates();
+            }
+        }
+        public LinkedList<(DayTime Time, CourseEntryType EntryType)> Timings
+        {
+            get
+            {
+                timings.Clear();
+                foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+                    timings.AddLast((temp.DayTime, temp.EntryType));
+
+                return timings;
+            }
+        }
+
+
+        public Course(string ID, string NAME, AllCourses ReferenceCourseList)
+        {
+            Id = ID;
+            Name = NAME;
+            CoursesList = ReferenceCourseList;
+            CoursesList.AllCoursesList.AddLast(this);
+        }
+        public void AddCourseTiming(CourseEntryType entryType, RoomLocation roomLocation, DayTime dayTime, LinkedList<Teacher> TeacherList)
+        {
+
+            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+                if (temp.DayTime.Intersect(dayTime))
+                    throw new ArgumentException("Time collides..");
+            Entries.AddLast((TeacherList, entryType, roomLocation, dayTime));
+        }
+        public void AddTeacherToTiming(Teacher t, DayTime dt)
+        {
+            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+                if (temp.DayTime == dt)
+                {
+                    if (!temp.Teachers.Contains(t))
+                        temp.Teachers.AddLast(t);
+                    break;
+                }
+        }
+
+        public LinkedList<CourseTimeEntry> GetTimeEntries()
+        {
+            LinkedList<CourseTimeEntry> result = new LinkedList<CourseTimeEntry>();
+            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+                result.AddLast(
+                    new CourseTimeEntry()
+                    {
+                        Course = this,
+                        CourseEntryType = temp.EntryType,
+                        DayTime = temp.DayTime,
+                        RoomLocation = temp.Location,
+                        TeacherList = temp.Teachers
+                    });
+
+            return result;
+        }
+        public LinkedList<Teacher> GetTeachers(CourseEntryType ctype)
+        {
+            LinkedList<CourseEntryType> temp = new LinkedList<CourseEntryType>();
+            temp.AddLast(ctype);
+            return GetTeachers(ctype);
+        }
+        public LinkedList<Teacher> GetTeachers(LinkedList<CourseEntryType> ctype)
+        {
+            LinkedList<Teacher> result = new LinkedList<Teacher>();
+
+            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+                if (ctype.Contains(temp.EntryType))
+                    result.AddLast(temp.Teachers);
+            return result;
+        }
     }
 }
