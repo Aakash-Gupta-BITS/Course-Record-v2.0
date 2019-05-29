@@ -8,17 +8,33 @@ namespace ConsoleAppEngine
 {
     class TimeTable
     {
-        public readonly LinkedList<AbstractTimeEntry> List = new LinkedList<AbstractTimeEntry>();
+        internal readonly AllCourses AllCourses;
+        internal LinkedList<Course> CourseList => AllCourses.AllCoursesList;
 
-        public TimeTable(AbstractTimeEntry val) => List.AddLast(val);
-        public void Add(Course c)
+        private readonly LinkedList<CourseTimeEntry> timeList = new LinkedList<CourseTimeEntry>();
+        public LinkedList<CourseTimeEntry> TimeList
         {
-            LinkedList<CourseTimeEntry> entry = c.GetTimeEntries();
-            foreach (CourseTimeEntry x in entry)
-                List.AddLast(x);
+            get
+            {
+                timeList.Clear();
+                foreach (Course s in CourseList)
+                    foreach (CourseTimeEntry ct in s.GetTimeEntries())
+                        timeList.AddLast(ct);
+                timeList.Sort();
+                return timeList;
+            }
         }
 
-        
-        public AbstractTimeEntry[] ToArray() => List.ToArray();
+        public TimeTable(AllCourses courses) => AllCourses = courses;
+
+        private void Add(Course c)
+        {
+            foreach (Course i in CourseList)
+                foreach (CourseTimeEntry j in i.GetTimeEntries())
+                    foreach (CourseTimeEntry k in c.GetTimeEntries())
+                        if (j.DayTime.Intersect(k.DayTime))
+                            throw new Exception("Time Collides");
+            CourseList.AddLast(c);
+        }
     }
 }

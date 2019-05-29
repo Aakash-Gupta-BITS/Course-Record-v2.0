@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppEngine
 {
-    public class DayTime
+    public class DayTime : IComparable
     {
         private readonly DateTime dateTime;
         private readonly DateTime finalDateTime;
@@ -78,6 +78,20 @@ namespace ConsoleAppEngine
         public static bool operator ==(DayTime lhs, DayTime rhs) => lhs.Equals(rhs);
         public static bool operator !=(DayTime lhs, DayTime rhs) => !lhs.Equals(rhs);
 
+        public int CompareTo(object obj)
+        {
+            DayTime dt = obj as DayTime;
+            if (dt == null)
+                throw new Exception();
+
+            if (this < dt)
+                return -1;
+            else if (this > dt)
+                return 1;
+            else if (this == dt)
+                return 0;
+            return -2;
+        }
 
         public override string ToString() =>
             string.Format("{0}\t{1}:{2}\t{3}:{4}",
@@ -105,5 +119,6 @@ namespace ConsoleAppEngine
             hashCode = hashCode * -1521134295 + EndMinute.GetHashCode();
             return hashCode;
         }
+
     }
 }

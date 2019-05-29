@@ -32,15 +32,27 @@ namespace ConsoleAppEngine
             abcd.AddLast(ToAdd.First);
             return abcd;
         }
+        public static LinkedList<T> Sort<T>(this LinkedList<T> abcd)
+        {
+            var temp = abcd.ToArray();
+            Array.Sort(temp);
+            abcd.Clear();
+            foreach (var x in temp)
+                abcd.AddLast(x);
+            return abcd;
+
+        }
     }
 
     public class Course
     {
+        private readonly AllCourses CoursesList;
+        private readonly AllTeachers TeacherList;
+
         public readonly string Id;
         public readonly string Name;
         private readonly LinkedList<(LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime)> Entries 
             = new LinkedList<(LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime)>();
-        private readonly AllCourses CoursesList;
 
         // Local Lists
         private readonly LinkedList<Teacher> teachers = new LinkedList<Teacher>();
@@ -83,11 +95,12 @@ namespace ConsoleAppEngine
         }
 
 
-        public Course(string ID, string NAME, AllCourses ReferenceCourseList)
+        public Course(string ID, string NAME, AllCourses ReferenceCourseList, AllTeachers ReferenceTeacherList)
         {
             Id = ID;
             Name = NAME;
             CoursesList = ReferenceCourseList;
+            TeacherList = ReferenceTeacherList;
             CoursesList.AllCoursesList.AddLast(this);
         }
         public void AddCourseTiming(CourseEntryType entryType, RoomLocation roomLocation, DayTime dayTime, LinkedList<Teacher> TeacherList)
@@ -100,6 +113,8 @@ namespace ConsoleAppEngine
         }
         public void AddTeacherToTiming(Teacher t, DayTime dt)
         {
+            if (!TeacherList.List.Contains(t))
+                TeacherList.List.AddLast(t);
             foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
                 if (temp.DayTime == dt)
                 {

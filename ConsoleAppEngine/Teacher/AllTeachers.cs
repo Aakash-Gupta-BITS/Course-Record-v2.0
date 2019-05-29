@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppEngine
 {
-    class AllTeachers
+    public class AllTeachers
     {
+        internal LinkedList<Teacher> List = new LinkedList<Teacher>();
     }
 }
