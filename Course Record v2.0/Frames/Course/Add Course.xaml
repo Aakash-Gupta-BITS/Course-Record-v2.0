@@ -1,0 +1,92 @@
+﻿<Page
+    x:Class="Course_Record_v2._0.Frames.Course.Add_Course"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Course_Record_v2._0.Frames.Course"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Margin="0,10,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Background Image
+        <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="/Assets/AddCourseBackground.png" Stretch="UniformToFill" Opacity="0.2"/>
+            -->
+        
+        <!--Course Number-->
+        <TextBlock  Margin="5,5,5,5" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="Right" VerticalAlignment="Center"
+                    Text="Course Number : "/>
+        <ComboBox   Margin="5,5,5,5" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    x:Name="CourseNo1">
+            <ComboBoxItem Content="BIO"/>
+            <ComboBoxItem Content="BIOT"/>
+            <ComboBoxItem Content="BITS"/>
+            <ComboBoxItem Content="CE"/>
+            <ComboBoxItem Content="CHE"/>
+            <ComboBoxItem Content="CHEM"/>
+            <ComboBoxItem Content="CS"/>
+            <ComboBoxItem Content="DE"/>
+            <ComboBoxItem Content="ECON"/>
+            <ComboBoxItem Content="EEE"/>
+            <ComboBoxItem Content="FIN"/>
+            <ComboBoxItem Content="GS"/>
+            <ComboBoxItem Content="HSS"/>
+            <ComboBoxItem Content="INSTR"/>
+            <ComboBoxItem Content="IS"/>
+            <ComboBoxItem Content="ITEB"/>
+            <ComboBoxItem Content="MATH"/>
+            <ComboBoxItem Content="MBA"/>
+            <ComboBoxItem Content="ME"/>
+            <ComboBoxItem Content="MEL"/>
+            <ComboBoxItem Content="MF"/>
+            <ComboBoxItem Content="MGTS"/>
+            <ComboBoxItem Content="MSE"/>
+            <ComboBoxItem Content="MUSIC"/>
+            <ComboBoxItem Content="PHA"/>
+            <ComboBoxItem Content="PHY"/>
+            <ComboBoxItem Content="SS"/>
+        </ComboBox>
+        <TextBox    Margin="5,5,5,5" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    x:Name="CourseNo2"/>
+        <TextBlock  Margin="5,5,5,5" Grid.Row="0" Grid.Column="3" HorizontalTextAlignment="Right" VerticalAlignment="Center"
+                    x:Name="Output_No"/>
+
+        <!--Course Title-->
+        <TextBlock  Margin="5,5,5,5" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="Right" VerticalAlignment="Center"
+                    Text="Course Title : "/>
+        <TextBox    Margin="5,5,5,5" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.ColumnSpan="3"
+                    x:Name="CourseTitle" PlaceholderText="Full course name comes here..."/>
+
+        <!--Units-->
+        <Grid       Margin="5,5,5,5" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Margin="5,5,5,5" Grid.Column="0" Content="Lecture"/>
+            <TextBox  Margin="5,5,5,5" Grid.Column="1" PlaceholderText="Lecture Units" IsEnabled="False"/>
+            <CheckBox Margin="5,5,5,5" Grid.Column="2" Content="Practical"/>
+            <TextBox  Margin="5,5,5,5" Grid.Column="3" PlaceholderText="Practical Units" IsEnabled="False"/>
+            <CheckBox Margin="5,5,5,5" Grid.Column="4" Content="Tutorial"/>
+            <TextBlock Margin="5,5,5,5" Grid.Column="5" Text="-" VerticalAlignment="Center"/>
+        </Grid>
+        
+        
+    </Grid>
+</Page>

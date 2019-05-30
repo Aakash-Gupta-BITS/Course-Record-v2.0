@@ -12,6 +12,7 @@ namespace ConsoleAppEngine
         public Course Course { get; set; }
         public CourseEntryType CourseEntryType { get; set; }
         public RoomLocation RoomLocation { get; set; }
+        public uint SectionNo { get; set; }
 
         public static bool operator ==(CourseTimeEntry lhs, CourseTimeEntry rhs) => lhs.Equals(rhs);
         public static bool operator !=(CourseTimeEntry lhs, CourseTimeEntry rhs) => !lhs.Equals(rhs);
@@ -24,6 +25,7 @@ namespace ConsoleAppEngine
                    EqualityComparer<Course>.Default.Equals(Course, entry.Course) &&
                    CourseEntryType == entry.CourseEntryType &&
                    DayTime == entry.DayTime &&
+                   SectionNo == entry.SectionNo &&
                    EqualityComparer<RoomLocation>.Default.Equals(RoomLocation, entry.RoomLocation);
         }
         public override int GetHashCode()
@@ -32,6 +34,7 @@ namespace ConsoleAppEngine
             hashCode = hashCode * -1521134295 + EqualityComparer<LinkedList<Teacher>>.Default.GetHashCode(TeacherList);
             hashCode = hashCode * -1521134295 + EqualityComparer<Course>.Default.GetHashCode(Course);
             hashCode = hashCode * -1521134295 + CourseEntryType.GetHashCode();
+            hashCode = hashCode * -1521134295 + SectionNo.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<RoomLocation>.Default.GetHashCode(RoomLocation);
             return hashCode;
         }

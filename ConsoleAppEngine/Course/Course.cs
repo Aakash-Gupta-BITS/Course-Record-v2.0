@@ -49,10 +49,10 @@ namespace ConsoleAppEngine
         private readonly AllCourses CoursesList;
         private readonly AllTeachers TeacherList;
 
-        public readonly string Id;
-        public readonly string Name;
-        private readonly LinkedList<(LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime)> Entries 
-            = new LinkedList<(LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime)>();
+        public readonly string Number;
+        public readonly string Title;
+        private readonly LinkedList<(LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime, uint Section)> Entries
+            = new LinkedList<(LinkedList<Teacher>, CourseEntryType, RoomLocation, DayTime, uint)>();
 
         // Local Lists
         private readonly LinkedList<Teacher> teachers = new LinkedList<Teacher>();
@@ -64,7 +64,7 @@ namespace ConsoleAppEngine
             {
                 teachers.Clear();
 
-                foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) tempi in Entries)
+                foreach ((LinkedList<Teacher> Teachers, CourseEntryType, RoomLocation, DayTime, uint) tempi in Entries)
                     foreach (Teacher tempj in tempi.Teachers)
                         teachers.AddLast(tempj);
 
@@ -76,7 +76,7 @@ namespace ConsoleAppEngine
             get
             {
                 roomLocations.Clear();
-                foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+                foreach ((LinkedList<Teacher>, CourseEntryType, RoomLocation Location, DayTime, uint) temp in Entries)
                     roomLocations.AddLast(temp.Location);
 
                 return roomLocations.RemoveDuplicates();
@@ -87,7 +87,7 @@ namespace ConsoleAppEngine
             get
             {
                 timings.Clear();
-                foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+                foreach ((LinkedList<Teacher>, CourseEntryType EntryType, RoomLocation, DayTime DayTime, uint) temp in Entries)
                     timings.AddLast((temp.DayTime, temp.EntryType));
 
                 return timings;
@@ -97,25 +97,25 @@ namespace ConsoleAppEngine
 
         public Course(string ID, string NAME, AllCourses ReferenceCourseList, AllTeachers ReferenceTeacherList)
         {
-            Id = ID;
-            Name = NAME;
+            Number = ID;
+            Title = NAME;
             CoursesList = ReferenceCourseList;
             TeacherList = ReferenceTeacherList;
             CoursesList.AllCoursesList.AddLast(this);
         }
-        public void AddCourseTiming(CourseEntryType entryType, RoomLocation roomLocation, DayTime dayTime, LinkedList<Teacher> TeacherList)
+        public void AddCourseTiming(CourseEntryType entryType, RoomLocation roomLocation, DayTime dayTime, LinkedList<Teacher> TeacherList, uint Section)
         {
 
-            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+            foreach ((LinkedList<Teacher>, CourseEntryType, RoomLocation, DayTime DayTime, uint) temp in Entries)
                 if (temp.DayTime.Intersect(dayTime))
                     throw new ArgumentException("Time collides..");
-            Entries.AddLast((TeacherList, entryType, roomLocation, dayTime));
+            Entries.AddLast((TeacherList, entryType, roomLocation, dayTime, Section));
         }
         public void AddTeacherToTiming(Teacher t, DayTime dt)
         {
             if (!TeacherList.List.Contains(t))
                 TeacherList.List.AddLast(t);
-            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+            foreach ((LinkedList<Teacher> Teachers, CourseEntryType, RoomLocation, DayTime DayTime, uint) temp in Entries)
                 if (temp.DayTime == dt)
                 {
                     if (!temp.Teachers.Contains(t))
@@ -127,7 +127,7 @@ namespace ConsoleAppEngine
         public LinkedList<CourseTimeEntry> GetTimeEntries()
         {
             LinkedList<CourseTimeEntry> result = new LinkedList<CourseTimeEntry>();
-            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime, uint Section) temp in Entries)
                 result.AddLast(
                     new CourseTimeEntry()
                     {
@@ -135,7 +135,8 @@ namespace ConsoleAppEngine
                         CourseEntryType = temp.EntryType,
                         DayTime = temp.DayTime,
                         RoomLocation = temp.Location,
-                        TeacherList = temp.Teachers
+                        TeacherList = temp.Teachers,
+                        SectionNo = temp.Section
                     });
 
             return result;
@@ -150,7 +151,7 @@ namespace ConsoleAppEngine
         {
             LinkedList<Teacher> result = new LinkedList<Teacher>();
 
-            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation Location, DayTime DayTime) temp in Entries)
+            foreach ((LinkedList<Teacher> Teachers, CourseEntryType EntryType, RoomLocation, DayTime, uint) temp in Entries)
                 if (ctype.Contains(temp.EntryType))
                     result.AddLast(temp.Teachers);
             return result;
