@@ -9,24 +9,16 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView IsPaneOpen="True" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" IsPaneToggleButtonVisible="False">
-            <NavigationView.MenuItems>
-                <NavigationViewItem FontFamily="Monaco" FontSize="20" Margin="0,5,0,3"
-                                    Content="Home"/>
-                <NavigationViewItemSeparator/>
-                
-                <NavigationViewItem FontFamily="Monaco" FontSize="20" Margin="0,2,0,3"
-                                     Content="Courses"/>
-                <NavigationViewItem FontFamily="Monaco" FontSize="20" Margin="0,2,0,3"
-                                     Content="Teachers"/>
-                <NavigationViewItem FontFamily="Monaco" FontSize="20" Margin="0,2,0,3"
-                                    Content="Time Table"/>
-                <NavigationViewItemSeparator/>
-                
-            </NavigationView.MenuItems>
-
-            
+        <Frame x:Name="ContentFrame" Navigated="ContentFrame_Navigated"/>
+        <NavigationView PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Visible" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="True"
+                        SelectionChanged="NavView_SelectionChanged"
+                        BackRequested="BackRequested"
+                        x:Name="NavView" />
+        <NavigationView PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Visible" Visibility="Collapsed" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="True" 
+                        SelectionChanged="SecondNavigationView_SelectionChanged"
+                        BackRequested="BackRequested"
+                        x:Name="SecondNavigationView" >
             
         </NavigationView>
-    </Grid>
+     </Grid>
 </Page>
