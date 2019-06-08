@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppEngine
 {
-    class TimeTable
+    public class TimeTable
     {
         internal readonly AllCourses AllCourses;
         internal LinkedList<Course> CourseList => AllCourses.AllCoursesList;

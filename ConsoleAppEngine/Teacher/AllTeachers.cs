@@ -8,6 +8,17 @@ namespace ConsoleAppEngine
 {
     public class AllTeachers
     {
-        internal LinkedList<Teacher> List = new LinkedList<Teacher>();
+        public LinkedList<Teacher> List = new LinkedList<Teacher>();
+
+        public AllTeachers()
+        {
+
+        }
+
+        public void AddTeacher(Teacher t)
+        {
+            if (!List.Contains(t))
+                List.AddLast(t);
+        }
     }
 }
