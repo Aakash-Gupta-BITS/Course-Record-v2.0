@@ -15,13 +15,14 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
-        <Frame x:Name="ContentFrame" Grid.Row="2"/>
+        <Frame x:Name="ContentFrame" Grid.Row="2" Navigated="ContentFrame_Navigated"/>
 
         <NavigationView x:Name="SecNav" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False" Grid.Row="1" SelectionChanged="SecNav_SelectionChanged"/>
 
-        <NavigationView PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="True" Grid.Row="0" Grid.RowSpan="3"
+        <NavigationView PaneDisplayMode="LeftMinimal" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="True" Grid.Row="0" Grid.RowSpan="3"
                         x:Name="NavView"
-                        SelectionChanged="NavView_SelectionChanged">
+                        SelectionChanged="NavView_SelectionChanged"
+                        BackRequested="NavView_BackRequested">
             <NavigationView.MenuItems>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Modify"/>

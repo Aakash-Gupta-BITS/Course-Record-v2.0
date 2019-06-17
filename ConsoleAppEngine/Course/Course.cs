@@ -44,6 +44,7 @@ namespace ConsoleAppEngine
         }
     }
 
+    [Obsolete("Use CourseEntry Instead")]
     public class Course
     {
         private readonly AllCourses CoursesList;
@@ -101,7 +102,7 @@ namespace ConsoleAppEngine
             Title = NAME;
             CoursesList = ReferenceCourseList;
             TeacherList = ReferenceTeacherList;
-            CoursesList.AllCoursesList.AddLast(this);
+            // CoursesList.AllCoursesList.AddLast(this);
         }
         public void AddCourseTiming(CourseEntryType entryType, RoomLocation roomLocation, DayTime dayTime, LinkedList<Teacher> TeacherList, uint Section)
         {

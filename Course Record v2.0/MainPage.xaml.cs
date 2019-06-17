@@ -17,44 +17,43 @@ namespace Course_Record_v2._0
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public Globals Global = new Globals();
-        private readonly LinkedList<NavigationViewItemBase> MainPageNavigationItems = new LinkedList<NavigationViewItemBase>();
+        private readonly LinkedList<NavigationViewItemBase> NavigationItems = new LinkedList<NavigationViewItemBase>();
 
         public MainPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-
-            // Main Page
-            MainPageNavigationItems.AddLast(new NavigationViewItemSeparator());
-            MainPageNavigationItems.AddLast(new NavigationViewItemHeader() { Content = "Contacts" });
-            MainPageNavigationItems.AddLast(new NavigationViewItem() { Content = "Teachers" });
-            MainPageNavigationItems.AddLast(new NavigationViewItemSeparator());
-            MainPageNavigationItems.AddLast(new NavigationViewItemHeader() { Content = "Semester Data" });
-            MainPageNavigationItems.AddLast(new NavigationViewItem() { Content = "Course" });
-            MainPageNavigationItems.AddLast(new NavigationViewItem() { Content = "Time Table" });
-            MainPageNavigationItems.AddLast(new NavigationViewItemSeparator());
-            MainPageNavigationItems.AddLast(new NavigationViewItemHeader() { Content = "Websites" });
-            MainPageNavigationItems.AddLast(new NavigationViewItem() { Content = "ID" });
-            MainPageNavigationItems.AddLast(new NavigationViewItem() { Content = "Nalanda" });
-            MainPageNavigationItems.AddLast(new NavigationViewItem() { Content = "SWD" });
-            MainPageNavigationItems.AddLast(new NavigationViewItemSeparator());
+            
+            NavigationItems.AddLast(new NavigationViewItemSeparator());
+            NavigationItems.AddLast(new NavigationViewItemHeader() { Content = "Contacts" });
+            NavigationItems.AddLast(new NavigationViewItem() { Content = "Teachers" });
+            NavigationItems.AddLast(new NavigationViewItemSeparator());
+            NavigationItems.AddLast(new NavigationViewItemHeader() { Content = "Semester Data" });
+            NavigationItems.AddLast(new NavigationViewItem() { Content = "Course" });
+            NavigationItems.AddLast(new NavigationViewItem() { Content = "Time Table" });
+            NavigationItems.AddLast(new NavigationViewItemSeparator());
+            NavigationItems.AddLast(new NavigationViewItemHeader() { Content = "Internet" });
+            NavigationItems.AddLast(new NavigationViewItem() { Content = "Internet" });
+            NavigationItems.AddLast(new NavigationViewItemSeparator());
 
             NavView.MenuItems.Clear();
-            foreach (NavigationViewItemBase b in MainPageNavigationItems)
+            foreach (NavigationViewItemBase b in NavigationItems)
                 NavView.MenuItems.Add(b);
-        }
 
+        }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             object SelectedItem = (sender.SelectedItem as NavigationViewItem).Content;
+
             switch (SelectedItem)
             {
                 case "Course":
-                    this.Frame.Navigate(typeof(Frames.Course.MainPage), Global);
+                    this.Frame.Navigate(typeof(Frames.Course.MainPage));
                     break;
             }
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e) => NavView.SelectedItem = NavigationItems.First.Next.Next.Value;
     }
 }

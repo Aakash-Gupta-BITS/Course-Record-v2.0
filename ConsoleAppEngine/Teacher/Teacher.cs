@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Text;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Controls;
+using Windows.Storage;
 
 namespace ConsoleAppEngine
 {
@@ -13,14 +19,16 @@ namespace ConsoleAppEngine
         public readonly LinkedList<string> EmailId = new LinkedList<string>();
         public readonly RoomLocation ChamberLocation = new RoomLocation();
         public readonly DayTime ChamberTiming;
-        public LinkedList<Course> CoursesMaintained => throw new NotImplementedException();
-        public LinkedList<CourseTimeEntry> TimeTableEntries => throw new NotImplementedException();
+
+        internal CheckBox DisplayListViewItem = new CheckBox();
+        public bool? IsSelected => DisplayListViewItem.IsChecked;
 
         public Teacher(string name, RoomLocation roomLocation = null,  DayTime ChamberTimings = null)
         {
             Name = name;
             ChamberLocation = roomLocation;
             ChamberTiming = ChamberTimings;
+            DisplayListViewItem.Content = Name;
         }
 
         public void AddPhone(string input)

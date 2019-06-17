@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Visible" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False"
+        <NavigationView PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False"
                         x:Name="NavView" 
                         SelectionChanged="NavView_SelectionChanged"
                         />

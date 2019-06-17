@@ -22,24 +22,21 @@ namespace Course_Record_v2._0.Frames.Course
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Globals Global = null;
-        private readonly LinkedList<NavigationViewItemBase> SecondNavCourseItems = new LinkedList<NavigationViewItemBase>();
+        private readonly LinkedList<NavigationViewItemBase> CourseNavigationNames = new LinkedList<NavigationViewItemBase>();
 
         public MainPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-
-           SecondNavCourseItems.AddLast(new NavigationViewItem() { Content = "Overview" });
-           SecondNavCourseItems.AddLast(new NavigationViewItem() { Content = "Books" });
-           SecondNavCourseItems.AddLast(new NavigationViewItem() { Content = "Handout" });
-           SecondNavCourseItems.AddLast(new NavigationViewItem() { Content = "Teachers" });
-           SecondNavCourseItems.AddLast(new NavigationViewItem() { Content = "CT log" });
-           SecondNavCourseItems.AddLast(new NavigationViewItem() { Content = "Time Table" });
-           SecondNavCourseItems.AddLast(new NavigationViewItem() { Content = "Events" });
-           SecondNavCourseItems.AddLast(new NavigationViewItem() { Content = "Tests" });
-           SecondNavCourseItems.AddLast(new NavigationViewItem() { Content = "Files" });
+            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Overview" });
+            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Books" });
+            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Handout" });
+            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Teachers" });
+            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "CT log" });
+            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Time Table" });
+            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Events" });
+            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Tests" });
+            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Files" });
 
             foreach (NavigationViewItemBase temp in NavView.MenuItems)
             {
@@ -49,6 +46,9 @@ namespace Course_Record_v2._0.Frames.Course
                     break;
                 }
             }
+
+            foreach (NavigationViewItem t in CourseNavigationNames)
+                SecNav.MenuItems.Add(t);
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -56,45 +56,60 @@ namespace Course_Record_v2._0.Frames.Course
             object SelectedItem = (sender.SelectedItem as NavigationViewItem).Content;
             NavView.Header = SelectedItem;
 
-            SecNav.Visibility = Visibility.Visible;
             switch (SelectedItem)
             {
                 case "Add Courses":
-                    ContentFrame.Navigate(typeof(Add_Course), Global);
+                    ContentFrame.Navigate(typeof(Add_Course));
                     SecNav.Visibility = Visibility.Collapsed;
                     break;
                 default:
-                    PopulateSecondNavView(SecondNavCourseItems);
+                    SecNav.SelectedItem = CourseNavigationNames.First.Value;
+                    SecNav.Visibility = Visibility.Visible;
                     break;
             }
-        }
-
-        private void PopulateSecondNavView(LinkedList<NavigationViewItemBase> list)
-        {
-            SecNav.MenuItems.Clear();
-            foreach (NavigationViewItemBase temp in list)
-                SecNav.MenuItems.Add(temp);
-            SecNav.SelectedItem = list.First.Value;
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if (e.Parameter is Globals g)
-                Global = g;
-            base.OnNavigatedTo(e);
         }
 
         private void SecNav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            // object SelectedItem = (sender.SelectedItem as NavigationViewItem).Content;
-            switch ((NavView.SelectedItem as NavigationViewItem).Content)
+            object SelectedItem = (sender.SelectedItem as NavigationViewItem).Content;
+            switch (SelectedItem)
             {
-                case "Add Courses":
+                case "Overview":
+                    ContentFrame.Navigate(typeof(Overview));
                     break;
-                default:
-                    ContentFrame.Navigate(typeof(EmptyPage));
+                case "Books":
+                    ContentFrame.Navigate(typeof(Books));
+                    break;
+                case "Handout":
+                    ContentFrame.Navigate(typeof(Handout));
+                    break;
+                case "Teachers":
+                    ContentFrame.Navigate(typeof(Teachers));
+                    break;
+                case "CT log":
+                    ContentFrame.Navigate(typeof(CT_log));
+                    break;
+                case "Time Table":
+                    ContentFrame.Navigate(typeof(TimeTable));
+                    break;
+                case "Events":
+                    ContentFrame.Navigate(typeof(Events));
+                    break;
+                case "Tests":
+                    ContentFrame.Navigate(typeof(Tests));
+                    break;
+                case "Files":
+                    ContentFrame.Navigate(typeof(Files));
                     break;
             }
         }
+
+        private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            this.Frame.GoBack();
+            this.Frame.ForwardStack.Clear();
+        }
+
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e) => ContentFrame.BackStack.Clear();
     }
 }

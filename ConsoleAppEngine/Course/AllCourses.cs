@@ -8,6 +8,6 @@ namespace ConsoleAppEngine
 {
     public class AllCourses
     {
-        public LinkedList<Course> AllCoursesList { get; set; }
+        public LinkedList<CourseEntry> CoursEntryList { get; set; }
     }
 }

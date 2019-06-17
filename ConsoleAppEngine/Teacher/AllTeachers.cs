@@ -10,11 +10,6 @@ namespace ConsoleAppEngine
     {
         public LinkedList<Teacher> List = new LinkedList<Teacher>();
 
-        public AllTeachers()
-        {
-
-        }
-
         public void AddTeacher(Teacher t)
         {
             if (!List.Contains(t))
