@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ConsoleAppEngine;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -23,6 +24,7 @@ namespace Course_Record_v2._0.Frames.Course
     public sealed partial class MainPage : Page
     {
         private readonly LinkedList<NavigationViewItemBase> CourseNavigationNames = new LinkedList<NavigationViewItemBase>();
+        CourseEntry Math3Course = new CourseEntry(null, "MATHEMATICS 3", "MATH F113", 3, 0, true, null);
 
         public MainPage()
         {
@@ -38,17 +40,29 @@ namespace Course_Record_v2._0.Frames.Course
             CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Tests" });
             CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Files" });
 
+            LinkedList<NavigationViewItem> x = new LinkedList<NavigationViewItem>();
+
+            foreach (NavigationViewItem t in CourseNavigationNames)
+                SecNav.MenuItems.Add(t);
+
+
             foreach (NavigationViewItemBase temp in NavView.MenuItems)
             {
                 if (temp is NavigationViewItem t)
                 {
-                    NavView.SelectedItem = t;
-                    break;
+                    x.AddLast(t);
                 }
             }
 
-            foreach (NavigationViewItem t in CourseNavigationNames)
-                SecNav.MenuItems.Add(t);
+            NavView.SelectedItem = x.Last.Value;
+
+
+            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "AgCD", true, "Hekko"));
+            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "ABCD", true, "Hekko"));
+            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "AfD", true, "Hekko"));
+            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "AD", true, "Hekko"));
+            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "ABCD", true, "Hekko"));
+
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -81,7 +95,7 @@ namespace Course_Record_v2._0.Frames.Course
                     ContentFrame.Navigate(typeof(Books));
                     break;
                 case "Handout":
-                    ContentFrame.Navigate(typeof(Handout));
+                    ContentFrame.Navigate(typeof(Handout), Math3Course.HandoutEntry);
                     break;
                 case "Teachers":
                     ContentFrame.Navigate(typeof(Teachers));

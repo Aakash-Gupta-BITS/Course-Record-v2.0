@@ -120,6 +120,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Course\Handout\EHandoutItem.cs" />
+    <Compile Include="Course\Handout\EHandouts.cs" />
     <Compile Include="Supportive Structures\AllEnums\BarnchType.cs" />
     <Compile Include="Course\AllCourses.cs" />
     <Compile Include="Course\Course.cs" />

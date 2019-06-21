@@ -13,13 +13,14 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <Frame x:Name="ContentFrame" Grid.Row="2" Navigated="ContentFrame_Navigated"/>
 
         <NavigationView x:Name="SecNav" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False" Grid.Row="1" SelectionChanged="SecNav_SelectionChanged"/>
 
-        <NavigationView PaneDisplayMode="LeftMinimal" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="True" Grid.Row="0" Grid.RowSpan="3"
+        <NavigationView PaneDisplayMode="LeftMinimal" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="True" Grid.Row="0" Grid.RowSpan="4"
                         x:Name="NavView"
                         SelectionChanged="NavView_SelectionChanged"
                         BackRequested="NavView_BackRequested">
@@ -32,6 +33,6 @@
                 <NavigationViewItem Content="MATHS III"/>
             </NavigationView.MenuItems>
         </NavigationView>
-        
+
     </Grid>
 </Page>

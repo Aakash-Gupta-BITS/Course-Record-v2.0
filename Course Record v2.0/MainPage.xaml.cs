@@ -40,7 +40,11 @@ namespace Course_Record_v2._0
             foreach (NavigationViewItemBase b in NavigationItems)
                 NavView.MenuItems.Add(b);
 
+            this.Loaded += (object sender, RoutedEventArgs e) => NavView.SelectedItem = NavigationItems.First.Next.Next.Next.Next.Next.Value;
+
+
         }
+
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
@@ -54,6 +58,6 @@ namespace Course_Record_v2._0
             }
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) => NavView.SelectedItem = NavigationItems.First.Next.Next.Value;
+       // protected override void OnNavigatedTo(NavigationEventArgs e) => NavView.SelectedItem = NavigationItems.First.Next.Next.Next.Next.Next.Value;
     }
 }

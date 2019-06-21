@@ -16,6 +16,8 @@ namespace ConsoleAppEngine
         private readonly byte units;
         public readonly bool HaveTutorial;
         public readonly Teacher IC;
+        public EHandouts HandoutEntry = new EHandouts();
+
         private readonly (LinkedList<Teacher> Teachers, uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) LectureInfo;
         private readonly (LinkedList<Teacher> Teachers, uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) PracticalInfo;
         private readonly (LinkedList<Teacher> Teachers, uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) TutorialInfo;
@@ -80,7 +82,7 @@ namespace ConsoleAppEngine
             PracticalInfo = practicalInfo;
             TutorialInfo = tutorialInfo;
 
-            AllCourses.CoursEntryList.AddLast(this);
+            // AllCourses.CoursEntryList.AddLast(this);
         }
 
     }

@@ -124,6 +124,7 @@
     <Compile Include="Frames\Course\Books.xaml.cs">
       <DependentUpon>Books.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Frames\Course\CoursePage.cs" />
     <Compile Include="Frames\Course\CT log.xaml.cs">
       <DependentUpon>CT log.xaml</DependentUpon>
     </Compile>
@@ -229,6 +230,12 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleAppEngine\ConsoleAppEngine.csproj">
+      <Project>{282ffbed-bb88-4eaf-858d-c9479bd1e9e1}</Project>
+      <Name>ConsoleAppEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
