@@ -58,10 +58,8 @@ namespace Course_Record_v2._0.Frames.Course
 
 
             Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "AgCD", true, "Hekko"));
-            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "ABCD", true, "Hekko"));
-            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "AfD", true, "Hekko"));
-            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "AD", true, "Hekko"));
-            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "ABCD", true, "Hekko"));
+            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(2, "ABCD", true, "Hekko"));
+            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(3, "AfD", true, "Hekko"));
 
         }
 
