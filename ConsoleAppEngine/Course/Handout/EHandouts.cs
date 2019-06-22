@@ -247,6 +247,7 @@ namespace ConsoleAppEngine
                     // DELETE
                     case ContentDialogResult.Secondary:
                         ViewList.Items.Remove(ItemToChange.GetView);
+                        lists.Remove(ItemToChange);
                         ItemToChange.IsDeleted = true;
                         break;
 
@@ -283,7 +284,7 @@ namespace ConsoleAppEngine
                 ViewGrid.Visibility = Visibility.Visible;
                 AddGrid.Visibility = Visibility.Collapsed;
                 ClearAddGrid();
-
+                ItemToChange = null;
                 return;
             };
         }
@@ -294,6 +295,11 @@ namespace ConsoleAppEngine
                 return;
             foreach (var a in (from x in lists where x.IsDeleted == true select x).ToArray())
                 lists.Remove(a);
+
+            var list = (from element in lists orderby element.LectureNo select element).ToArray();
+            lists.Clear();
+            foreach (var x in list)
+                lists.AddLast(x);
 
             ViewList.Items.Clear();
 
@@ -308,7 +314,7 @@ namespace ConsoleAppEngine
                 LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));    // Red
                 throw new Exception();
             }
-            foreach (var x in (from a in lists where a != ItemToChange select a.LectureNo))
+            foreach (var x in (from a in lists where a != ItemToChange && a.IsDeleted == false select a.LectureNo))
                 if (x == lecture)
                 {
                     LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));    // Red
