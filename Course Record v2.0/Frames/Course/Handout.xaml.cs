@@ -32,12 +32,18 @@ namespace Course_Record_v2._0.Frames.Course
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
+            HandoutEntry = e.Parameter as EHandouts;
+            ViewGrid.Visibility = Visibility.Visible;
+            HandoutEntry.InitializeViews(
+                ViewGrid,
+                AddGrid,
+                ViewCommand,
+                AddCommand);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-
+            HandoutEntry.DeleteViews();
         }
     }
 }

@@ -13,16 +13,17 @@ namespace ConsoleAppEngine
 {
     public class EHandoutItem
     {
-        public readonly int LectureNo;
-        public readonly string Topic;
-        public readonly bool DoneByMe;
-        public readonly string Description;
+        public int LectureNo { get; private set; }
+        public string Topic { get; private set; }
+        public bool DoneByMe { get; internal set; }
+        public string Description { get; private set; }
 
         internal bool IsDeleted = false;
-        public readonly ListViewItem GetView = new ListViewItem();
+        internal readonly ListViewItem GetView = new ListViewItem();
 
-        CheckBox ViewCheckBox = null;
-        TappedEventHandler lastTappedEventHandler;
+        internal readonly TextBlock LectureViewBlock;
+        internal readonly TextBlock TopicViewBlock;
+        internal readonly CheckBox DoneViewBox;
 
         public EHandoutItem(int lectureNo, string topic, bool doneByMe, string description)
         {
@@ -31,99 +32,22 @@ namespace ConsoleAppEngine
             DoneByMe = doneByMe;
             Description = description;
 
-            GenerateView();
-        }
-
-        public static Grid Header()
-        {
-            Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0.5, GridUnitType.Star) });
-
-            TextBlock LectureNo = new TextBlock()
-            {
-                Text = "Lecture No",
-                HorizontalAlignment = HorizontalAlignment.Left,
-                TextWrapping = TextWrapping.Wrap,
-                FontWeight = FontWeights.Bold
-            };
-            TextBlock Topic = new TextBlock()
-            {
-                Text = "Topic",
-                HorizontalAlignment = HorizontalAlignment.Left,
-                FontWeight = FontWeights.Bold
-            };
-            TextBlock DonebyMe = new TextBlock()
-            {
-                Text = "Done by Me",
-                HorizontalAlignment = HorizontalAlignment.Left,
-                FontWeight = FontWeights.Bold
-            };
-
-            Grid.SetColumn(LectureNo, 0);
-            Grid.SetColumn(Topic, 1);
-            Grid.SetColumn(DonebyMe, 2);
-
-            grid.Children.Add(LectureNo);
-            grid.Children.Add(Topic);
-            grid.Children.Add(DonebyMe);
-
-            return grid;
-        }
-
-        internal void GenerateTappedEvent(ListView l)
-        {
-            Action<object, TappedRoutedEventArgs> action = async (object sender, TappedRoutedEventArgs e) =>
-            {
-                if (ViewCheckBox.IsPointerOver)
-                    return;
-
-                ContentDialog contentDialog = new ContentDialog
-                {
-                    Title = Topic,
-                    Content = Description,
-                    PrimaryButtonText = "Modify",
-                    SecondaryButtonText = "Delete",
-                    CloseButtonText = "Ok"
-                };
-                l.SelectedItem = null;
-                switch (await contentDialog.ShowAsync())
-                {
-                    // Delete
-                    case ContentDialogResult.Secondary:
-                        l.Items.Remove(GetView);
-                        IsDeleted = true;
-                        break;
-                }
-            };
-
-            if (lastTappedEventHandler != null)
-                GetView.Tapped -= lastTappedEventHandler;
-
-            lastTappedEventHandler = new TappedEventHandler(action);
-            GetView.Tapped += lastTappedEventHandler;
-
-        }
-
-        private void GenerateView()
-        {
             Grid grid = new Grid();
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0.5, GridUnitType.Star) });
 
-            TextBlock lecture = new TextBlock()
+            LectureViewBlock = new TextBlock()
             {
                 Text = LectureNo.ToString(),
                 HorizontalAlignment = HorizontalAlignment.Left
             };
-            TextBlock topic = new TextBlock()
+            TopicViewBlock = new TextBlock()
             {
                 Text = Topic,
                 HorizontalAlignment = HorizontalAlignment.Left
             };
-            CheckBox donebyme = new CheckBox()
+            DoneViewBox = new CheckBox()
             {
                 IsChecked = DoneByMe,
                 Content = "",
@@ -131,20 +55,29 @@ namespace ConsoleAppEngine
                 MinWidth = 32
             };
 
-            Grid.SetColumn(lecture, 0);
-            Grid.SetColumn(topic, 1);
-            Grid.SetColumn(donebyme, 2);
+            Grid.SetColumn(LectureViewBlock, 0);
+            Grid.SetColumn(TopicViewBlock, 1);
+            Grid.SetColumn(DoneViewBox, 2);
 
-            grid.Children.Add(lecture);
-            grid.Children.Add(topic);
-            grid.Children.Add(donebyme);
+            grid.Children.Add(LectureViewBlock);
+            grid.Children.Add(TopicViewBlock);
+            grid.Children.Add(DoneViewBox);
 
             GetView.Content = grid;
             GetView.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-
-            ViewCheckBox = donebyme;
+            DoneViewBox.Click += (object sender, RoutedEventArgs e) => DoneByMe = DoneViewBox.IsChecked == true ? true : false;
         }
+        
+        internal void Update(int lectureNo, string topic, bool doneByMe, string description)
+        {
+            LectureNo = lectureNo;
+            Topic = topic;
+            DoneByMe = doneByMe;
+            Description = description;
 
-        public override string ToString() => Topic;
+            LectureViewBlock.Text = LectureNo.ToString();
+            TopicViewBlock.Text = topic;
+            DoneViewBox.IsChecked = DoneByMe;
+        }
     }
 }
