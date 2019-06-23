@@ -5,22 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleAppEngine.AllEnums;
 
-namespace ConsoleAppEngine
+namespace ConsoleAppEngine.Course
 {
     public class CourseEntry
     {
-        internal readonly AllCourses AllCourses;
+       // internal readonly AllCourses AllCourses;
 
         public readonly string Title;
         private readonly (EBranchType branchtype, string branchstring) id;
         private readonly byte units;
         public readonly bool HaveTutorial;
-        public readonly Teacher IC;
+       // public readonly Teacher IC;
         public EHandouts HandoutEntry = new EHandouts();
 
-        private readonly (LinkedList<Teacher> Teachers, uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) LectureInfo;
-        private readonly (LinkedList<Teacher> Teachers, uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) PracticalInfo;
-        private readonly (LinkedList<Teacher> Teachers, uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) TutorialInfo;
+        private readonly (/*LinkedList<Teacher> Teachers,*/ uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) LectureInfo;
+        private readonly (/*LinkedList<Teacher> Teachers,*/ uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) PracticalInfo;
+        private readonly (/*LinkedList<Teacher> Teachers,*/ uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) TutorialInfo;
 
         public EBranchType Branch => 
             id.branchtype;
@@ -33,8 +33,8 @@ namespace ConsoleAppEngine
         public int TotalUnits =>
             LectureUnits + PracticalUnits;
 
-        public LinkedList<Teacher> LectureTeachers =>
-            LectureInfo == default ? default : LectureInfo.Teachers;
+ //       public LinkedList<Teacher> LectureTeachers =>
+ //           LectureInfo == default ? default : LectureInfo.Teachers;
         public uint LectureSection => 
             LectureInfo == default ? default : LectureInfo.Section;
         public DayOfWeek[] LectureDays =>
@@ -44,8 +44,8 @@ namespace ConsoleAppEngine
         public uint LectureRoom =>
             LectureInfo == default ? default : LectureInfo.Room;
 
-        public LinkedList<Teacher> PracticalTeachers => 
-            PracticalInfo == default ? default : PracticalInfo.Teachers;
+//        public LinkedList<Teacher> PracticalTeachers => 
+//            PracticalInfo == default ? default : PracticalInfo.Teachers;
         public uint PracticalSection =>
             PracticalInfo == default ? default : PracticalInfo.Section;
         public DayOfWeek[] PracticalDays =>
@@ -55,8 +55,8 @@ namespace ConsoleAppEngine
         public uint PracticalRoom =>
             PracticalInfo == default ? default : PracticalInfo.Room;
 
-        public LinkedList<Teacher> TutorialTeachers => 
-            TutorialInfo == default ? default : TutorialInfo.Teachers;
+//        public LinkedList<Teacher> TutorialTeachers => 
+//            TutorialInfo == default ? default : TutorialInfo.Teachers;
         public uint TutorialSection =>
             TutorialInfo == default ? default : TutorialInfo.Section;
         public DayOfWeek[] TutorialDays => 
@@ -66,17 +66,17 @@ namespace ConsoleAppEngine
         public uint TutorialRoom => 
             TutorialInfo == default ? default : TutorialInfo.Room;
 
-        public CourseEntry(AllCourses allCourses, string title, string id, int lectureUnits, int practicalUnits, bool haveTutorial, Teacher ic,
-             (LinkedList<Teacher> lecTeachers, uint lecSec, uint lecRoom, DayOfWeek[] lecDays, byte[] lecHours) lectureInfo = default,
-             (LinkedList<Teacher> tutTeachers, uint tutSec, uint tutRoom, DayOfWeek[] tutDays, byte[] tutHours) tutorialInfo = default,
-             (LinkedList<Teacher> pracTeachers, uint pracSec, uint pracRoom, DayOfWeek[] pracDays, byte[] pracHours) practicalInfo = default)
+        public CourseEntry(/*AllCourses allCourses,*/ string title, string id, int lectureUnits, int practicalUnits, bool haveTutorial, // Teacher ic,
+             (/*LinkedList<Teacher> lecTeachers,*/ uint lecSec, uint lecRoom, DayOfWeek[] lecDays, byte[] lecHours) lectureInfo = default,
+             (/*LinkedList<Teacher> tutTeachers,*/ uint tutSec, uint tutRoom, DayOfWeek[] tutDays, byte[] tutHours) tutorialInfo = default,
+             (/*LinkedList<Teacher> pracTeachers,*/ uint pracSec, uint pracRoom, DayOfWeek[] pracDays, byte[] pracHours) practicalInfo = default)
         {
-            AllCourses = allCourses;
+            // AllCourses = allCourses;
             Title = title;
             this.id = ((EBranchType)Enum.Parse(typeof(EBranchType), id.Split(' ')[0], true), id.Split(' ')[1]);
             units = (byte)((lectureUnits & 0x07) | ((practicalUnits & 0x07) << 4));
             HaveTutorial = haveTutorial;
-            IC = ic;
+            // IC = ic;
 
             LectureInfo = lectureInfo;
             PracticalInfo = practicalInfo;

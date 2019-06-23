@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
        
-        <Grid x:Name="ViewGrid" Visibility="Collapsed" Grid.Row="0" Margin="0,10,0,0">
+        <Grid x:Name="ViewGrid" Visibility="Visible" Grid.Row="0" Margin="0,10,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>

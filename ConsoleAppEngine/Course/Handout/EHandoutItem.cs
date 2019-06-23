@@ -1,25 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Text;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
-using ConsoleAppEngine;
+using ConsoleAppEngine.Course.Abstracts;
 
-namespace ConsoleAppEngine
+namespace ConsoleAppEngine.Course
 {
-    public class EHandoutItem
+    public class EHandoutItem : ECourseElemItemBase
     {
         public int LectureNo { get; private set; }
         public string Topic { get; private set; }
         public bool DoneByMe { get; internal set; }
         public string Description { get; private set; }
-
-        internal bool IsDeleted = false;
-        internal readonly ListViewItem GetView = new ListViewItem();
 
         internal readonly TextBlock LectureViewBlock;
         internal readonly TextBlock TopicViewBlock;
@@ -78,6 +69,17 @@ namespace ConsoleAppEngine
             LectureViewBlock.Text = LectureNo.ToString();
             TopicViewBlock.Text = topic;
             DoneViewBox.IsChecked = DoneByMe;
+        }
+
+        internal override object PointerOverObject => DoneViewBox;
+
+        public override int CompareTo(object obj)
+        {
+            if (obj is EHandoutItem e)
+            {
+                return this.LectureNo.CompareTo(e.LectureNo);
+            }
+            throw new Exception();
         }
     }
 }

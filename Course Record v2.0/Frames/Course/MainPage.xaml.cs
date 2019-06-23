@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine;
+using ConsoleAppEngine.Course;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,7 +24,7 @@ namespace Course_Record_v2._0.Frames.Course
     public sealed partial class MainPage : Page
     {
         private readonly LinkedList<NavigationViewItemBase> CourseNavigationNames = new LinkedList<NavigationViewItemBase>();
-        CourseEntry Math3Course = new CourseEntry(null, "MATHEMATICS 3", "MATH F113", 3, 0, true, null);
+        CourseEntry Math3Course = new CourseEntry("MATHEMATICS 3", "MATH F113", 3, 0, true);
 
         public MainPage()
         {

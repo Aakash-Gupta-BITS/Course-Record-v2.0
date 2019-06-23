@@ -1,40 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
+using ConsoleAppEngine.Course.Abstracts;
 
-namespace ConsoleAppEngine
+namespace ConsoleAppEngine.Course
 {
-    public class EHandouts
+    public class EHandouts : ECourseElemBase<EHandoutItem>
     {
-        readonly LinkedList<EHandoutItem> lists = new LinkedList<EHandoutItem>();
-        EHandoutItem ItemToChange { get; set; }
-
-        Grid ViewGrid;
-        Grid AddGrid;
-        ListView ViewList;
         TextBox LectureBox;
         TextBox TopicBox;
         TextBox DescriptionBox;
         CheckBox DoneByMeBox;
-        Button AddButton;
-        readonly ContentDialog contentDialog = new ContentDialog()
-        {
-            PrimaryButtonText = "Modify",
-            SecondaryButtonText = "Delete",
-            CloseButtonText = "Ok"
-        };
-        AppBarButton ViewCommand;
-        AppBarButton AddCommand;
 
-        private void AddHandout()
+        internal override void AddNewItem()
         {
             AddHandout(new EHandoutItem(int.Parse(LectureBox.Text), TopicBox.Text, DoneByMeBox.IsChecked == true, DescriptionBox.Text));
         }
@@ -45,269 +27,146 @@ namespace ConsoleAppEngine
             UpdateList();
         }
 
-        public void InitializeViews(Grid viewGrid, Grid addGrid, AppBarButton viewCommand, AppBarButton addCommand)
+        internal override Grid Header()
         {
-            Grid Header()
+            Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0.5, GridUnitType.Star) });
+
+            TextBlock LectureNo = new TextBlock()
             {
-                Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0.5, GridUnitType.Star) });
-
-                TextBlock LectureNo = new TextBlock()
-                {
-                    Text = "Lecture No",
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    TextWrapping = TextWrapping.Wrap,
-                    FontWeight = FontWeights.Bold
-                };
-                TextBlock Topic = new TextBlock()
-                {
-                    Text = "Topic",
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    FontWeight = FontWeights.Bold
-                };
-                TextBlock DonebyMe = new TextBlock()
-                {
-                    Text = "Done by Me",
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    FontWeight = FontWeights.Bold
-                };
-
-                Grid.SetColumn(LectureNo, 0);
-                Grid.SetColumn(Topic, 1);
-                Grid.SetColumn(DonebyMe, 2);
-
-                grid.Children.Add(LectureNo);
-                grid.Children.Add(Topic);
-                grid.Children.Add(DonebyMe);
-
-                return grid;
-            }
-
-            void FillViewGrid()
+                Text = "Lecture No",
+                HorizontalAlignment = HorizontalAlignment.Left,
+                TextWrapping = TextWrapping.Wrap,
+                FontWeight = FontWeights.Bold
+            };
+            TextBlock Topic = new TextBlock()
             {
-                Grid header = Header();
-                Grid.SetRow(header, 0);
-                ViewList = new ListView();
-                Grid.SetRow(ViewList, 1);
-
-                ViewGrid.Children.Add(header);
-                ViewGrid.Children.Add(ViewList);
-
-                UpdateList();
-            }
-
-            void FillAddGrid()
+                Text = "Topic",
+                HorizontalAlignment = HorizontalAlignment.Left,
+                FontWeight = FontWeights.Bold
+            };
+            TextBlock DonebyMe = new TextBlock()
             {
-                TextBlock tb1 = new TextBlock()
-                {
-                    Margin = new Thickness(10, 10, 10, 10),
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    Text = "Lecture No : "
-                };
-                Grid.SetRow(tb1, 0);
-                Grid.SetColumn(tb1, 0);
+                Text = "Done by Me",
+                HorizontalAlignment = HorizontalAlignment.Left,
+                FontWeight = FontWeights.Bold
+            };
 
-                TextBlock tb2 = new TextBlock()
-                {
-                    Margin = new Thickness(10, 10, 10, 10),
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    Text = "Topic : "
-                };
-                Grid.SetRow(tb2, 1);
-                Grid.SetColumn(tb2, 0);
+            Grid.SetColumn(LectureNo, 0);
+            Grid.SetColumn(Topic, 1);
+            Grid.SetColumn(DonebyMe, 2);
 
-                TextBlock tb3 = new TextBlock()
-                {
-                    Margin = new Thickness(10, 10, 10, 10),
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    Text = "Description : "
-                };
-                Grid.SetRow(tb3, 2);
-                Grid.SetColumn(tb3, 0);
+            grid.Children.Add(LectureNo);
+            grid.Children.Add(Topic);
+            grid.Children.Add(DonebyMe);
 
-                LectureBox = new TextBox()
-                {
-                    Margin = new Thickness(10, 10, 10, 10),
-                    HorizontalAlignment = HorizontalAlignment.Stretch
-                };
-                Grid.SetRow(LectureBox, 0);
-                Grid.SetColumn(LectureBox, 1);
-
-                TopicBox = new TextBox()
-                {
-                    Margin = new Thickness(10, 10, 10, 10),
-                    HorizontalAlignment = HorizontalAlignment.Stretch
-                };
-                Grid.SetRow(TopicBox, 1);
-                Grid.SetColumn(TopicBox, 1);
-
-                DescriptionBox = new TextBox()
-                {
-                    Margin = new Thickness(10, 10, 10, 10),
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    TextWrapping = TextWrapping.Wrap
-                };
-                Grid.SetRow(DescriptionBox, 2);
-                Grid.SetColumn(DescriptionBox, 1);
-
-                DoneByMeBox = new CheckBox()
-                {
-                    Margin = new Thickness(10, 10, 10, 10),
-                    Content = "Done By Me"
-                };
-                Grid.SetRow(DoneByMeBox, 3);
-                Grid.SetColumn(DoneByMeBox, 1);
-
-                AddButton = new Button()
-                {
-                    Margin = new Thickness(10, 10, 10, 10),
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    Content = "Add"
-                };
-                Grid.SetRow(AddButton, 4);
-                Grid.SetColumn(AddButton, 0);
-                Grid.SetColumnSpan(AddButton, 2);
-
-                addGrid.Children.Add(tb1);
-                addGrid.Children.Add(tb2);
-                addGrid.Children.Add(tb3);
-                addGrid.Children.Add(LectureBox);
-                addGrid.Children.Add(TopicBox);
-                addGrid.Children.Add(DescriptionBox);
-                addGrid.Children.Add(DoneByMeBox);
-                addGrid.Children.Add(AddButton);
-            }
-
-            ViewGrid = viewGrid;
-            AddGrid = addGrid;
-            ViewCommand = viewCommand;
-            AddCommand = addCommand;
-
-            FillViewGrid();
-            FillAddGrid();
-            SetEvents();
+            return grid;
         }
 
-        public void DeleteViews()
+        internal override void FillAddGrid()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
+            TextBlock tb1 = new TextBlock()
+            {
+                Margin = new Thickness(10, 10, 10, 10),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Text = "Lecture No : "
+            };
+            Grid.SetRow(tb1, 0);
+            Grid.SetColumn(tb1, 0);
 
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            LectureBox = null;
-            TopicBox = null;
-            DescriptionBox = null;
-            DoneByMeBox = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            TextBlock tb2 = new TextBlock()
+            {
+                Margin = new Thickness(10, 10, 10, 10),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Text = "Topic : "
+            };
+            Grid.SetRow(tb2, 1);
+            Grid.SetColumn(tb2, 0);
+
+            TextBlock tb3 = new TextBlock()
+            {
+                Margin = new Thickness(10, 10, 10, 10),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Text = "Description : "
+            };
+            Grid.SetRow(tb3, 2);
+            Grid.SetColumn(tb3, 0);
+
+            LectureBox = new TextBox()
+            {
+                Margin = new Thickness(10, 10, 10, 10),
+                HorizontalAlignment = HorizontalAlignment.Stretch
+            };
+            Grid.SetRow(LectureBox, 0);
+            Grid.SetColumn(LectureBox, 1);
+
+            TopicBox = new TextBox()
+            {
+                Margin = new Thickness(10, 10, 10, 10),
+                HorizontalAlignment = HorizontalAlignment.Stretch
+            };
+            Grid.SetRow(TopicBox, 1);
+            Grid.SetColumn(TopicBox, 1);
+
+            DescriptionBox = new TextBox()
+            {
+                Margin = new Thickness(10, 10, 10, 10),
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                TextWrapping = TextWrapping.Wrap
+            };
+            Grid.SetRow(DescriptionBox, 2);
+            Grid.SetColumn(DescriptionBox, 1);
+
+            DoneByMeBox = new CheckBox()
+            {
+                Margin = new Thickness(10, 10, 10, 10),
+                Content = "Done By Me"
+            };
+            Grid.SetRow(DoneByMeBox, 3);
+            Grid.SetColumn(DoneByMeBox, 1);
+
+            AddButton = new Button()
+            {
+                Margin = new Thickness(10, 10, 10, 10),
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                Content = "Add"
+            };
+            Grid.SetRow(AddButton, 4);
+            Grid.SetColumn(AddButton, 0);
+            Grid.SetColumnSpan(AddButton, 2);
+
+            AddGrid.Children.Add(tb1);
+            AddGrid.Children.Add(tb2);
+            AddGrid.Children.Add(tb3);
+            AddGrid.Children.Add(LectureBox);
+            AddGrid.Children.Add(TopicBox);
+            AddGrid.Children.Add(DescriptionBox);
+            AddGrid.Children.Add(DoneByMeBox);
+            AddGrid.Children.Add(AddButton);
         }
 
-        private void SetEvents()
+        internal override void SetContentDialog()
         {
-            ViewCommand.Click += (object sender, RoutedEventArgs e) =>
-            {
-                AddGrid.Visibility = Visibility.Collapsed;
-                ViewGrid.Visibility = Visibility.Visible;
-                if (AddButton.Content.ToString() == "Modify")
-                    ClearAddGrid();
-            };
-            AddCommand.Click += (object sender, RoutedEventArgs e) =>
-            {
-                ViewGrid.Visibility = Visibility.Collapsed;
-                AddGrid.Visibility = Visibility.Visible;
-                AddButton.Content = "Add";
-            };
-            ViewList.SelectionChanged += async (object sender, SelectionChangedEventArgs e) =>
-            {
-                if (ViewList.SelectedItem == null) return;
-
-                foreach (var a in lists)
-                    if (a.GetView == ViewList.SelectedItem)
-                    {
-                        ItemToChange = a;
-                        break;
-                    }
-
-                ViewList.SelectedItem = null;
-
-                if (ItemToChange.DoneViewBox.IsPointerOver)
-                    return;
-
-                contentDialog.Title = ItemToChange.Topic;
-                contentDialog.Content = ItemToChange.Description;
-
-                switch (await contentDialog.ShowAsync())
-                {
-                    // DELETE
-                    case ContentDialogResult.Secondary:
-                        ViewList.Items.Remove(ItemToChange.GetView);
-                        lists.Remove(ItemToChange);
-                        ItemToChange.IsDeleted = true;
-                        break;
-
-                    // MODIFY
-                    case ContentDialogResult.Primary:
-
-                        ViewGrid.Visibility = Visibility.Collapsed;
-                        AddGrid.Visibility = Visibility.Visible;
-
-                        AddButton.Content = "Modify";
-                        LectureBox.Text = ItemToChange.LectureNo.ToString();
-                        DescriptionBox.Text = ItemToChange.Description;
-                        TopicBox.Text = ItemToChange.Topic;
-                        DoneByMeBox.IsChecked = ItemToChange.DoneByMe;
-
-                        break;
-                }
-            };
-            AddButton.Click += (object sender, RoutedEventArgs e) =>
-            {
-                try
-                {
-                    CheckInputs();
-                }
-                catch
-                {
-                    return;
-                }
-                if (AddButton.Content.ToString() == "Add")
-                    AddHandout();
-                else if (AddButton.Content.ToString() == "Modify")
-                    ItemToChange.Update(int.Parse(LectureBox.Text), TopicBox.Text, DoneByMeBox.IsChecked == true, DescriptionBox.Text);
-
-                ViewGrid.Visibility = Visibility.Visible;
-                AddGrid.Visibility = Visibility.Collapsed;
-                ClearAddGrid();
-                ItemToChange = null;
-                return;
-            };
+            contentDialog.Title = ItemToChange.Topic;
+            contentDialog.Content = ItemToChange.Description;
         }
 
-        private void UpdateList()
+        internal override void SetAddGrid_ItemToChange()
         {
-            if (ViewList == null)
-                return;
-            foreach (var a in (from x in lists where x.IsDeleted == true select x).ToArray())
-                lists.Remove(a);
-
-            var list = (from element in lists orderby element.LectureNo select element).ToArray();
-            lists.Clear();
-            foreach (var x in list)
-                lists.AddLast(x);
-
-            ViewList.Items.Clear();
-
-            foreach (var a in (from a in lists select a.GetView))
-                ViewList.Items.Add(a);
+            LectureBox.Text = ItemToChange.LectureNo.ToString();
+            DescriptionBox.Text = ItemToChange.Description;
+            TopicBox.Text = ItemToChange.Topic;
+            DoneByMeBox.IsChecked = ItemToChange.DoneByMe;
         }
 
-        private void CheckInputs()
+        internal override void ItemToChangeUpdate()
+        {
+            ItemToChange.Update(int.Parse(LectureBox.Text), TopicBox.Text, DoneByMeBox.IsChecked == true, DescriptionBox.Text);
+        }
+
+        internal override void CheckInputs()
         {
             if (!int.TryParse(LectureBox.Text, out int lecture))
             {
@@ -324,7 +183,7 @@ namespace ConsoleAppEngine
             LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
         }
 
-        private void ClearAddGrid()
+        internal override void ClearAddGrid()
         {
             ItemToChange = null;
             LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
@@ -333,6 +192,24 @@ namespace ConsoleAppEngine
             DescriptionBox.Text = "";
             DoneByMeBox.IsChecked = false;
             AddButton.Content = "Add";
+        }
+        
+        public override void DestructViews()
+        {
+            ViewGrid.Children.Clear();
+            AddGrid.Children.Clear();
+            ViewList.Items.Clear();
+
+            ViewGrid = null;
+            AddGrid = null;
+            ViewList = null;
+            LectureBox = null;
+            TopicBox = null;
+            DescriptionBox = null;
+            DoneByMeBox = null;
+            AddButton = null;
+            ViewCommand = null;
+            AddCommand = null;
         }
     }
 }

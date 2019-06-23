@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine;
+using ConsoleAppEngine.Course;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -33,7 +33,6 @@ namespace Course_Record_v2._0.Frames.Course
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             HandoutEntry = e.Parameter as EHandouts;
-            ViewGrid.Visibility = Visibility.Visible;
             HandoutEntry.InitializeViews(
                 ViewGrid,
                 AddGrid,
@@ -43,7 +42,7 @@ namespace Course_Record_v2._0.Frames.Course
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            HandoutEntry.DeleteViews();
+            HandoutEntry.DestructViews();
         }
     }
 }
