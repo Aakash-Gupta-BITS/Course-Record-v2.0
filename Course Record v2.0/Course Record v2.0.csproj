@@ -152,6 +152,7 @@
     <Compile Include="Frames\Course\TimeTable.xaml.cs">
       <DependentUpon>TimeTable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

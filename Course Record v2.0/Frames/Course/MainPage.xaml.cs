@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ConsoleAppEngine.Course;
 
@@ -24,7 +14,7 @@ namespace Course_Record_v2._0.Frames.Course
     public sealed partial class MainPage : Page
     {
         private readonly LinkedList<NavigationViewItemBase> CourseNavigationNames = new LinkedList<NavigationViewItemBase>();
-        CourseEntry Math3Course = new CourseEntry("MATHEMATICS 3", "MATH F113", 3, 0, true);
+        readonly CourseEntry Math3Course = new CourseEntry("MATHEMATICS 3", "MATH F113", 3, 0, true);
 
         public MainPage()
         {
@@ -57,9 +47,7 @@ namespace Course_Record_v2._0.Frames.Course
             NavView.SelectedItem = x.Last.Value;
 
 
-            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(1, "AgCD", true, "Hekko"));
-            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(2, "ABCD", true, "Hekko"));
-            Math3Course.HandoutEntry.AddHandout(new EHandoutItem(3, "AfD", true, "Hekko"));
+            Math3Course.BookEntry.AddBook(new EBookItem(TextBookType.TextBook, "Stephen P. Robbins, and Mary Coulter", "Management", 13, "Pearson Education", false));
 
         }
 
@@ -90,7 +78,7 @@ namespace Course_Record_v2._0.Frames.Course
                     ContentFrame.Navigate(typeof(Overview));
                     break;
                 case "Books":
-                    ContentFrame.Navigate(typeof(Books));
+                    ContentFrame.Navigate(typeof(Books), Math3Course.BookEntry);
                     break;
                 case "Handout":
                     ContentFrame.Navigate(typeof(Handout), Math3Course.HandoutEntry);
@@ -123,5 +111,6 @@ namespace Course_Record_v2._0.Frames.Course
         }
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e) => ContentFrame.BackStack.Clear();
+
     }
 }

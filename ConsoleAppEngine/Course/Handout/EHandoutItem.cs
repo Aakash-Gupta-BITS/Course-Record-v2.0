@@ -55,7 +55,6 @@ namespace ConsoleAppEngine.Course
             grid.Children.Add(DoneViewBox);
 
             GetView.Content = grid;
-            GetView.HorizontalContentAlignment = HorizontalAlignment.Stretch;
             DoneViewBox.Click += (object sender, RoutedEventArgs e) => DoneByMe = DoneViewBox.IsChecked == true ? true : false;
         }
         
@@ -72,14 +71,5 @@ namespace ConsoleAppEngine.Course
         }
 
         internal override object PointerOverObject => DoneViewBox;
-
-        public override int CompareTo(object obj)
-        {
-            if (obj is EHandoutItem e)
-            {
-                return this.LectureNo.CompareTo(e.LectureNo);
-            }
-            throw new Exception();
-        }
     }
 }

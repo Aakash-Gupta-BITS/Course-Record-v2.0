@@ -12,17 +12,18 @@ namespace ConsoleAppEngine.Course
        // internal readonly AllCourses AllCourses;
 
         public readonly string Title;
-        private readonly (EBranchType branchtype, string branchstring) id;
+        private readonly (BranchType branchtype, string branchstring) id;
         private readonly byte units;
         public readonly bool HaveTutorial;
        // public readonly Teacher IC;
-        public EHandouts HandoutEntry = new EHandouts();
+        public readonly EHandouts HandoutEntry = new EHandouts();
+        public readonly EBooks BookEntry = new EBooks();
 
         private readonly (/*LinkedList<Teacher> Teachers,*/ uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) LectureInfo;
         private readonly (/*LinkedList<Teacher> Teachers,*/ uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) PracticalInfo;
         private readonly (/*LinkedList<Teacher> Teachers,*/ uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) TutorialInfo;
 
-        public EBranchType Branch => 
+        public BranchType Branch => 
             id.branchtype;
         public string Id =>
             id.branchtype + " " + id.branchstring;
@@ -73,7 +74,7 @@ namespace ConsoleAppEngine.Course
         {
             // AllCourses = allCourses;
             Title = title;
-            this.id = ((EBranchType)Enum.Parse(typeof(EBranchType), id.Split(' ')[0], true), id.Split(' ')[1]);
+            this.id = ((BranchType)Enum.Parse(typeof(BranchType), id.Split(' ')[0], true), id.Split(' ')[1]);
             units = (byte)((lectureUnits & 0x07) | ((practicalUnits & 0x07) << 4));
             HaveTutorial = haveTutorial;
             // IC = ic;

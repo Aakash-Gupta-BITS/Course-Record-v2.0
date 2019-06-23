@@ -16,18 +16,72 @@ namespace ConsoleAppEngine.Course
         TextBox DescriptionBox;
         CheckBox DoneByMeBox;
 
-        internal override void AddNewItem()
-        {
-            AddHandout(new EHandoutItem(int.Parse(LectureBox.Text), TopicBox.Text, DoneByMeBox.IsChecked == true, DescriptionBox.Text));
-        }
-
         public void AddHandout(EHandoutItem handoutItem)
         {
             lists.AddLast(handoutItem);
             UpdateList();
         }
 
-        internal override Grid Header()
+        public override void DestructViews()
+        {
+            ViewGrid.Children.Clear();
+            AddGrid.Children.Clear();
+            ViewList.Items.Clear();
+
+            ViewGrid = null;
+            AddGrid = null;
+            ViewList = null;
+            AddButton = null;
+            ViewCommand = null;
+            AddCommand = null;
+
+            LectureBox = null;
+            TopicBox = null;
+            DescriptionBox = null;
+            DoneByMeBox = null;
+        }
+
+        protected override void AddNewItem()
+        {
+            AddHandout(new EHandoutItem(
+                int.Parse(LectureBox.Text),
+                TopicBox.Text,
+                DoneByMeBox.IsChecked == true,
+                DescriptionBox.Text));
+        }
+
+        protected override void CheckInputs()
+        {
+            // Valid Lecture Check
+            if (!int.TryParse(LectureBox.Text, out int lecture) || lecture <= 0)
+            {
+                LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));    // Red
+                throw new Exception();
+            }
+            // Lecture Repeatition check
+            foreach (var x in (from a in lists where a != ItemToChange && a.IsDeleted == false select a.LectureNo))
+                if (x == lecture)
+                {
+                    LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));    // Red
+                    throw new Exception();
+                }
+
+            LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
+        }
+
+        protected override void ClearAddGrid()
+        {
+            ItemToChange = null;
+            LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
+            AddButton.Content = "Add";
+
+            LectureBox.Text = 
+            TopicBox.Text = 
+            DescriptionBox.Text = "";
+            DoneByMeBox.IsChecked = false;
+        }
+
+        protected override Grid Header()
         {
             Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
@@ -38,7 +92,6 @@ namespace ConsoleAppEngine.Course
             {
                 Text = "Lecture No",
                 HorizontalAlignment = HorizontalAlignment.Left,
-                TextWrapping = TextWrapping.Wrap,
                 FontWeight = FontWeights.Bold
             };
             TextBlock Topic = new TextBlock()
@@ -50,7 +103,7 @@ namespace ConsoleAppEngine.Course
             TextBlock DonebyMe = new TextBlock()
             {
                 Text = "Done by Me",
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Center,
                 FontWeight = FontWeights.Bold
             };
 
@@ -65,12 +118,12 @@ namespace ConsoleAppEngine.Course
             return grid;
         }
 
-        internal override void FillAddGrid()
+        protected override void InitializeAddGrid()
         {
             TextBlock tb1 = new TextBlock()
             {
                 Margin = new Thickness(10, 10, 10, 10),
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Right,
                 Text = "Lecture No : "
             };
             Grid.SetRow(tb1, 0);
@@ -79,7 +132,7 @@ namespace ConsoleAppEngine.Course
             TextBlock tb2 = new TextBlock()
             {
                 Margin = new Thickness(10, 10, 10, 10),
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Right,
                 Text = "Topic : "
             };
             Grid.SetRow(tb2, 1);
@@ -88,7 +141,7 @@ namespace ConsoleAppEngine.Course
             TextBlock tb3 = new TextBlock()
             {
                 Margin = new Thickness(10, 10, 10, 10),
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Right,
                 Text = "Description : "
             };
             Grid.SetRow(tb3, 2);
@@ -147,13 +200,14 @@ namespace ConsoleAppEngine.Course
             AddGrid.Children.Add(AddButton);
         }
 
-        internal override void SetContentDialog()
+        protected override void ItemToChangeUpdate()
         {
-            contentDialog.Title = ItemToChange.Topic;
-            contentDialog.Content = ItemToChange.Description;
+            ItemToChange.Update(int.Parse(LectureBox.Text), TopicBox.Text, DoneByMeBox.IsChecked == true, DescriptionBox.Text);
         }
 
-        internal override void SetAddGrid_ItemToChange()
+        protected override IOrderedEnumerable<EHandoutItem> OrderList() => lists.OrderBy(a => a.LectureNo);
+
+        protected override void SetAddGrid_ItemToChange()
         {
             LectureBox.Text = ItemToChange.LectureNo.ToString();
             DescriptionBox.Text = ItemToChange.Description;
@@ -161,55 +215,11 @@ namespace ConsoleAppEngine.Course
             DoneByMeBox.IsChecked = ItemToChange.DoneByMe;
         }
 
-        internal override void ItemToChangeUpdate()
+        protected override void SetContentDialog()
         {
-            ItemToChange.Update(int.Parse(LectureBox.Text), TopicBox.Text, DoneByMeBox.IsChecked == true, DescriptionBox.Text);
+            contentDialog.Title = ItemToChange.Topic;
+            contentDialog.Content = ItemToChange.Description;
         }
 
-        internal override void CheckInputs()
-        {
-            if (!int.TryParse(LectureBox.Text, out int lecture))
-            {
-                LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));    // Red
-                throw new Exception();
-            }
-            foreach (var x in (from a in lists where a != ItemToChange && a.IsDeleted == false select a.LectureNo))
-                if (x == lecture)
-                {
-                    LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));    // Red
-                    throw new Exception();
-                }
-
-            LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-        }
-
-        internal override void ClearAddGrid()
-        {
-            ItemToChange = null;
-            LectureBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            LectureBox.Text = "";
-            TopicBox.Text = "";
-            DescriptionBox.Text = "";
-            DoneByMeBox.IsChecked = false;
-            AddButton.Content = "Add";
-        }
-        
-        public override void DestructViews()
-        {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            LectureBox = null;
-            TopicBox = null;
-            DescriptionBox = null;
-            DoneByMeBox = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
-        }
     }
 }

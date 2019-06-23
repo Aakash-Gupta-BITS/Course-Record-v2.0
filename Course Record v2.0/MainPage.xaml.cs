@@ -48,6 +48,7 @@ namespace Course_Record_v2._0
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
+            if (sender.SelectedItem == null) return;
             object SelectedItem = (sender.SelectedItem as NavigationViewItem).Content;
 
             switch (SelectedItem)
@@ -58,6 +59,9 @@ namespace Course_Record_v2._0
             }
         }
 
-       // protected override void OnNavigatedTo(NavigationEventArgs e) => NavView.SelectedItem = NavigationItems.First.Next.Next.Next.Next.Next.Value;
+       // protected override void OnNavigatedTo(NavigationEventArgs e)
+       // {
+       //     NavView.SelectedItem = null;
+     //   }
     }
 }

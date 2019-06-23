@@ -9,6 +9,37 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <Grid x:Name="ViewGrid" Visibility="Visible" Grid.Row="0" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+        
+        <Grid x:Name="AddGrid" Visibility="Collapsed" Grid.Row="0" Margin="0,10,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+
+        <CommandBar x:Name="Commands" Grid.Row="1" Background="Black" OverflowButtonVisibility="Visible">
+            <AppBarButton x:Name="ViewCommand" Icon="View" Label="View"/>
+            <AppBarButton x:Name="AddCommand" Icon="Add" Label="Add"/>
+        </CommandBar>
     </Grid>
 </Page>

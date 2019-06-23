@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppEngine.AllEnums
 {
-    public enum EBranchType : byte
+    public enum TextBookType
+    {
+        TextBook,
+        Reference,
+        Extra
+    }
+
+    public enum BranchType : byte
     {
         BIO,
         BIOT,
@@ -35,5 +42,14 @@ namespace ConsoleAppEngine.AllEnums
         PHA,
         PHY,
         SS
+    }
+
+    public enum TestType
+    {
+        Tutorial_Test,
+        Quiz,
+        Assignment,
+        Midsem,
+        Comprehensive_Examination
     }
 }

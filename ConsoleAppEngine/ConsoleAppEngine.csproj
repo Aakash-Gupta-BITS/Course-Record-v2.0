@@ -122,9 +122,12 @@
   <ItemGroup>
     <Compile Include="Course\Abstracts\ECourseElemBase.cs" />
     <Compile Include="Course\Abstracts\ECourseElemItemBase.cs" />
+    <Compile Include="Course\Book\EBookItem.cs" />
+    <Compile Include="Course\Book\EBooks.cs" />
     <Compile Include="Course\Handout\EHandoutItem.cs" />
     <Compile Include="Course\Handout\EHandouts.cs" />
-    <Compile Include="Supportive Structures\AllEnums\BarnchType.cs" />
+    <Compile Include="Course\Test\ETestItem.cs" />
+    <Compile Include="Supportive Structures\Enums.cs" />
     <Compile Include="Course\CourseEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ConsoleAppEngine.rd.xml" />

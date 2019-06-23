@@ -25,14 +25,15 @@ namespace ConsoleAppEngine.Course.Abstracts
         protected AppBarButton ViewCommand;
         protected AppBarButton AddCommand;
 
-        internal abstract void AddNewItem();
-        internal abstract Grid Header();
-        internal abstract void FillAddGrid();
-        internal abstract void CheckInputs();
-        internal abstract void ClearAddGrid();
-        internal abstract void ItemToChangeUpdate();
-        internal abstract void SetContentDialog();
-        internal abstract void SetAddGrid_ItemToChange();
+        protected abstract void AddNewItem();
+        protected abstract Grid Header();
+        protected abstract void InitializeAddGrid();
+        protected abstract void CheckInputs();
+        protected abstract void ClearAddGrid();
+        protected abstract void ItemToChangeUpdate();
+        protected abstract void SetContentDialog();
+        protected abstract void SetAddGrid_ItemToChange();
+        protected abstract IOrderedEnumerable<T> OrderList();
         public abstract void DestructViews();
 
         public void InitializeViews(Grid viewGrid, Grid addGrid, AppBarButton viewCommand, AppBarButton addCommand)
@@ -43,7 +44,7 @@ namespace ConsoleAppEngine.Course.Abstracts
             AddCommand = addCommand;
 
             FillViewGrid();
-            FillAddGrid();
+            InitializeAddGrid();
             SetEvents();
         }
 
@@ -145,11 +146,10 @@ namespace ConsoleAppEngine.Course.Abstracts
             foreach (var a in (from x in lists where x.IsDeleted == true select x).ToArray())
                 lists.Remove(a);
 
-            Array arr = lists.ToArray();
-            Array.Sort(arr);
+            List<T> v = OrderList().ToList();
             lists.Clear();
-            foreach (var x in arr)
-                lists.AddLast(x as T);
+            foreach (var x in v)
+                lists.AddLast(x);
 
             ViewList.Items.Clear();
 
