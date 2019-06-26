@@ -47,6 +47,7 @@ namespace ConsoleAppEngine.AllEnums
     public enum TestType
     {
         Tutorial_Test,
+        Lab,
         Quiz,
         Assignment,
         Midsem,

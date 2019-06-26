@@ -22,55 +22,15 @@ namespace ConsoleAppEngine.Course
 
         public EBookItem(TextBookType bookType, string author, string name, int edition, string press, bool isBest)
         {
-            BookType = bookType;
-            Author = author;
-            Name = name;
-            Edition = edition;
-            Press = press;
-            IsBest = isBest;
+            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 2), (typeof(string), 1), (typeof(bool), 1));
 
-            Grid grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            NameViewBlock = controls[0] as TextBlock;
+            AuthorViewBlock = controls[1] as TextBlock;
+            BookTypeViewBlock = controls[2] as TextBlock;
+            IsBestViewBox = controls[3] as CheckBox;
 
-            NameViewBlock = new TextBlock()
-            {
-                Text = Name,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                TextWrapping = TextWrapping.Wrap
-            };
-            AuthorViewBlock = new TextBlock()
-            {
-                Text = Author,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                TextWrapping = TextWrapping.Wrap
-            };
-            BookTypeViewBlock = new TextBlock()
-            {
-                Text = BookType.ToString(),
-                HorizontalAlignment = HorizontalAlignment.Left
-            };
-            IsBestViewBox = new CheckBox()
-            {
-                IsChecked = IsBest,
-                Content = "",
-                HorizontalAlignment = HorizontalAlignment.Center,
-                MinWidth = 32
-            };
+            Update(bookType, author, name, edition, press, isBest);
 
-            Grid.SetColumn(NameViewBlock, 0);
-            Grid.SetColumn(AuthorViewBlock, 1);
-            Grid.SetColumn(BookTypeViewBlock, 2);
-            Grid.SetColumn(IsBestViewBox, 3);
-
-            grid.Children.Add(NameViewBlock);
-            grid.Children.Add(AuthorViewBlock);
-            grid.Children.Add(BookTypeViewBlock);
-            grid.Children.Add(IsBestViewBox);
-
-            GetView.Content = grid;
             IsBestViewBox.Click += (object sender, RoutedEventArgs e) => IsBest = IsBestViewBox.IsChecked == true ? true : false;
         }
 

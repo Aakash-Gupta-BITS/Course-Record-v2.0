@@ -6,6 +6,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using ConsoleAppEngine.Course.Abstracts;
+using ConsoleAppEngine.AllEnums;
+using System.Collections.Generic;
 
 namespace ConsoleAppEngine.Course
 {
@@ -56,30 +58,29 @@ namespace ConsoleAppEngine.Course
                 BestBookBox.IsChecked == true));
         }
 
-        protected override void CheckInputs()
+        protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
-            // Edition Check
+            Controls.AddLast(EditionBox);
+            Controls.AddLast(BookTypeBox);
+
             if (!int.TryParse(EditionBox.Text, out int ed) || ed <= 0)
             {
-                EditionBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));   // Red
-                throw new Exception();
+                ErrorWaale.AddLast(EditionBox);
             }
 
             // Book Type Check
             if (BookTypeBox.SelectedItem == null)
             {
-                BookTypeBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));   // Red
-                throw new Exception();
+                ErrorWaale.AddLast(BookTypeBox);
             }
-
-
-            EditionBox.BorderBrush = AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
         }
 
         protected override void ClearAddGrid()
         {
             ItemToChange = null;
-            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
+            AddButton.BorderBrush =
+            EditionBox.BorderBrush =
+            BookTypeBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
             AddButton.Content = "Add";
 
             NameBox.Text =
@@ -91,99 +92,10 @@ namespace ConsoleAppEngine.Course
 
         } 
 
-        protected override Grid Header()
+        protected override Grid Header() => GenerateHeader(("Name", 2), ("Author", 2), ("Book Type", 1), ("Best Book", 1));
+
+        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
         {
-            Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-
-            TextBlock NameBlock = new TextBlock()
-            {
-                Text = "Name",
-                HorizontalAlignment = HorizontalAlignment.Left,
-                FontWeight = FontWeights.Bold
-            };
-            TextBlock AuthorBlock = new TextBlock()
-            {
-                Text = "Author",
-                HorizontalAlignment = HorizontalAlignment.Left,
-                FontWeight = FontWeights.Bold
-            };
-            TextBlock BookTypeBlock = new TextBlock()
-            {
-                Text = "Book Type",
-                HorizontalAlignment = HorizontalAlignment.Left,
-                FontWeight = FontWeights.Bold
-            };
-            TextBlock BestBlock = new TextBlock()
-            {
-                Text = "Best Book",
-                HorizontalAlignment = HorizontalAlignment.Center,
-                FontWeight = FontWeights.Bold
-            };
-
-            Grid.SetColumn(NameBlock, 0);
-            Grid.SetColumn(AuthorBlock, 1);
-            Grid.SetColumn(BookTypeBlock, 2);
-            Grid.SetColumn(BestBlock, 3);
-
-            grid.Children.Add(NameBlock);
-            grid.Children.Add(AuthorBlock);
-            grid.Children.Add(BookTypeBlock);
-            grid.Children.Add(BestBlock);
-
-            return grid;
-        }
-
-        protected override void InitializeAddGrid()
-        {
-            TextBlock tb1 = new TextBlock()
-            {
-                Margin = new Thickness(10, 10, 5, 10),
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Text = "Name : "
-            };
-            Grid.SetRow(tb1, 0);
-            Grid.SetColumn(tb1, 0);
-
-            TextBlock tb2 = new TextBlock()
-            {
-                Margin = new Thickness(10, 10, 5, 10),
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Text = "Author : "
-            };
-            Grid.SetRow(tb2, 1);
-            Grid.SetColumn(tb2, 0);
-
-            TextBlock tb3 = new TextBlock()
-            {
-                Margin = new Thickness(10, 10, 5, 10),
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Text = "Edition : "
-            };
-            Grid.SetRow(tb3, 2);
-            Grid.SetColumn(tb3, 0);
-
-            TextBlock tb4 = new TextBlock()
-            {
-                Margin = new Thickness(10, 10, 5, 10),
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Text = "Press : "
-            };
-            Grid.SetRow(tb4, 3);
-            Grid.SetColumn(tb4, 0);
-
-            TextBlock tb5 = new TextBlock()
-            {
-                Margin = new Thickness(10, 10, 5, 10),
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Text = "Type : "
-            };
-            Grid.SetRow(tb5, 4);
-            Grid.SetColumn(tb5, 0);
-
             NameBox = new TextBox()
             {
                 Margin = new Thickness(5, 10, 10, 5),
@@ -242,15 +154,7 @@ namespace ConsoleAppEngine.Course
             Grid.SetColumn(AddButton, 0);
             Grid.SetColumnSpan(AddButton, 2);
 
-            BookTypeBox.Items.Add(TextBookType.TextBook.ToString());
-            BookTypeBox.Items.Add(TextBookType.Reference.ToString());
-            BookTypeBox.Items.Add(TextBookType.Extra.ToString());
 
-            AddGrid.Children.Add(tb1);
-            AddGrid.Children.Add(tb2);
-            AddGrid.Children.Add(tb3);
-            AddGrid.Children.Add(tb4);
-            AddGrid.Children.Add(tb5);
             AddGrid.Children.Add(NameBox);
             AddGrid.Children.Add(AuthorBox);
             AddGrid.Children.Add(EditionBox);
@@ -281,7 +185,6 @@ namespace ConsoleAppEngine.Course
             PressBox.Text = ItemToChange.Press;
             BookTypeBox.SelectedIndex = (int)ItemToChange.BookType;
             BestBookBox.IsChecked = ItemToChange.IsBest;
-
         }
 
         protected override void SetContentDialog()

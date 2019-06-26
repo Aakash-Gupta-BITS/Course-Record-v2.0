@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -31,10 +30,19 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Row="0" HorizontalAlignment="Stretch" Margin="5,10,10,5" x:Name="NameInput" Header="Name"/>
+            <TextBox Grid.Row="1" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="AuthorInput" Header="Author"/>
+            <TextBox Grid.Row="2" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="EditionInput" Header="Edition"/>
+            <TextBox Grid.Row="3" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="PressInput" Header="Press"/>
+            <ComboBox Grid.Row="4" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="BookTypeInput" Header="BookType">
+                <ComboBoxItem Content="TextBook"/>
+                <ComboBoxItem Content="Reference"/>
+                <ComboBoxItem Content="Extra"/>
+            </ComboBox>
+
+            <CheckBox Grid.Row="5" HorizontalAlignment="Left" Margin="5,5,10,10" x:Name="BestBookInput" Content="Best Book"/>
+            <Button Grid.Row="6" HorizontalAlignment="Stretch" Margin="10,10,10,10" x:Name="AddButton" Content="Add"/>
         </Grid>
 
         <CommandBar x:Name="Commands" Grid.Row="1" Background="Black" OverflowButtonVisibility="Visible">

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI;
 
 namespace ConsoleAppEngine.Course.Abstracts
 {
@@ -27,8 +30,8 @@ namespace ConsoleAppEngine.Course.Abstracts
 
         protected abstract void AddNewItem();
         protected abstract Grid Header();
-        protected abstract void InitializeAddGrid();
-        protected abstract void CheckInputs();
+        protected abstract void InitializeAddGrid(params FrameworkElement[] AddViewGridControls);
+        protected abstract void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale);
         protected abstract void ClearAddGrid();
         protected abstract void ItemToChangeUpdate();
         protected abstract void SetContentDialog();
@@ -36,7 +39,7 @@ namespace ConsoleAppEngine.Course.Abstracts
         protected abstract IOrderedEnumerable<T> OrderList();
         public abstract void DestructViews();
 
-        public void InitializeViews(Grid viewGrid, Grid addGrid, AppBarButton viewCommand, AppBarButton addCommand)
+        public void InitializeViews(Grid viewGrid, Grid addGrid, AppBarButton viewCommand, AppBarButton addCommand, params FrameworkElement[] AddViewGridControls)
         {
             ViewGrid = viewGrid;
             AddGrid = addGrid;
@@ -44,8 +47,10 @@ namespace ConsoleAppEngine.Course.Abstracts
             AddCommand = addCommand;
 
             FillViewGrid();
-            InitializeAddGrid();
+            InitializeAddGrid(AddViewGridControls);
             SetEvents();
+
+            ViewGrid.Visibility = Visibility.Visible;
         }
 
         void SetEvents()
@@ -61,13 +66,13 @@ namespace ConsoleAppEngine.Course.Abstracts
             {
                 ViewGrid.Visibility = Visibility.Collapsed;
                 AddGrid.Visibility = Visibility.Visible;
-                AddButton.Content = "Add";
+                ClearAddGrid();
             };
             AddButton.Click += (object sender, RoutedEventArgs e) =>
             {
                 try
                 {
-                    CheckInputs();
+                    AbstractCheckInputs();
                 }
                 catch
                 {
@@ -99,7 +104,8 @@ namespace ConsoleAppEngine.Course.Abstracts
 
                 ViewList.SelectedItem = null;
 
-                if (ItemToChange.PointerOverObject != null && (ItemToChange.PointerOverObject as ButtonBase).IsPointerOver)
+                if (ItemToChange.PointerOverObject != null &&
+                ((ItemToChange.PointerOverObject is ButtonBase x) && x.IsPointerOver))
                     return;
 
                 SetContentDialog();
@@ -124,6 +130,29 @@ namespace ConsoleAppEngine.Course.Abstracts
                         break;
                 }
             };
+        }
+
+        void AbstractCheckInputs()
+        {
+            LinkedList<Control> controls_cando = new LinkedList<Control>();
+
+            LinkedList<Control> controls_err = new LinkedList<Control>();
+
+            CheckInputs(controls_cando, controls_err);
+
+            foreach (Control x in controls_err)
+                x.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+
+            if (controls_err.Count != 0)
+            {
+                AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+                throw new Exception();
+            }
+
+            foreach (Control x in controls_cando)
+                x.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
+
+            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
         }
 
         protected void FillViewGrid()
@@ -156,6 +185,25 @@ namespace ConsoleAppEngine.Course.Abstracts
             foreach (var a in (from a in lists select a.GetView))
                 ViewList.Items.Add(a);
         }
-    }
 
+        protected static Grid GenerateHeader(params (string Name, double Width)[] Input)
+        {
+            Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
+            int i = 0;
+            foreach ((string Name, double Width) x in Input)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(x.Width, GridUnitType.Star) });
+                TextBlock temp = new TextBlock()
+                {
+                    Text = x.Name,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    FontWeight = FontWeights.Bold
+                };
+                Grid.SetColumn(temp, i++);
+                grid.Children.Add(temp);
+            }
+
+            return grid;
+        }
+    }
 }

@@ -36,17 +36,13 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,5,10,5"     Text="Basic Info" FontWeight="Bold" FontSize="16"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,10,10,5"     Text="Basic Info" FontWeight="Bold" FontSize="16"/>
+            
+            <TextBox x:Name="Input_1Id"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,5,20,5" PlaceholderText="MATHS F113" Header="Course Id"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Margin="20,10,10,2.5" Text="Course Id" FontWeight="Bold"/>
-            <TextBox x:Name="Input_1Id"  Grid.Row="2" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="MATHS F113"/>
+            <TextBox x:Name="Input_2Title"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,5,20,5" PlaceholderText="MATHEMATICS III..." Header="Course Title"/>
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Margin="20,10,10,2.5" Text="Title" FontWeight="Bold"/>
-            <TextBox x:Name="Input_2Title"  Grid.Row="4" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="MATHEMATICS III..."/>
-
-            <TextBlock Grid.Row="5" Grid.Column="0" Margin="20,10,10,2.5" Text="Lecture Units"  FontWeight="Bold"/>
-            <TextBlock Grid.Row="5" Grid.Column="1" Margin="20,10,10,2.5" Text="Practical Units"  FontWeight="Bold"/>
-            <ComboBox x:Name="Input_3LectureUnits"  Grid.Row="6" Grid.Column="0" Margin="20,2.5,10,2.5" HorizontalAlignment="Stretch" SelectionChanged="LectureUnits_SelectionChanged">
+            <ComboBox x:Name="Input_3LectureUnits"  Grid.Row="6" Grid.Column="0" Margin="20,5,5,5" HorizontalAlignment="Stretch" SelectionChanged="LectureUnits_SelectionChanged" Header="Lecture Units">
                 <ComboBoxItem Content="0"/>
                 <ComboBoxItem Content="1"/>
                 <ComboBoxItem Content="2"/>
@@ -54,7 +50,7 @@
                 <ComboBoxItem Content="4"/>
                 <ComboBoxItem Content="5"/>
             </ComboBox>
-            <ComboBox x:Name="Input_4PracticalUnits" Grid.Row="6" Grid.Column="1" Margin="20,2.5,10,2.5" HorizontalAlignment="Stretch" SelectionChanged="PracticalUnits_SelectionChanged">
+            <ComboBox x:Name="Input_4PracticalUnits" Grid.Row="6" Grid.Column="1" Margin="5,5,20,5" HorizontalAlignment="Stretch" SelectionChanged="PracticalUnits_SelectionChanged" Header="Practical Units">
                 <ComboBoxItem Content="0"/>
                 <ComboBoxItem Content="1"/>
                 <ComboBoxItem Content="2"/>
@@ -63,13 +59,12 @@
                 <ComboBoxItem Content="5"/>
             </ComboBox>
 
-            <CheckBox x:Name="Input_5HaveTuts"  Grid.Row="7" Grid.Column="0" Margin="20,2.5,10,2.5" Content="Have Tutorials" Checked="HaveTuts_Checked" Unchecked="HaveTuts_Unchecked"/>
+            <CheckBox x:Name="Input_5HaveTuts"  Grid.Row="7" Grid.Column="0" Margin="20,5,20,5" Content="Have Tutorials" Checked="HaveTuts_Checked" Unchecked="HaveTuts_Unchecked"/>
 
-            <TextBlock Grid.Row="8" Grid.Column="0" Margin="20,10,10,2.5" Text="Instructor Incharge (IC)" FontWeight="Bold"/>
-            <SearchBox x:Name="Search_IC" Grid.Row="9" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="Enter Name Here" QuerySubmitted="Search_IC_QuerySubmitted"/>
-            <ComboBox x:Name="Input_6IC" Grid.Row="9" Grid.Column="1" Margin="20,2.5,10,2.5" HorizontalAlignment="Stretch" PlaceholderText="Click Search Icon and Select Name Here"/>
+            <SearchBox x:Name="Search_IC" Grid.Row="9" Grid.Column="0" Margin="20,28,5,5" PlaceholderText="Enter Name Here" QuerySubmitted="Search_IC_QuerySubmitted"/>
+            <ComboBox x:Name="Input_6IC" Grid.Row="9" Grid.Column="1" Margin="5,5,20,5" HorizontalAlignment="Stretch" Header="Select from here for searched items"/>
 
-            <Grid x:Name="Grid_Lecture" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed">
+            <Grid x:Name="Grid_Lecture" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
@@ -93,26 +88,21 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,5,10,5"     Text="Lecture Info" FontWeight="Bold" FontSize="16"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,10,10,5"     Text="Lecture Info" FontWeight="Bold" FontSize="16"/>
                
-                <TextBlock Grid.Row="2" Grid.Column="0" Margin="20,2.5,10,2.5" Text="Teachers" FontWeight="Bold"/>
-                <SearchBox Grid.Row="3" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="Enter Name Here"/>
-                <ComboBox  Grid.Row="3" Grid.Column="1" Margin="20,2.5,10,2.5" HorizontalAlignment="Stretch" PlaceholderText="Click Search Icon and Select Name Here"/>
+                <SearchBox Grid.Row="3" Grid.Column="0" Margin="20,28,5,5" PlaceholderText="Enter Name Here"/>
+                <ComboBox  Grid.Row="3" Grid.Column="1" Margin="5,5,20,5" HorizontalAlignment="Stretch" Header="Select Teachers Here"/>
 
-                <TextBlock Grid.Row="5" Grid.Column="0" Margin="20,2.5,10,2.5" Text="Section" FontWeight="Bold"/>
-                <TextBox   Grid.Row="6" Grid.Column="0" Margin="20,2.5,10,2.5"/>
+                <TextBox   Grid.Row="6" Grid.Column="0" Margin="20,2.5,10,2.5" Header="Section"/>
 
-                <TextBlock Grid.Row="8" Grid.Column="0" Margin="20,2.5,10,2.5" Text="Room No." FontWeight="Bold"/>
-                <TextBox   Grid.Row="9" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="5105"/>
+                <TextBox   Grid.Row="9" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="5105" Header="Room No"/>
 
-                <TextBlock Grid.Row="11" Grid.Column="0" Margin="20,2.5,10,2.5" Text="Days Of Week" FontWeight="Bold"/>
-                <TextBox   Grid.Row="12" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="M T W Th F S"/>
+                <TextBox   Grid.Row="12" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="M T W Th F S" Header="Days Of Week"/>
 
-                <TextBlock Grid.Row="14" Grid.Column="0" Margin="20,2.5,10,2.5" Text="Hours" FontWeight="Bold"/>
-                <TextBox   Grid.Row="15" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="1 2"/>
+                <TextBox   Grid.Row="15" Grid.Column="0" Margin="20,2.5,10,2.5" PlaceholderText="1 2" Header="Hours"/>
 
                 <ScrollViewer Grid.Row="5" Grid.Column="1" Grid.RowSpan="12">
-                    <ListView>
+                    <ListView Header="Teachers appearing here will be selected">
 
                     </ListView>
                 </ScrollViewer>

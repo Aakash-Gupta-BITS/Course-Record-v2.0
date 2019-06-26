@@ -9,6 +9,53 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <Grid x:Name="ViewGrid" Visibility="Visible" Grid.Row="0" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <Grid x:Name="AddGrid" Visibility="Collapsed" Grid.Row="0" Margin="0,10,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <DatePicker  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,10,10,5" x:Name="DateInput" Header="Date"/>
+            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Margin="5,5,5,5" x:Name="TypeInput" Header="Test Type">
+                <x:String>Tutorial Test</x:String>
+                <x:String>Lab</x:String>
+                <x:String>Quiz</x:String>
+                <x:String>Assignment</x:String>
+                <x:String>Midsem</x:String>
+                <x:String>Comprehensive Examination</x:String>
+            </ComboBox>
+            <TextBox  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="IndexInput" Header="Index"/>
+            <TextBox  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="MarksInput" Header="Marks Obtained"/>
+            <TextBox  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="MaxMarkInput" Header="Maximum Marks"/>
+            <TextBox  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="DescriptionInput" Header="Description"/>
+            <Button   Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="10,10,10,10" x:Name="ButtonInput" Content="Add"/>
+
+        </Grid>
+
+        <CommandBar x:Name="Commands" Grid.Row="1" Background="Black" OverflowButtonVisibility="Visible">
+            <AppBarButton x:Name="ViewCommand" Icon="View" Label="View"/>
+            <AppBarButton x:Name="AddCommand" Icon="Add" Label="Add"/>
+        </CommandBar>
     </Grid>
 </Page>

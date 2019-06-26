@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ConsoleAppEngine.Course;
-
+using ConsoleAppEngine.AllEnums;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Course_Record_v2._0.Frames.Course
@@ -45,10 +45,16 @@ namespace Course_Record_v2._0.Frames.Course
             }
 
             NavView.SelectedItem = x.Last.Value;
-
-
-            Math3Course.BookEntry.AddBook(new EBookItem(TextBookType.TextBook, "Stephen P. Robbins, and Mary Coulter", "Management", 13, "Pearson Education", false));
-
+            Math3Course.TeacherEntry.AddTeacher(new ETeacherEntry(
+                "Dr. Manoj Kannan",
+                new string[] { @"+91-1596-515-855", "" },
+                new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
+                @"#3270, New Science Block
+Faculty Division III
+BITS Pilani, Pilani Campus
+Vidya Vihar, Pilani 333031 (Rajasthan)",
+                @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
+                "Katayi Bdia Master"));
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -84,7 +90,7 @@ namespace Course_Record_v2._0.Frames.Course
                     ContentFrame.Navigate(typeof(Handout), Math3Course.HandoutEntry);
                     break;
                 case "Teachers":
-                    ContentFrame.Navigate(typeof(Teachers));
+                    ContentFrame.Navigate(typeof(Teachers), Math3Course.TeacherEntry);
                     break;
                 case "CT log":
                     ContentFrame.Navigate(typeof(CT_log));
@@ -96,7 +102,7 @@ namespace Course_Record_v2._0.Frames.Course
                     ContentFrame.Navigate(typeof(Events));
                     break;
                 case "Tests":
-                    ContentFrame.Navigate(typeof(Tests));
+                    ContentFrame.Navigate(typeof(Tests), Math3Course.TestEntry);
                     break;
                 case "Files":
                     ContentFrame.Navigate(typeof(Files));

@@ -18,6 +18,9 @@ namespace ConsoleAppEngine.Course
        // public readonly Teacher IC;
         public readonly EHandouts HandoutEntry = new EHandouts();
         public readonly EBooks BookEntry = new EBooks();
+        public readonly ETests TestEntry = new ETests();
+        public readonly ETeachers TeacherEntry = new ETeachers();
+        
 
         private readonly (/*LinkedList<Teacher> Teachers,*/ uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) LectureInfo;
         private readonly (/*LinkedList<Teacher> Teachers,*/ uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) PracticalInfo;

@@ -124,7 +124,6 @@
     <Compile Include="Frames\Course\Books.xaml.cs">
       <DependentUpon>Books.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Frames\Course\CoursePage.cs" />
     <Compile Include="Frames\Course\CT log.xaml.cs">
       <DependentUpon>CT log.xaml</DependentUpon>
     </Compile>
@@ -152,7 +151,6 @@
     <Compile Include="Frames\Course\TimeTable.xaml.cs">
       <DependentUpon>TimeTable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -4,5 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Course_Record_v2._0"
     RequestedTheme="Dark">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="TextControlForeground" Color="Blue"/>
+                    <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="Blue"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Blue"/>
+                    <SolidColorBrush x:Key="TextControlForegroundDisabled" Color="Blue"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 
 </Application>

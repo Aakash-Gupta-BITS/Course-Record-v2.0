@@ -25,7 +25,12 @@ namespace Course_Record_v2._0.Frames.Course
                 ViewGrid,
                 AddGrid,
                 ViewCommand,
-                AddCommand);
+                AddCommand,
+                LectureInput,
+                TopicInput,
+                DescriptionInput,
+                DoneInput,
+                AddButton);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

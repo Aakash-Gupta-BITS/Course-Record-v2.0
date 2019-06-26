@@ -18,43 +18,14 @@ namespace ConsoleAppEngine.Course
 
         public EHandoutItem(int lectureNo, string topic, bool doneByMe, string description)
         {
-            LectureNo = lectureNo;
-            Topic = topic;
-            DoneByMe = doneByMe;
-            Description = description;
+            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 3), (typeof(bool), 0.5));
 
-            Grid grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0.5, GridUnitType.Star) });
+            LectureViewBlock = controls[0] as TextBlock;
+            TopicViewBlock = controls[1] as TextBlock;
+            DoneViewBox = controls[2] as CheckBox;
 
-            LectureViewBlock = new TextBlock()
-            {
-                Text = LectureNo.ToString(),
-                HorizontalAlignment = HorizontalAlignment.Left
-            };
-            TopicViewBlock = new TextBlock()
-            {
-                Text = Topic,
-                HorizontalAlignment = HorizontalAlignment.Left
-            };
-            DoneViewBox = new CheckBox()
-            {
-                IsChecked = DoneByMe,
-                Content = "",
-                HorizontalAlignment = HorizontalAlignment.Center,
-                MinWidth = 32
-            };
+            Update(lectureNo, topic, doneByMe, description);
 
-            Grid.SetColumn(LectureViewBlock, 0);
-            Grid.SetColumn(TopicViewBlock, 1);
-            Grid.SetColumn(DoneViewBox, 2);
-
-            grid.Children.Add(LectureViewBlock);
-            grid.Children.Add(TopicViewBlock);
-            grid.Children.Add(DoneViewBox);
-
-            GetView.Content = grid;
             DoneViewBox.Click += (object sender, RoutedEventArgs e) => DoneByMe = DoneViewBox.IsChecked == true ? true : false;
         }
         
