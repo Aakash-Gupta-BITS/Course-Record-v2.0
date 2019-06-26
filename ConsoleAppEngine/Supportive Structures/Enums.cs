@@ -53,4 +53,11 @@ namespace ConsoleAppEngine.AllEnums
         Midsem,
         Comprehensive_Examination
     }
+
+    public enum TimeTableEntryType
+    {
+        Lecture,
+        Practial,
+        Tutorial
+    }
 }

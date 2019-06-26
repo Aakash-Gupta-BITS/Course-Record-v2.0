@@ -130,6 +130,7 @@
     <Compile Include="Course\Teacher\ETeachers.cs" />
     <Compile Include="Course\Test\ETestItem.cs" />
     <Compile Include="Course\Test\ETests.cs" />
+    <Compile Include="Course\Time Table\ECourseTimeTable.cs" />
     <Compile Include="Course\Time Table\ETimeTableItem.cs" />
     <Compile Include="Supportive Structures\Enums.cs" />
     <Compile Include="Course\CourseEntry.cs" />
