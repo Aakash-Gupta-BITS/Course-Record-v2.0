@@ -90,13 +90,13 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                     ContentFrame.Navigate(typeof(Handout), Math3Course.HandoutEntry);
                     break;
                 case "Teachers":
-                    ContentFrame.Navigate(typeof(Teachers), Math3Course.TeacherEntry);
+                    ContentFrame.Navigate(typeof(Teachers), Math3Course);
                     break;
                 case "CT log":
                     ContentFrame.Navigate(typeof(CT_log));
                     break;
                 case "Time Table":
-                    ContentFrame.Navigate(typeof(TimeTable));
+                    ContentFrame.Navigate(typeof(TimeTable), Math3Course);
                     break;
                 case "Events":
                     ContentFrame.Navigate(typeof(Events));

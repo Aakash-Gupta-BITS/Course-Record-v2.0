@@ -12,7 +12,7 @@ namespace ConsoleAppEngine.Course.Abstracts
 {
     public abstract class ECourseElemBase<T> where T : ECourseElemItemBase
     {
-        protected readonly LinkedList<T> lists = new LinkedList<T>();
+        internal readonly LinkedList<T> lists = new LinkedList<T>();
         protected T ItemToChange { get; set; }
 
         protected Grid ViewGrid;
@@ -38,6 +38,11 @@ namespace ConsoleAppEngine.Course.Abstracts
         protected abstract void SetAddGrid_ItemToChange();
         protected abstract IOrderedEnumerable<T> OrderList();
         public abstract void DestructViews();
+
+        public virtual void PostDeleteTasks()
+        {
+
+        }
 
         public void InitializeViews(Grid viewGrid, Grid addGrid, AppBarButton viewCommand, AppBarButton addCommand, params FrameworkElement[] AddViewGridControls)
         {
@@ -117,6 +122,8 @@ namespace ConsoleAppEngine.Course.Abstracts
                         ViewList.Items.Remove(ItemToChange.GetView);
                         lists.Remove(ItemToChange);
                         ItemToChange.IsDeleted = true;
+                        PostDeleteTasks();
+                        ItemToChange = null;
                         break;
 
                     // MODIFY
@@ -140,6 +147,11 @@ namespace ConsoleAppEngine.Course.Abstracts
 
             CheckInputs(controls_cando, controls_err);
 
+            foreach (Control x in controls_cando)
+                x.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
+
+            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
+
             foreach (Control x in controls_err)
                 x.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
 
@@ -148,11 +160,6 @@ namespace ConsoleAppEngine.Course.Abstracts
                 AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
                 throw new Exception();
             }
-
-            foreach (Control x in controls_cando)
-                x.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-
-            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
         }
 
         protected void FillViewGrid()

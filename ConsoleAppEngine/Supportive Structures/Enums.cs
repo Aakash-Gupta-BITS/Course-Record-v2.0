@@ -57,7 +57,8 @@ namespace ConsoleAppEngine.AllEnums
     public enum TimeTableEntryType
     {
         Lecture,
-        Practial,
-        Tutorial
+        Practical,
+        Tutorial,
+        CommonHour
     }
 }

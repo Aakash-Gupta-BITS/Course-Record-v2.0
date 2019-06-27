@@ -20,7 +20,8 @@ namespace Course_Record_v2._0.Frames.Course
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            TeacherEntry = e.Parameter as ETeachers;
+            TeacherEntry = (e.Parameter as CourseEntry).TeacherEntry;
+            TeacherEntry.SetTimeEntry((e.Parameter as CourseEntry).TimeEntry);
             TeacherEntry.InitializeViews(
                 ViewGrid,
                 AddGrid,

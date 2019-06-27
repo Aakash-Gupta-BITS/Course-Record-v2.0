@@ -19,6 +19,9 @@ namespace ConsoleAppEngine.Course
         TextBox WebsiteBox;
         TextBox OtherBox;
 
+        ECourseTimeTable EquivalentTimeEntry;
+        public void SetTimeEntry(ECourseTimeTable x) => EquivalentTimeEntry = x;
+
         public void AddTeacher(ETeacherEntry t)
         {
             lists.AddLast(t);
@@ -103,6 +106,12 @@ namespace ConsoleAppEngine.Course
         }
 
         protected override IOrderedEnumerable<ETeacherEntry> OrderList() => lists.OrderBy(a => a.Name);
+
+        public override void PostDeleteTasks()
+        {
+            foreach (var x in EquivalentTimeEntry.lists)
+                x.DeleteTeacher(ItemToChange);
+        }
 
         protected override void SetAddGrid_ItemToChange()
         {
