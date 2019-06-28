@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using ConsoleAppEngine.Course;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine.Course;
-using ConsoleAppEngine.AllEnums;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Course_Record_v2._0.Frames.Course
@@ -13,96 +11,75 @@ namespace Course_Record_v2._0.Frames.Course
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private readonly LinkedList<NavigationViewItemBase> CourseNavigationNames = new LinkedList<NavigationViewItemBase>();
-        readonly CourseEntry Math3Course = new CourseEntry("MATHEMATICS 3", "MATH F113", 3, 0, true);
+        AllCourses allCourses;
+        NavigationViewItem GoBack = new NavigationViewItem() { Content = "Go Back" };
 
         public MainPage()
         {
             this.InitializeComponent();
-
-            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Overview" });
-            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Books" });
-            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Handout" });
-            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Teachers" });
-            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "CT log" });
-            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Time Table" });
-            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Events" });
-            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Tests" });
-            CourseNavigationNames.AddLast(new NavigationViewItem() { Content = "Files" });
-
-            LinkedList<NavigationViewItem> x = new LinkedList<NavigationViewItem>();
-
-            foreach (NavigationViewItem t in CourseNavigationNames)
-                SecNav.MenuItems.Add(t);
-
-
-            foreach (NavigationViewItemBase temp in NavView.MenuItems)
-            {
-                if (temp is NavigationViewItem t)
-                {
-                    x.AddLast(t);
-                }
-            }
-
-            NavView.SelectedItem = x.Last.Value;
-            Math3Course.TeacherEntry.AddTeacher(new ETeacherEntry(
-                "Dr. Manoj Kannan",
-                new string[] { @"+91-1596-515-855", "" },
-                new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
-                @"#3270, New Science Block
-Faculty Division III
-BITS Pilani, Pilani Campus
-Vidya Vihar, Pilani 333031 (Rajasthan)",
-                @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
-                "Katayi Bdia Master"));
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            object SelectedItem = (sender.SelectedItem as NavigationViewItem).Content;
-            NavView.Header = SelectedItem;
+            var SelectedItem = sender.SelectedItem as NavigationViewItem;
+            NavView.Header = SelectedItem.Content;
 
-            switch (SelectedItem)
+            if (SelectedItem == AddCoursesNavigation)
             {
-                case "Add Courses":
-                    ContentFrame.Navigate(typeof(Add_Course));
-                    SecNav.Visibility = Visibility.Collapsed;
-                    break;
-                default:
-                    SecNav.SelectedItem = CourseNavigationNames.First.Value;
-                    SecNav.Visibility = Visibility.Visible;
-                    break;
+                ContentFrame.Navigate(typeof(Add_Course), allCourses);
+                SecNav.Visibility = Visibility.Collapsed;
+            }
+            else if (SelectedItem == GoBack)
+            {
+                this.Frame.GoBack();
+            }
+            else
+            {
+                SecNav.SelectedItem = null;
+                SecNav.SelectedItem = OverViewItem;
+                SecNav.Visibility = Visibility.Visible;
             }
         }
 
         private void SecNav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            object SelectedItem = (sender.SelectedItem as NavigationViewItem).Content;
-            switch (SelectedItem)
+            var SelectedItem = (sender.SelectedItem as NavigationViewItem);
+            if (SelectedItem == null)
+                return;
+
+            CourseEntry SelectedCourse = null;
+            foreach (var x in allCourses.CoursesList)
+                if (NavView.SelectedItem == x.navigationViewItem)
+                {
+                    SelectedCourse = x;
+                    break;
+                }
+
+            switch (SelectedItem.Content)
             {
                 case "Overview":
                     ContentFrame.Navigate(typeof(Overview));
                     break;
                 case "Books":
-                    ContentFrame.Navigate(typeof(Books), Math3Course.BookEntry);
+                    ContentFrame.Navigate(typeof(Books), SelectedCourse.BookEntry);
                     break;
                 case "Handout":
-                    ContentFrame.Navigate(typeof(Handout), Math3Course.HandoutEntry);
+                    ContentFrame.Navigate(typeof(Handout), SelectedCourse.HandoutEntry);
                     break;
                 case "Teachers":
-                    ContentFrame.Navigate(typeof(Teachers), Math3Course);
+                    ContentFrame.Navigate(typeof(Teachers), SelectedCourse);
                     break;
                 case "CT log":
                     ContentFrame.Navigate(typeof(CT_log));
                     break;
                 case "Time Table":
-                    ContentFrame.Navigate(typeof(TimeTable), Math3Course);
+                    ContentFrame.Navigate(typeof(TimeTable), SelectedCourse);
                     break;
                 case "Events":
-                    ContentFrame.Navigate(typeof(Events), Math3Course.EventEntry);
+                    ContentFrame.Navigate(typeof(Events), SelectedCourse.EventEntry);
                     break;
                 case "Tests":
-                    ContentFrame.Navigate(typeof(Tests), Math3Course.TestEntry);
+                    ContentFrame.Navigate(typeof(Tests), SelectedCourse.TestEntry);
                     break;
                 case "Files":
                     ContentFrame.Navigate(typeof(Files));
@@ -110,13 +87,26 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
             }
         }
 
-        private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.Frame.GoBack();
-            this.Frame.ForwardStack.Clear();
+            allCourses = e.Parameter as AllCourses;
+            foreach (var x in allCourses.CoursesList)
+                NavView.MenuItems.Add(x.navigationViewItem);
+            NavView.MenuItems.Add(new NavigationViewItemSeparator());
+            NavView.MenuItems.Add(new NavigationViewItemHeader() { Content = "Navigation" });
+            NavView.MenuItems.Add(GoBack);
+            NavView.MenuItems.Add(new NavigationViewItemSeparator());
+
+            if (allCourses.CoursesList.Count == 0)
+                NavView.SelectedItem = AddCoursesNavigation;
+            else
+                NavView.SelectedItem = allCourses.CoursesList.First.Value.navigationViewItem;
         }
 
-        private void ContentFrame_Navigated(object sender, NavigationEventArgs e) => ContentFrame.BackStack.Clear();
-
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            ContentFrame.ForwardStack.Clear();
+            ContentFrame.BackStack.Clear();
+        }
     }
 }

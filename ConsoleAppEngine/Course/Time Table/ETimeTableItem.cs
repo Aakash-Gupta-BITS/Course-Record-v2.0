@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
+﻿using ConsoleAppEngine.Abstracts;
+using ConsoleAppEngine.AllEnums;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using ConsoleAppEngine.Course.Abstracts;
-using ConsoleAppEngine.AllEnums;
 
 namespace ConsoleAppEngine.Course
 {
-    public class ETimeTableItem : ECourseElemItemBase
+    public class ETimeTableItem : EElementItemBase
     {
         public TimeTableEntryType EntryType { get; private set; }
         public uint Section { get; private set; }
@@ -37,7 +37,7 @@ namespace ConsoleAppEngine.Course
         {
             EntryType = entryType;
             Section = section;
-            switch(teacher.Count)
+            switch (teacher.Count)
             {
                 case 0:
                     break;
@@ -143,7 +143,7 @@ namespace ConsoleAppEngine.Course
                         break;
                 }
             }
-            
+
             output = output.Substring(0, output.Length - 1);
             return output;
         }

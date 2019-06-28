@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
-using Windows.UI.Text;
+﻿using ConsoleAppEngine.Abstracts;
 using System.Collections.Generic;
+using System.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI;
-using ConsoleAppEngine.Course.Abstracts;
 
 namespace ConsoleAppEngine.Course
 {
@@ -25,7 +23,7 @@ namespace ConsoleAppEngine.Course
 
     }
 
-    public partial class EHandouts : ECourseElemBase<EHandoutItem>
+    public partial class EHandouts : EElementBase<EHandoutItem>
     {
         public override void DestructViews()
         {
@@ -76,8 +74,8 @@ namespace ConsoleAppEngine.Course
             AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
             AddButton.Content = "Add";
 
-            LectureBox.Text = 
-            TopicBox.Text = 
+            LectureBox.Text =
+            TopicBox.Text =
             DescriptionBox.Text = "";
             DoneByMeBox.IsChecked = false;
         }

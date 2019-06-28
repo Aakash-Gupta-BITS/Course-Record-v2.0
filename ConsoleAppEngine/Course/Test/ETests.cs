@@ -1,13 +1,12 @@
-﻿using System;
+﻿using ConsoleAppEngine.Abstracts;
+using ConsoleAppEngine.AllEnums;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Text;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI;
-using ConsoleAppEngine.Course.Abstracts;
-using ConsoleAppEngine.AllEnums;
-using System.Collections.Generic;
 
 namespace ConsoleAppEngine.Course
 {
@@ -27,7 +26,7 @@ namespace ConsoleAppEngine.Course
         }
     }
 
-    public partial class ETests : ECourseElemBase<ETestItem>
+    public partial class ETests : EElementBase<ETestItem>
     {
         public override void DestructViews()
         {

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using ConsoleAppEngine.Abstracts;
+using ConsoleAppEngine.AllEnums;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using ConsoleAppEngine.Course.Abstracts;
-using ConsoleAppEngine.AllEnums;
 
-namespace ConsoleAppEngine.Course 
+namespace ConsoleAppEngine.Course
 {
-    public class ETestItem : ECourseElemItemBase
+    public class ETestItem : EElementItemBase
     {
         public DateTime DayOfTest { get; private set; }
         public TestType TypeOfTest { get; private set; }
@@ -21,7 +21,7 @@ namespace ConsoleAppEngine.Course
         readonly TextBlock MarksViewBlock;
 
         public ETestItem(DateTime dayOfTest, TestType typeOfTest, int testIndex, float marksObtained, float totalMarks, string description)
-        { 
+        {
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 2), (typeof(string), 1));
 
             NameViewBlock = controls[0] as TextBlock;

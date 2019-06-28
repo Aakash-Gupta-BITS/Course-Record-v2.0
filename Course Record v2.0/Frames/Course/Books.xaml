@@ -35,12 +35,7 @@
             <TextBox Grid.Row="1" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="AuthorInput" Header="Author"/>
             <TextBox Grid.Row="2" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="EditionInput" Header="Edition"/>
             <TextBox Grid.Row="3" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="PressInput" Header="Press"/>
-            <ComboBox Grid.Row="4" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="BookTypeInput" Header="BookType">
-                <ComboBoxItem Content="TextBook"/>
-                <ComboBoxItem Content="Reference"/>
-                <ComboBoxItem Content="Extra"/>
-            </ComboBox>
-
+            <ComboBox Grid.Row="4" HorizontalAlignment="Stretch" Margin="5,5,10,5" x:Name="BookTypeInput" Header="BookType"/>
             <CheckBox Grid.Row="5" HorizontalAlignment="Left" Margin="5,5,10,10" x:Name="BestBookInput" Content="Best Book"/>
             <Button Grid.Row="6" HorizontalAlignment="Stretch" Margin="10,10,10,10" x:Name="AddButton" Content="Add"/>
         </Grid>

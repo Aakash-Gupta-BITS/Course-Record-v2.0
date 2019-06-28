@@ -18,19 +18,29 @@
         
         <Frame x:Name="ContentFrame" Grid.Row="2" Navigated="ContentFrame_Navigated"/>
 
-        <NavigationView x:Name="SecNav" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False" Grid.Row="1" SelectionChanged="SecNav_SelectionChanged"/>
+        <NavigationView x:Name="SecNav" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False" Grid.Row="1" SelectionChanged="SecNav_SelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Overview" x:Name="OverViewItem"/>
+                <NavigationViewItem Content="Books"/>
+                <NavigationViewItem Content="Handout"/>
+                <NavigationViewItem Content="Teachers"/>
+                <NavigationViewItem Content="CT log"/>
+                <NavigationViewItem Content="Time Table"/>
+                <NavigationViewItem Content="Events"/>
+                <NavigationViewItem Content="Tests"/>
+                <NavigationViewItem Content="Files"/>
+            </NavigationView.MenuItems>
+        </NavigationView>
 
-        <NavigationView PaneDisplayMode="LeftMinimal" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="True" Grid.Row="0" Grid.RowSpan="4"
+        <NavigationView PaneDisplayMode="LeftMinimal" IsSettingsVisible="False" IsTapEnabled="True" IsBackButtonVisible="Collapsed" Grid.Row="0" Grid.RowSpan="4"
                         x:Name="NavView"
-                        SelectionChanged="NavView_SelectionChanged"
-                        BackRequested="NavView_BackRequested">
+                        SelectionChanged="NavView_SelectionChanged">
             <NavigationView.MenuItems>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Modify"/>
-                <NavigationViewItem Content="Add Courses"/>
+                <NavigationViewItem Content="Add Courses" x:Name="AddCoursesNavigation"/>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Course List"/>
-                <NavigationViewItem Content="MATHS III"/>
             </NavigationView.MenuItems>
         </NavigationView>
 

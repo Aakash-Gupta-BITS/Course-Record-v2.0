@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI;
+using Windows.UI.Xaml.Media;
 
-namespace ConsoleAppEngine.Course.Abstracts
+namespace ConsoleAppEngine.Abstracts
 {
-    public abstract class ECourseElemBase<T> where T : ECourseElemItemBase
+    public abstract class EElementBase<T> where T : EElementItemBase
     {
         internal readonly LinkedList<T> lists = new LinkedList<T>();
         protected T ItemToChange { get; set; }
@@ -61,20 +61,20 @@ namespace ConsoleAppEngine.Course.Abstracts
 
         void SetEvents()
         {
-            ViewCommand.Click += (object sender, RoutedEventArgs e) =>
+            ViewCommand.Click += (sender, e) =>
             {
                 AddGrid.Visibility = Visibility.Collapsed;
                 ViewGrid.Visibility = Visibility.Visible;
                 if (AddButton.Content.ToString() == "Modify")
                     ClearAddGrid();
             };
-            AddCommand.Click += (object sender, RoutedEventArgs e) =>
+            AddCommand.Click += (sender, e) =>
             {
                 ViewGrid.Visibility = Visibility.Collapsed;
                 AddGrid.Visibility = Visibility.Visible;
                 ClearAddGrid();
             };
-            AddButton.Click += (object sender, RoutedEventArgs e) =>
+            AddButton.Click += (sender, e) =>
             {
                 try
                 {
@@ -97,7 +97,7 @@ namespace ConsoleAppEngine.Course.Abstracts
                 ItemToChange = null;
                 return;
             };
-            ViewList.SelectionChanged += async (object sender, SelectionChangedEventArgs e) =>
+            ViewList.SelectionChanged += async (sender, e) =>
             {
                 if (ViewList.SelectedItem == null) return;
 
@@ -111,7 +111,7 @@ namespace ConsoleAppEngine.Course.Abstracts
                 ViewList.SelectedItem = null;
 
                 if (ItemToChange.PointerOverObject != null &&
-                ((ItemToChange.PointerOverObject is ButtonBase x) && x.IsPointerOver))
+                ItemToChange.PointerOverObject is ButtonBase x && x.IsPointerOver)
                     return;
 
                 SetContentDialog();
@@ -190,7 +190,7 @@ namespace ConsoleAppEngine.Course.Abstracts
 
             ViewList.Items.Clear();
 
-            foreach (var a in (from a in lists select a.GetView))
+            foreach (var a in from a in lists select a.GetView)
                 ViewList.Items.Add(a);
         }
 

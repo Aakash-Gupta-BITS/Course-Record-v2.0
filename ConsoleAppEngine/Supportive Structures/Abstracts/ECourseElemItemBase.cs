@@ -2,9 +2,9 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace ConsoleAppEngine.Course.Abstracts
+namespace ConsoleAppEngine.Abstracts
 {
-    public abstract class ECourseElemItemBase
+    public abstract class EElementItemBase
     {
         internal bool IsDeleted = false;
         internal readonly ListViewItem GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };

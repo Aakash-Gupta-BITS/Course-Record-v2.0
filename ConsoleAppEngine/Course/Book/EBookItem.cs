@@ -1,11 +1,11 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using ConsoleAppEngine.Course.Abstracts;
+﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace ConsoleAppEngine.Course
 {
-    public class EBookItem : ECourseElemItemBase
+    public class EBookItem : EElementItemBase
     {
         public TextBookType BookType { get; private set; }
         public string Author { get; private set; }

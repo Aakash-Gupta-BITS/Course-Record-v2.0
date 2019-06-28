@@ -1,67 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.UI.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
+﻿using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Course;
 using Windows.UI.Xaml.Controls;
-using Windows.Storage;
-using System.Threading.Tasks;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Windows.UI.Xaml.Navigation;
 
 namespace Course_Record_v2._0
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
-        private readonly LinkedList<NavigationViewItemBase> NavigationItems = new LinkedList<NavigationViewItemBase>();
+        AllCourses Courses = new AllCourses();
 
         public MainPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            
-            NavigationItems.AddLast(new NavigationViewItemSeparator());
-            NavigationItems.AddLast(new NavigationViewItemHeader() { Content = "Contacts" });
-            NavigationItems.AddLast(new NavigationViewItem() { Content = "Teachers" });
-            NavigationItems.AddLast(new NavigationViewItemSeparator());
-            NavigationItems.AddLast(new NavigationViewItemHeader() { Content = "Semester Data" });
-            NavigationItems.AddLast(new NavigationViewItem() { Content = "Course" });
-            NavigationItems.AddLast(new NavigationViewItem() { Content = "Time Table" });
-            NavigationItems.AddLast(new NavigationViewItemSeparator());
-            NavigationItems.AddLast(new NavigationViewItemHeader() { Content = "Internet" });
-            NavigationItems.AddLast(new NavigationViewItem() { Content = "Internet" });
-            NavigationItems.AddLast(new NavigationViewItemSeparator());
 
-            NavView.MenuItems.Clear();
-            foreach (NavigationViewItemBase b in NavigationItems)
-                NavView.MenuItems.Add(b);
+            CourseEntry Math3Course = new CourseEntry((BranchType.MATH, "F213"), "Mathematics 3", 3, 0, null);
+            Math3Course.TeacherEntry.AddTeacher(new ETeacherEntry(
+                "Dr. Manoj Kannan",
+                new string[] { @"+91-1596-515-855", "" },
+                new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
+                @"#3270, New Science Block
+Faculty Division III
+BITS Pilani, Pilani Campus
+Vidya Vihar, Pilani 333031 (Rajasthan)",
+                @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
+                "Katayi Bdia Master"));
 
-            this.Loaded += (object sender, RoutedEventArgs e) => NavView.SelectedItem = NavigationItems.First.Next.Next.Next.Next.Next.Value;
-
-
+            Courses.CoursesList.AddLast(Math3Course);
         }
-
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (sender.SelectedItem == null) return;
-            object SelectedItem = (sender.SelectedItem as NavigationViewItem).Content;
+            object SelectedItem = (sender.SelectedItem as NavigationViewItem);
 
-            switch (SelectedItem)
-            {
-                case "Course":
-                    this.Frame.Navigate(typeof(Frames.Course.MainPage));
-                    break;
-            }
+            if (SelectedItem == CourseMenu)
+                this.Frame.Navigate(typeof(Frames.Course.MainPage), Courses);
         }
 
-       // protected override void OnNavigatedTo(NavigationEventArgs e)
-       // {
-       //     NavView.SelectedItem = null;
-     //   }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.Frame.BackStack.Clear();
+            this.Frame.ForwardStack.Clear();
+        }
     }
 }

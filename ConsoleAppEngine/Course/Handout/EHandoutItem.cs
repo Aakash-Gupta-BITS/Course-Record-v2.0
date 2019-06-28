@@ -1,11 +1,10 @@
-﻿using System;
+﻿using ConsoleAppEngine.Abstracts;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using ConsoleAppEngine.Course.Abstracts;
 
 namespace ConsoleAppEngine.Course
 {
-    public class EHandoutItem : ECourseElemItemBase
+    public class EHandoutItem : EElementItemBase
     {
         public int LectureNo { get; private set; }
         public string Topic { get; private set; }
@@ -28,7 +27,7 @@ namespace ConsoleAppEngine.Course
 
             DoneViewBox.Click += (object sender, RoutedEventArgs e) => DoneByMe = DoneViewBox.IsChecked == true ? true : false;
         }
-        
+
         internal void Update(int lectureNo, string topic, bool doneByMe, string description)
         {
             LectureNo = lectureNo;

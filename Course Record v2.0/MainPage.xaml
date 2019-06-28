@@ -9,10 +9,17 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     
     <Grid>
-        <NavigationView PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False"
+        <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False"
                         x:Name="NavView" 
-                        SelectionChanged="NavView_SelectionChanged"
-                        Header="Hello"
-                        />
+                        SelectionChanged="NavView_SelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItemSeparator/>
+                <NavigationViewItemHeader Content="All Courses Record"/>
+                <NavigationViewItem Content="Contacts" x:Name="ContactMenu"/>
+                <NavigationViewItem Content="Courses" x:Name="CourseMenu"/>
+                <NavigationViewItem Content="Time Table" x:Name="TimeMenu"/>
+                <NavigationViewItemSeparator/>
+            </NavigationView.MenuItems>
+        </NavigationView>
     </Grid>
 </Page>

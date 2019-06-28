@@ -1,12 +1,11 @@
-﻿using System;
+﻿using ConsoleAppEngine.Abstracts;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using ConsoleAppEngine.Course.Abstracts;
-using ConsoleAppEngine.AllEnums;
 
 namespace ConsoleAppEngine.Course
 {
-    public class EEventItem : ECourseElemItemBase
+    public class EEventItem : EElementItemBase
     {
         public string Title { get; private set; }
         public DateTime Timing { get; private set; }

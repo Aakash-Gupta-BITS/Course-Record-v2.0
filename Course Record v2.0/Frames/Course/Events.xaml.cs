@@ -1,6 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using ConsoleAppEngine.Course;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine.Course;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 

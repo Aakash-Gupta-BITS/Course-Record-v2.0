@@ -1,11 +1,10 @@
-﻿using System;
+﻿using ConsoleAppEngine.Abstracts;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using ConsoleAppEngine.Course.Abstracts;
 
 namespace ConsoleAppEngine.Course
 {
-    public class ETeacherEntry : ECourseElemItemBase
+    public class ETeacherEntry : EElementItemBase
     {
 
         public string Name { get; private set; }

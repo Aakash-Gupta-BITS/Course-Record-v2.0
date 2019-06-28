@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
-using Windows.UI.Text;
+﻿using ConsoleAppEngine.Abstracts;
 using System.Collections.Generic;
+using System.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI;
-using ConsoleAppEngine.Course.Abstracts;
 
 namespace ConsoleAppEngine.Course
 {
@@ -30,7 +28,7 @@ namespace ConsoleAppEngine.Course
         }
     }
 
-    public partial class ETeachers : ECourseElemBase<ETeacherEntry>
+    public partial class ETeachers : EElementBase<ETeacherEntry>
     {
         public override void DestructViews()
         {
