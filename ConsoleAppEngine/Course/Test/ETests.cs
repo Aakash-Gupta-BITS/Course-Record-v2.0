@@ -12,12 +12,12 @@ namespace ConsoleAppEngine.Course
 {
     public partial class ETests
     {
-        DatePicker DateBox;
-        ComboBox TestTypeBox;
-        TextBox TestIndexBox;
-        TextBox MarksObtainedBox;
-        TextBox TotalMarksBox;
-        TextBox DescriptionBox;
+        private DatePicker DateBox;
+        private ComboBox TestTypeBox;
+        private TextBox TestIndexBox;
+        private TextBox MarksObtainedBox;
+        private TextBox TotalMarksBox;
+        private TextBox DescriptionBox;
 
         public void AddTest(ETestItem testItem)
         {
@@ -65,27 +65,51 @@ namespace ConsoleAppEngine.Course
             bool TypeExists(int _index)
             {
                 foreach (var x in (from a in lists where a != ItemToChange select a))
+                {
                     if (x.TypeOfTest.ToString() == TestTypeBox.SelectedItem.ToString() && x.TestIndex == _index)
+                    {
                         return true;
+                    }
+                }
+
                 return false;
             }
 
             if (!double.TryParse(MarksObtainedBox.Text, out double obtained))
+            {
                 ErrorWaale.AddLast(MarksObtainedBox);
+            }
+
             if (!double.TryParse(TotalMarksBox.Text, out double totalmark))
+            {
                 ErrorWaale.AddLast(TotalMarksBox);
+            }
+
             if (!int.TryParse(TestIndexBox.Text, out int index))
+            {
                 ErrorWaale.AddLast(TestIndexBox);
+            }
+
             if (TestTypeBox.SelectedItem == null)
+            {
                 ErrorWaale.AddLast(TestTypeBox);
+            }
 
             if (ErrorWaale.Count != 0)
+            {
                 return;
+            }
 
             if (obtained < 0 || obtained > totalmark)
+            {
                 ErrorWaale.AddLast(MarksObtainedBox);
+            }
+
             if (totalmark <= 0 || totalmark < obtained)
+            {
                 ErrorWaale.AddLast(TotalMarksBox);
+            }
+
             if (TypeExists(index))
             {
                 ErrorWaale.AddLast(TestTypeBox);
@@ -107,7 +131,10 @@ namespace ConsoleAppEngine.Course
             DateBox.SelectedDate = DateTime.Now;
         }
 
-        protected override Grid Header() => GenerateHeader(("Test Name", 1), ("Date", 1), ("Description", 2), ("Marks", 1));
+        protected override Grid Header()
+        {
+            return GenerateHeader(("Test Name", 1), ("Date", 1), ("Description", 2), ("Marks", 1));
+        }
 
         protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
         {
@@ -130,7 +157,10 @@ namespace ConsoleAppEngine.Course
                 DescriptionBox.Text);
         }
 
-        protected override IOrderedEnumerable<ETestItem> OrderList() => lists.OrderBy(a => a.DayOfTest);
+        protected override IOrderedEnumerable<ETestItem> OrderList()
+        {
+            return lists.OrderBy(a => a.DayOfTest);
+        }
 
         protected override void SetAddGrid_ItemToChange()
         {

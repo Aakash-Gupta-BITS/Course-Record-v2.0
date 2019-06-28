@@ -12,12 +12,12 @@ namespace ConsoleAppEngine.Course
 {
     public partial class EBooks
     {
-        TextBox NameBox;
-        TextBox AuthorBox;
-        TextBox EditionBox;
-        TextBox PressBox;
-        ComboBox BookTypeBox;
-        CheckBox BestBookBox;
+        private TextBox NameBox;
+        private TextBox AuthorBox;
+        private TextBox EditionBox;
+        private TextBox PressBox;
+        private ComboBox BookTypeBox;
+        private CheckBox BestBookBox;
 
         public void AddBook(EBookItem eBookItem)
         {
@@ -94,7 +94,10 @@ namespace ConsoleAppEngine.Course
 
         }
 
-        protected override Grid Header() => GenerateHeader(("Name", 2), ("Author", 2), ("Book Type", 1), ("Best Book", 1));
+        protected override Grid Header()
+        {
+            return GenerateHeader(("Name", 2), ("Author", 2), ("Book Type", 1), ("Best Book", 1));
+        }
 
         protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
         {
@@ -118,7 +121,10 @@ namespace ConsoleAppEngine.Course
                 BestBookBox.IsChecked == true);
         }
 
-        protected override IOrderedEnumerable<EBookItem> OrderList() => lists.OrderBy(a => a.BookType).ThenBy(a => !a.IsBest).ThenBy(a => a.Name);
+        protected override IOrderedEnumerable<EBookItem> OrderList()
+        {
+            return lists.OrderBy(a => a.BookType).ThenBy(a => !a.IsBest).ThenBy(a => a.Name);
+        }
 
         protected override void SetAddGrid_ItemToChange()
         {

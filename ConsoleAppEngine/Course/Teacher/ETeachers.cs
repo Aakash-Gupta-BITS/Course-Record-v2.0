@@ -10,16 +10,18 @@ namespace ConsoleAppEngine.Course
 {
     public partial class ETeachers
     {
-        TextBox NameBox;
-        TextBox Phone1Box, Phone2Box;
-        TextBox Email1Box, Email2Box;
-        TextBox AddressBox;
-        TextBox WebsiteBox;
-        TextBox OtherBox;
+        private TextBox NameBox;
+        private TextBox Phone1Box, Phone2Box;
+        private TextBox Email1Box, Email2Box;
+        private TextBox AddressBox;
+        private TextBox WebsiteBox;
+        private TextBox OtherBox;
+        private ECourseTimeTable EquivalentTimeEntry;
 
-        ECourseTimeTable EquivalentTimeEntry;
-
-        public void SetTimeEntry(ECourseTimeTable x) => EquivalentTimeEntry = x;
+        public void SetTimeEntry(ECourseTimeTable x)
+        {
+            EquivalentTimeEntry = x;
+        }
 
         public void AddTeacher(ETeacherEntry t)
         {
@@ -81,7 +83,10 @@ namespace ConsoleAppEngine.Course
             OtherBox.Text = "";
         }
 
-        protected override Grid Header() => GenerateHeader(("Name", 1), ("Website", 2));
+        protected override Grid Header()
+        {
+            return GenerateHeader(("Name", 1), ("Website", 2));
+        }
 
         protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
         {
@@ -107,12 +112,17 @@ namespace ConsoleAppEngine.Course
                 OtherBox.Text);
         }
 
-        protected override IOrderedEnumerable<ETeacherEntry> OrderList() => lists.OrderBy(a => a.Name);
+        protected override IOrderedEnumerable<ETeacherEntry> OrderList()
+        {
+            return lists.OrderBy(a => a.Name);
+        }
 
         public override void PostDeleteTasks()
         {
             foreach (var x in EquivalentTimeEntry.lists)
+            {
                 x.DeleteTeacher(ItemToChange);
+            }
         }
 
         protected override void SetAddGrid_ItemToChange()

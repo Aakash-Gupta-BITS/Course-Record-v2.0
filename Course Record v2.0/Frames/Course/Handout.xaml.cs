@@ -11,7 +11,7 @@ namespace Course_Record_v2._0.Frames.Course
     /// </summary>
     public sealed partial class Handout : Page
     {
-        EHandouts HandoutEntry;
+        private EHandouts HandoutEntry;
 
         public Handout()
         {

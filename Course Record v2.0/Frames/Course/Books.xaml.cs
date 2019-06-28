@@ -13,12 +13,14 @@ namespace Course_Record_v2._0.Frames.Course
     /// </summary>
     public sealed partial class Books : Page
     {
-        EBooks BookEntry;
+        private EBooks BookEntry;
         public Books()
         {
             this.InitializeComponent();
             foreach (var x in Enum.GetNames(typeof(TextBookType)))
+            {
                 BookTypeInput.Items.Add(x);
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

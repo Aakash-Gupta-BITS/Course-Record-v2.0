@@ -11,8 +11,8 @@ namespace Course_Record_v2._0.Frames.Course
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        AllCourses allCourses;
-        NavigationViewItem GoBack = new NavigationViewItem() { Content = "Go Back" };
+        private AllCourses allCourses;
+        private readonly NavigationViewItem GoBack = new NavigationViewItem() { Content = "Go Back" };
 
         public MainPage()
         {
@@ -45,15 +45,19 @@ namespace Course_Record_v2._0.Frames.Course
         {
             var SelectedItem = (sender.SelectedItem as NavigationViewItem);
             if (SelectedItem == null)
+            {
                 return;
+            }
 
             CourseEntry SelectedCourse = null;
             foreach (var x in allCourses.CoursesList)
+            {
                 if (NavView.SelectedItem == x.navigationViewItem)
                 {
                     SelectedCourse = x;
                     break;
                 }
+            }
 
             switch (SelectedItem.Content)
             {
@@ -91,16 +95,23 @@ namespace Course_Record_v2._0.Frames.Course
         {
             allCourses = e.Parameter as AllCourses;
             foreach (var x in allCourses.CoursesList)
+            {
                 NavView.MenuItems.Add(x.navigationViewItem);
+            }
+
             NavView.MenuItems.Add(new NavigationViewItemSeparator());
             NavView.MenuItems.Add(new NavigationViewItemHeader() { Content = "Navigation" });
             NavView.MenuItems.Add(GoBack);
             NavView.MenuItems.Add(new NavigationViewItemSeparator());
 
             if (allCourses.CoursesList.Count == 0)
+            {
                 NavView.SelectedItem = AddCoursesNavigation;
+            }
             else
+            {
                 NavView.SelectedItem = allCourses.CoursesList.First.Value.navigationViewItem;
+            }
         }
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)

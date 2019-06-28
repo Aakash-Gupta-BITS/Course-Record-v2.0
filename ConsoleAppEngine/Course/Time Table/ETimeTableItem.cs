@@ -60,7 +60,9 @@ namespace ConsoleAppEngine.Course
             DayOfWeek[] r = weekDays.ToArray();
             Array.Sort(r);
             foreach (var x in r.Distinct())
+            {
                 WeekDays.AddLast(x);
+            }
 
             Array.Sort(hours);
             Hours = hours;
@@ -74,11 +76,13 @@ namespace ConsoleAppEngine.Course
         internal void DeleteTeacher(ETeacherEntry eTeacher)
         {
             for (int i = 0; i < Teacher.Length; ++i)
+            {
                 if (eTeacher == Teacher[i])
                 {
                     Teacher[i] = null;
                     TeacherViewBlock.Text = string.Join(", ", (from a in Teacher where a != null select a.Name).ToArray());
                 }
+            }
         }
 
         internal override object PointerOverObject => null;
@@ -116,7 +120,9 @@ namespace ConsoleAppEngine.Course
         internal static string GetDayListString(LinkedList<DayOfWeek> input)
         {
             if (input.Count == 0)
+            {
                 return "";
+            }
 
             string output = "";
             foreach (DayOfWeek w in input)

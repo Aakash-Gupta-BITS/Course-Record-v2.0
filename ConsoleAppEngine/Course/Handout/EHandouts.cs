@@ -10,10 +10,10 @@ namespace ConsoleAppEngine.Course
 {
     public partial class EHandouts
     {
-        TextBox LectureBox;
-        TextBox TopicBox;
-        TextBox DescriptionBox;
-        CheckBox DoneByMeBox;
+        private TextBox LectureBox;
+        private TextBox TopicBox;
+        private TextBox DescriptionBox;
+        private CheckBox DoneByMeBox;
 
         public void AddHandout(EHandoutItem handoutItem)
         {
@@ -59,12 +59,18 @@ namespace ConsoleAppEngine.Course
 
             // Valid Lecture Check
             if (!int.TryParse(LectureBox.Text, out int lecture) || lecture <= 0)
+            {
                 ErrorWaale.AddLast(LectureBox);
+            }
 
             // Lecture Repeatition check
             foreach (var x in (from a in lists where a != ItemToChange && a.IsDeleted == false select a.LectureNo))
+            {
                 if (x == lecture)
+                {
                     ErrorWaale.AddLast(LectureBox);
+                }
+            }
         }
 
         protected override void ClearAddGrid()
@@ -80,7 +86,10 @@ namespace ConsoleAppEngine.Course
             DoneByMeBox.IsChecked = false;
         }
 
-        protected override Grid Header() => GenerateHeader(("Lecture No", 1), ("Topic", 3), ("Done By Me", 0.5));
+        protected override Grid Header()
+        {
+            return GenerateHeader(("Lecture No", 1), ("Topic", 3), ("Done By Me", 0.5));
+        }
 
         protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
         {
@@ -96,7 +105,10 @@ namespace ConsoleAppEngine.Course
             ItemToChange.Update(int.Parse(LectureBox.Text), TopicBox.Text, DoneByMeBox.IsChecked == true, DescriptionBox.Text);
         }
 
-        protected override IOrderedEnumerable<EHandoutItem> OrderList() => lists.OrderBy(a => a.LectureNo);
+        protected override IOrderedEnumerable<EHandoutItem> OrderList()
+        {
+            return lists.OrderBy(a => a.LectureNo);
+        }
 
         protected override void SetAddGrid_ItemToChange()
         {

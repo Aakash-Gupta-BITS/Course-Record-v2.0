@@ -7,7 +7,7 @@ namespace Course_Record_v2._0
 {
     public sealed partial class MainPage
     {
-        AllCourses Courses = new AllCourses();
+        private readonly AllCourses Courses = new AllCourses();
 
         public MainPage()
         {
@@ -31,11 +31,17 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            if (sender.SelectedItem == null) return;
+            if (sender.SelectedItem == null)
+            {
+                return;
+            }
+
             object SelectedItem = (sender.SelectedItem as NavigationViewItem);
 
             if (SelectedItem == CourseMenu)
+            {
                 this.Frame.Navigate(typeof(Frames.Course.MainPage), Courses);
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

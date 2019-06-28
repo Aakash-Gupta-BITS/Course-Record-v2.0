@@ -11,11 +11,11 @@ namespace ConsoleAppEngine.Course
 {
     public partial class EEvents
     {
-        TextBox TitleBox;
-        DatePicker DateBox;
-        TimePicker TimeBox;
-        TextBox LocationBox;
-        TextBox DescriptionBox;
+        private TextBox TitleBox;
+        private DatePicker DateBox;
+        private TimePicker TimeBox;
+        private TextBox LocationBox;
+        private TextBox DescriptionBox;
 
         public void AddEvent(EEventItem eventItem)
         {
@@ -78,7 +78,10 @@ namespace ConsoleAppEngine.Course
             DescriptionBox.Text = "";
         }
 
-        protected override Grid Header() => GenerateHeader(("Title", 2), ("Timing", 1), ("Location", 1));
+        protected override Grid Header()
+        {
+            return GenerateHeader(("Title", 2), ("Timing", 1), ("Location", 1));
+        }
 
         protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
         {
@@ -105,7 +108,10 @@ namespace ConsoleAppEngine.Course
                 DescriptionBox.Text);
         }
 
-        protected override IOrderedEnumerable<EEventItem> OrderList() => lists.OrderBy(a => a.Timing);
+        protected override IOrderedEnumerable<EEventItem> OrderList()
+        {
+            return lists.OrderBy(a => a.Timing);
+        }
 
         protected override void SetAddGrid_ItemToChange()
         {

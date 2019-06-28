@@ -59,14 +59,16 @@ namespace ConsoleAppEngine.Abstracts
             AddGrid.Visibility = Visibility.Collapsed;
         }
 
-        void SetEvents()
+        private void SetEvents()
         {
             ViewCommand.Click += (sender, e) =>
             {
                 AddGrid.Visibility = Visibility.Collapsed;
                 ViewGrid.Visibility = Visibility.Visible;
                 if (AddButton.Content.ToString() == "Modify")
+                {
                     ClearAddGrid();
+                }
             };
             AddCommand.Click += (sender, e) =>
             {
@@ -85,7 +87,9 @@ namespace ConsoleAppEngine.Abstracts
                     return;
                 }
                 if (AddButton.Content.ToString() == "Add")
+                {
                     AddNewItem();
+                }
                 else if (AddButton.Content.ToString() == "Modify")
                 {
                     ItemToChangeUpdate();
@@ -99,20 +103,27 @@ namespace ConsoleAppEngine.Abstracts
             };
             ViewList.SelectionChanged += async (sender, e) =>
             {
-                if (ViewList.SelectedItem == null) return;
+                if (ViewList.SelectedItem == null)
+                {
+                    return;
+                }
 
                 foreach (var a in lists)
+                {
                     if (a.GetView == ViewList.SelectedItem)
                     {
                         ItemToChange = a;
                         break;
                     }
+                }
 
                 ViewList.SelectedItem = null;
 
                 if (ItemToChange.PointerOverObject != null &&
                 ItemToChange.PointerOverObject is ButtonBase x && x.IsPointerOver)
+                {
                     return;
+                }
 
                 SetContentDialog();
 
@@ -140,7 +151,7 @@ namespace ConsoleAppEngine.Abstracts
             };
         }
 
-        void AbstractCheckInputs()
+        private void AbstractCheckInputs()
         {
             LinkedList<Control> controls_cando = new LinkedList<Control>();
 
@@ -149,12 +160,16 @@ namespace ConsoleAppEngine.Abstracts
             CheckInputs(controls_cando, controls_err);
 
             foreach (Control x in controls_cando)
+            {
                 x.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
+            }
 
             AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 
             foreach (Control x in controls_err)
+            {
                 x.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+            }
 
             if (controls_err.Count != 0)
             {
@@ -179,19 +194,28 @@ namespace ConsoleAppEngine.Abstracts
         protected void UpdateList()
         {
             if (ViewList == null)
+            {
                 return;
+            }
+
             foreach (var a in (from x in lists where x.IsDeleted == true select x).ToArray())
+            {
                 lists.Remove(a);
+            }
 
             List<T> v = OrderList().ToList();
             lists.Clear();
             foreach (var x in v)
+            {
                 lists.AddLast(x);
+            }
 
             ViewList.Items.Clear();
 
             foreach (var a in from a in lists select a.GetView)
+            {
                 ViewList.Items.Add(a);
+            }
         }
 
         protected static Grid GenerateHeader(params (string Name, double Width)[] Input)

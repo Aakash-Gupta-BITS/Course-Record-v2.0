@@ -4,27 +4,38 @@ namespace ConsoleAppEngine
 {
     public class BrainV
     {
-        static char[,] arr = new char[7, 7];
-        static int[] inir = new int[33];
-        static int[] finr = new int[33];
-        static int[] inic = new int[33];
-        static int[] finc = new int[33];
-        static int flag = 0, s = 0;
+        private static readonly char[,] arr = new char[7, 7];
+        private static readonly int[] inir = new int[33];
+        private static readonly int[] finr = new int[33];
+        private static readonly int[] inic = new int[33];
+        private static readonly int[] finc = new int[33];
+        private static int flag = 0, s = 0;
 
         public static void Copy(char[,] ar1, char[,] ar2)
         {
             for (int i = 0; i < 7; i++)
+            {
                 for (int j = 0; j < 7; j++)
+                {
                     ar2[i, j] = ar1[i, j];
+                }
+            }
         }
 
         public static int Check1(char[,] chk)
         {
             int c = 0;
             for (int i = 0; i < 7; i++)
+            {
                 for (int j = 0; j < 7; j++)
+                {
                     if (chk[i, j] == 'o')
+                    {
                         c++;
+                    }
+                }
+            }
+
             return c;
         }
 
@@ -43,7 +54,9 @@ namespace ConsoleAppEngine
                     }
                 }
                 if (f == 1)
+                {
                     break;
+                }
             }
             return f;
         }
@@ -63,7 +76,10 @@ namespace ConsoleAppEngine
         public static void Compute(char[,] num)
         {
             if (Check1(num) == 1)
+            {
                 flag = 1;
+            }
+
             char[,] temp = new char[7, 7];
             Copy(num, temp);
             for (int i = 0; i < 7; i++)
@@ -145,11 +161,19 @@ namespace ConsoleAppEngine
         {
             int r, c;
             for (int i = 0; i < 7; i++)
+            {
                 for (int j = 0; j < 7; j++)
+                {
                     if ((i == 2 || i == 3 || i == 4) || (j == 2 || j == 3 || j == 4))
+                    {
                         arr[i, j] = 'o';
+                    }
                     else
+                    {
                         arr[i, j] = '*';
+                    }
+                }
+            }
 
             Console.WriteLine("Column No: 1 2 3 4 5 6 7");
             Console.WriteLine("Row1 ->    0|0|1|1|1|0|0");
@@ -171,7 +195,9 @@ namespace ConsoleAppEngine
             Console.WriteLine("*" + arr[4, 3] + "*");
             Console.WriteLine("*" + arr[5, 3] + "*");
             if (arr[3, 3] == ' ' && arr[4, 3] == 'o' && arr[5, 3] == 'o')
+            {
                 Console.WriteLine(arr[3, 3] + " " + arr[3 + 1, 3] + " " + arr[3 + 2, 3]);
+            }
 
 
             //Compute(arr);

@@ -15,10 +15,10 @@ namespace ConsoleAppEngine.Course
         public float TotalMarks { get; private set; }
         public string Description { get; private set; }
 
-        readonly TextBlock NameViewBlock;
-        readonly TextBlock TimingsViewBlock;
-        readonly TextBlock DescriptionViewBlock;
-        readonly TextBlock MarksViewBlock;
+        private readonly TextBlock NameViewBlock;
+        private readonly TextBlock TimingsViewBlock;
+        private readonly TextBlock DescriptionViewBlock;
+        private readonly TextBlock MarksViewBlock;
 
         public ETestItem(DateTime dayOfTest, TestType typeOfTest, int testIndex, float marksObtained, float totalMarks, string description)
         {
