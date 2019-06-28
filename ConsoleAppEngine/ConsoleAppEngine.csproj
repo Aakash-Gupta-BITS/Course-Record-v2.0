@@ -124,6 +124,8 @@
     <Compile Include="Course\Abstracts\ECourseElemItemBase.cs" />
     <Compile Include="Course\Book\EBookItem.cs" />
     <Compile Include="Course\Book\EBooks.cs" />
+    <Compile Include="Course\Event\EEventItem.cs" />
+    <Compile Include="Course\Event\EEvents.cs" />
     <Compile Include="Course\Handout\EHandoutItem.cs" />
     <Compile Include="Course\Handout\EHandouts.cs" />
     <Compile Include="Course\Teacher\ETeacherEntry.cs" />

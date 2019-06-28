@@ -10,7 +10,7 @@ using ConsoleAppEngine.Course.Abstracts;
 
 namespace ConsoleAppEngine.Course
 {
-    public class ETeachers : ECourseElemBase<ETeacherEntry>
+    public partial class ETeachers
     {
         TextBox NameBox;
         TextBox Phone1Box, Phone2Box;
@@ -20,6 +20,7 @@ namespace ConsoleAppEngine.Course
         TextBox OtherBox;
 
         ECourseTimeTable EquivalentTimeEntry;
+
         public void SetTimeEntry(ECourseTimeTable x) => EquivalentTimeEntry = x;
 
         public void AddTeacher(ETeacherEntry t)
@@ -27,7 +28,10 @@ namespace ConsoleAppEngine.Course
             lists.AddLast(t);
             UpdateList();
         }
+    }
 
+    public partial class ETeachers : ECourseElemBase<ETeacherEntry>
+    {
         public override void DestructViews()
         {
             ViewGrid.Children.Clear();

@@ -56,6 +56,7 @@ namespace ConsoleAppEngine.Course.Abstracts
             SetEvents();
 
             ViewGrid.Visibility = Visibility.Visible;
+            AddGrid.Visibility = Visibility.Collapsed;
         }
 
         void SetEvents()

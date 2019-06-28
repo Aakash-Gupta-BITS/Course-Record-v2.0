@@ -10,7 +10,7 @@ using ConsoleAppEngine.Course.Abstracts;
 
 namespace ConsoleAppEngine.Course
 {
-    public class EHandouts : ECourseElemBase<EHandoutItem>
+    public partial class EHandouts
     {
         TextBox LectureBox;
         TextBox TopicBox;
@@ -23,6 +23,10 @@ namespace ConsoleAppEngine.Course
             UpdateList();
         }
 
+    }
+
+    public partial class EHandouts : ECourseElemBase<EHandoutItem>
+    {
         public override void DestructViews()
         {
             ViewGrid.Children.Clear();
@@ -109,6 +113,5 @@ namespace ConsoleAppEngine.Course
             contentDialog.Title = ItemToChange.Topic;
             contentDialog.Content = ItemToChange.Description;
         }
-
     }
 }

@@ -21,6 +21,7 @@ namespace ConsoleAppEngine.Course
         public readonly ETests TestEntry = new ETests();
         public readonly ETeachers TeacherEntry = new ETeachers();
         public readonly ECourseTimeTable TimeEntry = new ECourseTimeTable();
+        public readonly EEvents EventEntry = new EEvents();
         
 
         private readonly (/*LinkedList<Teacher> Teachers,*/ uint Section, uint Room, DayOfWeek[] DaysOfWeek, byte[] Hours) LectureInfo;

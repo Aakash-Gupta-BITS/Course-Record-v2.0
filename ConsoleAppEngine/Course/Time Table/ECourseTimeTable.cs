@@ -11,11 +11,11 @@ using System.Collections.Generic;
 
 namespace ConsoleAppEngine.Course
 {
-    public class ECourseTimeTable : ECourseElemBase<ETimeTableItem>
+    public partial class ECourseTimeTable
     {
         ComboBox EntryTypeBox;
         TextBox SectionBox;
-        ComboBox[] TeachersBox = new ComboBox[3];
+        readonly ComboBox[] TeachersBox = new ComboBox[3];
         TextBox RoomBox;
         TextBox DaysBox;
         TextBox HoursBox;
@@ -67,7 +67,10 @@ namespace ConsoleAppEngine.Course
             lists.AddLast(eTimeTableItem);
             UpdateList();
         }
+    }
 
+    public partial class ECourseTimeTable : ECourseElemBase<ETimeTableItem>
+    {
         public override void DestructViews()
         {
             ViewGrid.Children.Clear();

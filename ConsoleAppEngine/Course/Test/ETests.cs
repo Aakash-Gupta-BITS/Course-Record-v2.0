@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ConsoleAppEngine.Course
 {
-    public class ETests : ECourseElemBase<ETestItem>
+    public partial class ETests
     {
         DatePicker DateBox;
         ComboBox TestTypeBox;
@@ -25,7 +25,10 @@ namespace ConsoleAppEngine.Course
             lists.AddLast(testItem);
             UpdateList();
         }
+    }
 
+    public partial class ETests : ECourseElemBase<ETestItem>
+    {
         public override void DestructViews()
         {
             ViewGrid.Children.Clear();

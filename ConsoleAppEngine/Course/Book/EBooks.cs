@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ConsoleAppEngine.Course
 {
-    public class EBooks : ECourseElemBase<EBookItem>
+    public partial class EBooks
     {
         TextBox NameBox;
         TextBox AuthorBox;
@@ -25,7 +25,10 @@ namespace ConsoleAppEngine.Course
             lists.AddLast(eBookItem);
             UpdateList();
         }
+    }
 
+    public partial class EBooks : ECourseElemBase<EBookItem>
+    {
         public override void DestructViews()
         {
             ViewGrid.Children.Clear();
@@ -96,72 +99,13 @@ namespace ConsoleAppEngine.Course
 
         protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
         {
-            NameBox = new TextBox()
-            {
-                Margin = new Thickness(5, 10, 10, 5),
-                HorizontalAlignment = HorizontalAlignment.Stretch
-            };
-            Grid.SetRow(NameBox, 0);
-            Grid.SetColumn(NameBox, 1);
-
-            AuthorBox = new TextBox()
-            {
-                Margin = new Thickness(5, 10, 10, 5),
-                HorizontalAlignment = HorizontalAlignment.Stretch
-            };
-            Grid.SetRow(AuthorBox, 1);
-            Grid.SetColumn(AuthorBox, 1);
-
-            EditionBox = new TextBox()
-            {
-                Margin = new Thickness(5, 10, 10, 5),
-                HorizontalAlignment = HorizontalAlignment.Stretch
-            };
-            Grid.SetRow(EditionBox, 2);
-            Grid.SetColumn(EditionBox, 1);
-
-            PressBox = new TextBox()
-            {
-                Margin = new Thickness(5, 10, 10, 5),
-                HorizontalAlignment = HorizontalAlignment.Stretch
-            };
-            Grid.SetRow(PressBox, 3);
-            Grid.SetColumn(PressBox, 1);
-
-            BookTypeBox = new ComboBox()
-            {
-                Margin = new Thickness(5, 10, 10, 5),
-                HorizontalAlignment = HorizontalAlignment.Stretch
-            };
-            Grid.SetRow(BookTypeBox, 4);
-            Grid.SetColumn(BookTypeBox, 1);
-
-            BestBookBox = new CheckBox()
-            {
-                Margin = new Thickness(5, 10, 10, 5),
-                Content = "Best Book"
-            };
-            Grid.SetRow(BestBookBox, 5);
-            Grid.SetColumn(BestBookBox, 1);
-
-            AddButton = new Button()
-            {
-                Margin = new Thickness(10, 5, 10, 10),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                Content = "Add"
-            };
-            Grid.SetRow(AddButton, 6);
-            Grid.SetColumn(AddButton, 0);
-            Grid.SetColumnSpan(AddButton, 2);
-
-
-            AddGrid.Children.Add(NameBox);
-            AddGrid.Children.Add(AuthorBox);
-            AddGrid.Children.Add(EditionBox);
-            AddGrid.Children.Add(PressBox);
-            AddGrid.Children.Add(BookTypeBox);
-            AddGrid.Children.Add(BestBookBox);
-            AddGrid.Children.Add(AddButton);
+            NameBox = AddViewGridControls[0] as TextBox;
+            AuthorBox = AddViewGridControls[1] as TextBox;
+            EditionBox = AddViewGridControls[2] as TextBox;
+            PressBox = AddViewGridControls[3] as TextBox;
+            BookTypeBox = AddViewGridControls[4] as ComboBox;
+            BestBookBox = AddViewGridControls[5] as CheckBox;
+            AddButton = AddViewGridControls[6] as Button;
         }
 
         protected override void ItemToChangeUpdate()

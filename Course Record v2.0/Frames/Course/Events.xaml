@@ -9,6 +9,42 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <Grid x:Name="ViewGrid" Visibility="Collapsed" Grid.Row="0" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <Grid x:Name="AddGrid" Visibility="Collapsed" Grid.Row="0" Margin="0,10,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="10,10,10,5" Header="Title" x:Name="TitleInput"/>
+            <DatePicker Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="10,5,5,5"   Header="Date" x:Name="DateInput"/>
+            <TimePicker Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="5,5,10,5"   Header="Time" x:Name="TimeInput"/>
+            <TextBox    Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="10,5,10,5"  Header="Location" AcceptsReturn="True" x:Name="LocationInput"/>
+            <TextBox    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="10,5,10,10" Header="Description" AcceptsReturn="True" x:Name="DescriptionInput"/>
+            <Button     Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="10,10,10,5" Content="Add" x:Name="AddButton"/>
+        </Grid>
+
+        <CommandBar x:Name="Commands" Grid.Row="1" Background="Black" OverflowButtonVisibility="Visible">
+            <AppBarButton x:Name="ViewCommand" Icon="View" Label="View"/>
+            <AppBarButton x:Name="AddCommand" Icon="Add" Label="Add"/>
+        </CommandBar>
     </Grid>
 </Page>
