@@ -20,13 +20,6 @@ namespace Course_Record_v2._0.Frames.Course
         public MainPage()
         {
             this.InitializeComponent();
-            this.Unloaded += (object sender, RoutedEventArgs e) =>
-            {
-                foreach (var x in allCourses.CoursesList)
-                {
-                    x.SyncTimeTablewithTeachers();
-                }
-            };
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -69,8 +62,6 @@ namespace Course_Record_v2._0.Frames.Course
                 }
             }
 
-            SelectedCourse.SyncTimeTablewithTeachers();
-
             switch (SelectedItem.Content)
             {
                 case "Overview":
@@ -84,7 +75,7 @@ namespace Course_Record_v2._0.Frames.Course
                     break;
                 case "Teachers":
                     LinkedList<object> lis = new LinkedList<object>();
-                    lis.AddLast(SelectedCourse.TeacherEntry);
+                    lis.AddLast(SelectedCourse);
                     lis.AddLast(allContacts);
                     ContentFrame.Navigate(typeof(Teachers), lis);
                     break;
