@@ -6,8 +6,8 @@ namespace ConsoleAppEngine.Abstracts
 {
     public abstract class EElementItemBase
     {
-        internal bool IsDeleted = false;
-        internal readonly ListViewItem GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
+        public bool IsDeleted = false;
+        public readonly ListViewItem GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
         internal abstract object PointerOverObject { get; }
 
         protected static FrameworkElement[] GenerateViews(ListViewItem GetView, params (Type t, double Width)[] Input)
@@ -23,6 +23,7 @@ namespace ConsoleAppEngine.Abstracts
                     controls[i] = new TextBlock()
                     {
                         HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Center,
                         TextWrapping = TextWrapping.Wrap
                     };
                 }

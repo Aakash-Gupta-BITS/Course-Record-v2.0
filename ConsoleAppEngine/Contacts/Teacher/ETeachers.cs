@@ -16,12 +16,6 @@ namespace ConsoleAppEngine.Course
         private TextBox AddressBox;
         private TextBox WebsiteBox;
         private TextBox OtherBox;
-        private ECourseTimeTable EquivalentTimeEntry;
-
-        public void SetTimeEntry(ECourseTimeTable x)
-        {
-            EquivalentTimeEntry = x;
-        }
 
         public void AddTeacher(ETeacherEntry t)
         {
@@ -66,7 +60,13 @@ namespace ConsoleAppEngine.Course
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
-
+            foreach (var x in (from a in lists where a != ItemToChange select a.Name))
+                if (NameBox.Text == x)
+                {
+                    Controls.AddLast(NameBox);
+                    ErrorWaale.AddLast(NameBox);
+                    break;
+                }
         }
 
         protected override void ClearAddGrid()
@@ -115,14 +115,6 @@ namespace ConsoleAppEngine.Course
         protected override IOrderedEnumerable<ETeacherEntry> OrderList()
         {
             return lists.OrderBy(a => a.Name);
-        }
-
-        public override void PostDeleteTasks()
-        {
-            foreach (var x in EquivalentTimeEntry.lists)
-            {
-                x.DeleteTeacher(ItemToChange);
-            }
         }
 
         protected override void SetAddGrid_ItemToChange()

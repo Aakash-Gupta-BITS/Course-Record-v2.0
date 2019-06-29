@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Contacts\AllContacts.cs" />
     <Compile Include="Supportive Structures\Abstracts\ECourseElemBase.cs" />
     <Compile Include="Supportive Structures\Abstracts\ECourseElemItemBase.cs" />
     <Compile Include="Course\AllCourses.cs" />
@@ -129,8 +130,8 @@
     <Compile Include="Course\Event\EEvents.cs" />
     <Compile Include="Course\Handout\EHandoutItem.cs" />
     <Compile Include="Course\Handout\EHandouts.cs" />
-    <Compile Include="Course\Teacher\ETeacherEntry.cs" />
-    <Compile Include="Course\Teacher\ETeachers.cs" />
+    <Compile Include="Contacts\Teacher\ETeacherEntry.cs" />
+    <Compile Include="Contacts\Teacher\ETeachers.cs" />
     <Compile Include="Course\Test\ETestItem.cs" />
     <Compile Include="Course\Test\ETests.cs" />
     <Compile Include="Course\Time Table\ECourseTimeTable.cs" />
@@ -145,9 +146,7 @@
       <Version>6.2.8</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Contacts\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

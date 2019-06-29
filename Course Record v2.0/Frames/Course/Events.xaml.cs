@@ -16,6 +16,11 @@ namespace Course_Record_v2._0.Frames.Course
         public Events()
         {
             this.InitializeComponent();
+
+            this.Unloaded += (object sender, Windows.UI.Xaml.RoutedEventArgs e) =>
+            {
+                EventEntry.DestructViews();
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -33,11 +38,6 @@ namespace Course_Record_v2._0.Frames.Course
                 DescriptionInput,
                 AddButton);
 
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            EventEntry.DestructViews();
         }
     }
 }

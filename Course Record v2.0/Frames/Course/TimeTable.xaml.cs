@@ -16,6 +16,11 @@ namespace Course_Record_v2._0.Frames.Course
         public TimeTable()
         {
             this.InitializeComponent();
+
+            this.Unloaded += (object sender, Windows.UI.Xaml.RoutedEventArgs e) =>
+            {
+                TimeEntry.DestructViews();
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -37,11 +42,6 @@ namespace Course_Record_v2._0.Frames.Course
                 AddButton);
 
             TimeEntry.SetTeachersEntry((e.Parameter as CourseEntry).TeacherEntry);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            TimeEntry.DestructViews();
         }
     }
 }

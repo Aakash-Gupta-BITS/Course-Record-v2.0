@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.AllEnums;
 using Windows.UI.Xaml.Controls;
+using System.Collections.Generic;
 
 namespace ConsoleAppEngine.Course
 {
@@ -30,6 +31,24 @@ namespace ConsoleAppEngine.Course
 
             navigationViewItem.Content = Title;
 
+        }
+
+        public void SyncTimeTablewithTeachers()
+        {
+            LinkedList<ETimeTableItem> temp = new LinkedList<ETimeTableItem>();
+            foreach (var x in TimeEntry.lists)
+            {
+                temp.AddLast(x);
+                foreach (var y in x.Teacher)
+                    if (!TeacherEntry.lists.Contains(y))            // If teacher is not found
+                    {
+                        temp.Remove(x);
+                        break;
+                    }
+            }
+            TimeEntry.lists.Clear();
+            foreach (var x in temp)
+                TimeEntry.lists.AddLast(x);
         }
     }
 }

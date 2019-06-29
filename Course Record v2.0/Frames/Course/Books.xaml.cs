@@ -21,6 +21,11 @@ namespace Course_Record_v2._0.Frames.Course
             {
                 BookTypeInput.Items.Add(x);
             }
+
+            this.Unloaded += (object sender, Windows.UI.Xaml.RoutedEventArgs e) =>
+            {
+                BookEntry.DestructViews();
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -38,11 +43,6 @@ namespace Course_Record_v2._0.Frames.Course
                 BookTypeInput,
                 BestBookInput,
                 AddButton);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            BookEntry.DestructViews();
         }
     }
 }

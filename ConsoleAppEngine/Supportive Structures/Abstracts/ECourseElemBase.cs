@@ -12,8 +12,9 @@ namespace ConsoleAppEngine.Abstracts
 {
     public abstract class EElementBase<T> where T : EElementItemBase
     {
-        internal readonly LinkedList<T> lists = new LinkedList<T>();
+        public readonly LinkedList<T> lists = new LinkedList<T>();
         protected T ItemToChange { get; set; }
+        public bool IsDestructed => ViewGrid == null;
 
         protected Grid ViewGrid;
         protected Grid AddGrid;
@@ -222,12 +223,12 @@ namespace ConsoleAppEngine.Abstracts
         {
             Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
             int i = 0;
-            foreach ((string Name, double Width) x in Input)
+            foreach ((string Name, double Width) in Input)
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(x.Width, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(Width, GridUnitType.Star) });
                 TextBlock temp = new TextBlock()
                 {
-                    Text = x.Name,
+                    Text = Name,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     FontWeight = FontWeights.Bold
                 };

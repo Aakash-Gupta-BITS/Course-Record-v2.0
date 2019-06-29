@@ -1,4 +1,6 @@
-﻿using ConsoleAppEngine.Course;
+﻿using System.Collections.Generic;
+using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Contacts;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -12,11 +14,19 @@ namespace Course_Record_v2._0.Frames.Course
     public sealed partial class MainPage : Page
     {
         private AllCourses allCourses;
+        private AllContacts allContacts;
         private readonly NavigationViewItem GoBack = new NavigationViewItem() { Content = "Go Back" };
-
+        
         public MainPage()
         {
             this.InitializeComponent();
+            this.Unloaded += (object sender, RoutedEventArgs e) =>
+            {
+                foreach (var x in allCourses.CoursesList)
+                {
+                    x.SyncTimeTablewithTeachers();
+                }
+            };
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -59,6 +69,8 @@ namespace Course_Record_v2._0.Frames.Course
                 }
             }
 
+            SelectedCourse.SyncTimeTablewithTeachers();
+
             switch (SelectedItem.Content)
             {
                 case "Overview":
@@ -71,7 +83,10 @@ namespace Course_Record_v2._0.Frames.Course
                     ContentFrame.Navigate(typeof(Handout), SelectedCourse.HandoutEntry);
                     break;
                 case "Teachers":
-                    ContentFrame.Navigate(typeof(Teachers), SelectedCourse);
+                    LinkedList<object> lis = new LinkedList<object>();
+                    lis.AddLast(SelectedCourse.TeacherEntry);
+                    lis.AddLast(allContacts);
+                    ContentFrame.Navigate(typeof(Teachers), lis);
                     break;
                 case "CT log":
                     ContentFrame.Navigate(typeof(CT_log));
@@ -93,7 +108,10 @@ namespace Course_Record_v2._0.Frames.Course
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            allCourses = e.Parameter as AllCourses;
+            var a = (e.Parameter as LinkedList<object>);
+            allCourses = a.First.Value as AllCourses;
+            allContacts = a.First.Next.Value as AllContacts;
+
             foreach (var x in allCourses.CoursesList)
             {
                 NavView.MenuItems.Add(x.navigationViewItem);
@@ -112,6 +130,11 @@ namespace Course_Record_v2._0.Frames.Course
             {
                 NavView.SelectedItem = allCourses.CoursesList.First.Value.navigationViewItem;
             }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            NavView.MenuItems.Clear();
         }
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)

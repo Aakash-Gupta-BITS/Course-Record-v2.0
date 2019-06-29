@@ -15,6 +15,10 @@ namespace Course_Record_v2._0.Frames.Course
         public Tests()
         {
             this.InitializeComponent();
+            this.Unloaded += (object sender, Windows.UI.Xaml.RoutedEventArgs e) =>
+            {
+                TestEntry.DestructViews();
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -33,11 +37,6 @@ namespace Course_Record_v2._0.Frames.Course
                 MaxMarkInput,
                 DescriptionInput,
                 ButtonInput);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            TestEntry.DestructViews();
         }
     }
 }
