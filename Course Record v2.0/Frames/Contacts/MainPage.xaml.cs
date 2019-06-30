@@ -3,16 +3,18 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ConsoleAppEngine.Contacts;
+using System.Collections.Generic;
 
 namespace Course_Record_v2._0.Frames.Contacts
 {
     public sealed partial class MainPage : Page
     {
         AllContacts allContacts;
+        AllCourses allCourses;
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -26,23 +28,29 @@ namespace Course_Record_v2._0.Frames.Contacts
 
             if (SelectedItem == TeachersNavigation)
             {
-                ContentFrame.Navigate(typeof(TeacherContacts), allContacts.TeacherEntry);
+                LinkedList<object> lis = new LinkedList<object>();
+                lis.AddLast(allContacts.TeacherEntry);
+                lis.AddLast(allCourses);
+                ContentFrame.Navigate(typeof(TeacherContacts), lis);
             }
             else if(SelectedItem == StudentsNavigation)
             {
-                ContentFrame.Navigate(typeof(StudentContacts), allContacts.StudentEntry);
+                LinkedList<object> lis = new LinkedList<object>();
+                lis.AddLast(allContacts.StudentEntry);
+                lis.AddLast(allCourses);
+                ContentFrame.Navigate(typeof(StudentContacts), lis);
             }
             else if (SelectedItem == GoBack)
             {
-                if (!allContacts.TeacherEntry.IsDestructed)
-                    allContacts.TeacherEntry.DestructViews();
-                this.Frame.GoBack();
+                Frame.GoBack();
             }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            allContacts = e.Parameter as AllContacts;
+            var temp = e.Parameter as LinkedList<object>;
+            allContacts = temp.First.Value as AllContacts;
+            allCourses = temp.First.Next.Value as AllCourses;
             NavView.SelectedItem = StudentsNavigation;
         }
 

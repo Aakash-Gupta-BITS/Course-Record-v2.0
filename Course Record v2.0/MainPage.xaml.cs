@@ -62,7 +62,10 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
             }
             else if (SelectedItem == ContactMenu)
             {
-                this.Frame.Navigate(typeof(Frames.Contacts.MainPage), Contacts);
+                LinkedList<object> lis = new LinkedList<object>();
+                lis.AddLast(Contacts);
+                lis.AddLast(Courses);
+                this.Frame.Navigate(typeof(Frames.Contacts.MainPage), lis);
             }
         }
 

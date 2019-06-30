@@ -1,6 +1,7 @@
 ﻿using ConsoleAppEngine.Course;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using System.Collections.Generic;
 
 
 namespace Course_Record_v2._0.Frames.Contacts
@@ -12,11 +13,17 @@ namespace Course_Record_v2._0.Frames.Contacts
         public StudentContacts()
         {
             this.InitializeComponent();
+            this.Unloaded += (object sender, Windows.UI.Xaml.RoutedEventArgs e) =>
+                {
+                    StudentEntry.DestructViews();
+                };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            StudentEntry = (e.Parameter as EStudents);
+            var temp = e.Parameter as LinkedList<object>;
+            StudentEntry = temp.First.Value as EStudents;
+            StudentEntry.SetAllCourses(temp.First.Next.Value as AllCourses);
             StudentEntry.InitializeViews(
                 ViewGrid,
                 AddGrid,
@@ -31,11 +38,6 @@ namespace Course_Record_v2._0.Frames.Contacts
                 RoomInput,
                 OtherInput,
                 AddButton);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            StudentEntry.DestructViews();
         }
     }
 }

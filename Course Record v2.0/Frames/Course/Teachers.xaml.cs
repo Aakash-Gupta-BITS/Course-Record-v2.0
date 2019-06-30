@@ -17,7 +17,7 @@ namespace Course_Record_v2._0.Frames.Course
     {
         CourseEntry entry;
         ETeachers teachers => entry.TeacherEntry;
-        AllContacts allContacts;
+        ETeachers allTeachers;
 
         public Teachers()
         {
@@ -25,7 +25,6 @@ namespace Course_Record_v2._0.Frames.Course
             this.Unloaded += (object sender, RoutedEventArgs e) =>
             {
                 ViewList.Items.Clear();
-                entry.SyncTimeTablewithTeachers();
             };
         }
 
@@ -39,7 +38,7 @@ namespace Course_Record_v2._0.Frames.Course
             };
 
             // Fill only those names that are not not yet added in course
-            foreach (var x in (from a in allContacts.TeacherEntry.lists where !ViewList.Items.Contains(a.GetView) select a.Name))
+            foreach (var x in (from a in allTeachers.lists where !ViewList.Items.Contains(a.GetView) select a.Name))
                 comboBox.Items.Add(x);
 
             // Instance of Content Dialog thaat will be displayed
@@ -67,7 +66,7 @@ namespace Course_Record_v2._0.Frames.Course
                 case ContentDialogResult.Primary:
 
                     // Find the selected teacher
-                    foreach (var x in allContacts.TeacherEntry.lists)
+                    foreach (var x in allTeachers.lists)
                         if (x.Name == comboBox.SelectedItem.ToString())
                         {
                             teachers.lists.AddLast(x);
@@ -140,6 +139,7 @@ namespace Course_Record_v2._0.Frames.Course
                     // Important : Item not to be removed from AllContacts
                     ViewList.Items.Remove(ItemSelected.GetView);
                     teachers.lists.Remove(ItemSelected);
+                    entry.SyncTimeTablewithTeachers();
                     break;
             }
         }
@@ -148,9 +148,9 @@ namespace Course_Record_v2._0.Frames.Course
         {
             var a = e.Parameter as LinkedList<object>;
             entry = a.First.Value as CourseEntry;
-            allContacts = a.First.Next.Value as AllContacts;
+            allTeachers = a.First.Next.Value as ETeachers;
 
-            foreach (var x in (from x in teachers.lists select x.GetView))
+            foreach (var x in (from x in teachers.lists where teachers.lists.Contains(x) select x.GetView))
                 ViewList.Items.Add(x);
         }
     }

@@ -17,10 +17,35 @@ namespace ConsoleAppEngine.Course
         private TextBox WebsiteBox;
         private TextBox OtherBox;
 
+        private AllCourses allCourses;
+
+        public void SetAllCourses(AllCourses s) => allCourses = s;
+
         public void AddTeacher(ETeacherEntry t)
         {
             lists.AddLast(t);
             UpdateList();
+        }
+
+        public override void PostDeleteTasks()
+        {
+            foreach (CourseEntry s in allCourses.CoursesList)
+            {
+                s.TeacherEntry.lists.Remove(ItemToChange);
+                s.SyncTimeTablewithTeachers();
+                /*
+                LinkedList<ETeacherEntry> temp = new LinkedList<ETeacherEntry>();
+                foreach (var x in s.TeacherEntry.lists)
+                {
+                    temp.AddLast(x);
+                    if (!lists.Contains(x))
+                        temp.Remove(x);
+                }
+
+                s.TeacherEntry.lists.Clear();
+                foreach (var x in temp)
+                    s.TeacherEntry.lists.AddLast(x);*/
+            }
         }
     }
 

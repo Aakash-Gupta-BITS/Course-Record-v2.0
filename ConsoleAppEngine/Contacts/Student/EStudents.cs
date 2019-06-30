@@ -20,6 +20,19 @@ namespace ConsoleAppEngine.Course
         private TextBox RoomBox;
         private TextBox OtherInput;
 
+        private AllCourses allCourses;
+
+        public void SetAllCourses(AllCourses s) => allCourses = s;
+
+
+        public override void PostDeleteTasks()
+        {
+            foreach (CourseEntry s in allCourses.CoursesList)
+            {
+                s.CTLog.lists.Remove(ItemToChange);
+            }
+        }
+
         public void AddStudent(EStudentEntry studentEntry)
         {
             lists.AddLast(studentEntry);

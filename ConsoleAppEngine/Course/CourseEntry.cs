@@ -20,6 +20,7 @@ namespace ConsoleAppEngine.Course
         public readonly ETeachers TeacherEntry = new ETeachers();
         public readonly ECourseTimeTable TimeEntry = new ECourseTimeTable();
         public readonly EEvents EventEntry = new EEvents();
+        public readonly EStudents CTLog = new EStudents();
 
         public CourseEntry((CourseType branchtype, string branchstring) id, string title, byte lectureUnits, byte practicalUnits, ETeacherEntry iC)
         {

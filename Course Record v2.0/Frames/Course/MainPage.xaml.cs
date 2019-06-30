@@ -76,11 +76,14 @@ namespace Course_Record_v2._0.Frames.Course
                 case "Teachers":
                     LinkedList<object> lis = new LinkedList<object>();
                     lis.AddLast(SelectedCourse);
-                    lis.AddLast(allContacts);
+                    lis.AddLast(allContacts.TeacherEntry);
                     ContentFrame.Navigate(typeof(Teachers), lis);
                     break;
                 case "CT log":
-                    ContentFrame.Navigate(typeof(CT_log));
+                    lis = new LinkedList<object>();
+                    lis.AddLast(SelectedCourse.CTLog);
+                    lis.AddLast(allContacts.StudentEntry);
+                    ContentFrame.Navigate(typeof(CT_log), lis);
                     break;
                 case "Time Table":
                     ContentFrame.Navigate(typeof(TimeTable), SelectedCourse);
