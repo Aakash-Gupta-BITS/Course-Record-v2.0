@@ -1,5 +1,49 @@
 ﻿namespace ConsoleAppEngine.AllEnums
 {
+    public enum BranchId
+    {
+        A1,
+        A2,
+        A3,
+        A4,
+        A5,
+        A7,
+        A8,
+
+        AB,
+
+        B1,
+        B2,
+        B3,
+        B4,
+        B5,
+
+        PS
+    }
+
+    public enum ExpandedBranch
+    {
+        // AX
+        ChemicalEngineering,
+        CivilEngineering,
+        ElectricalAndElectronics,
+        Mechanical,
+        BPharm,
+        ComputerScience,
+        ElectronicsAndInstrumentation,
+        // AB
+        ManufacturingEngineering,
+        // BX
+        Biology,
+        Chemistry,
+        Economics,
+        Mathematics,
+        Physics,
+
+        // XX
+        PS
+    }
+
     public enum TextBookType
     {
         TextBook,
@@ -7,7 +51,7 @@
         Extra
     }
 
-    public enum BranchType : byte
+    public enum CourseType : byte
     {
         BIO,
         BIOT,

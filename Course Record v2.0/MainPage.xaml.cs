@@ -17,7 +17,7 @@ namespace Course_Record_v2._0
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            CourseEntry Math3Course = new CourseEntry((BranchType.MATH, "F213"), "Mathematics 3", 3, 0, null);
+            CourseEntry Math3Course = new CourseEntry((CourseType.MATH, "F213"), "Mathematics 3", 3, 0, null);
 
             Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
                 "Dr. Manoj Kannan",
@@ -31,6 +31,17 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 "Katayi Bdia Master"));
             if (Courses.CoursesList.Count == 0)
                 Courses.CoursesList.AddLast(Math3Course);
+
+            Contacts.StudentEntry.AddStudent(new EStudentEntry(
+                "Aakash Gupta",
+                2018,
+                new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
+                887,
+                new string[] { "7496811413", "" },
+                @"uchanahome1@gmail.com",
+                "RAM",
+                4136,
+                "Developer of this App"));
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -59,7 +70,7 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
         {
             this.Frame.BackStack.Clear();
             this.Frame.ForwardStack.Clear();
-            foreach (var courses in Courses.CoursesList)
+            /*foreach (var courses in Courses.CoursesList)
             {
                 if (!courses.HandoutEntry.IsDestructed)
                     courses.HandoutEntry.DestructViews();
@@ -75,7 +86,7 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                     courses.TestEntry.DestructViews();
             }
             if (!Contacts.TeacherEntry.IsDestructed)
-                Contacts.TeacherEntry.DestructViews();
+                Contacts.TeacherEntry.DestructViews();*/
         }
     }
 }

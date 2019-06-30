@@ -19,11 +19,18 @@ namespace Course_Record_v2._0.Frames.Contacts
         {
             var SelectedItem = sender.SelectedItem as NavigationViewItem;
 
+            if (SelectedItem == null)
+                return;
+
             NavView.Header = SelectedItem.Content;
 
             if (SelectedItem == TeachersNavigation)
             {
                 ContentFrame.Navigate(typeof(TeacherContacts), allContacts.TeacherEntry);
+            }
+            else if(SelectedItem == StudentsNavigation)
+            {
+                ContentFrame.Navigate(typeof(StudentContacts), allContacts.StudentEntry);
             }
             else if (SelectedItem == GoBack)
             {
@@ -36,6 +43,7 @@ namespace Course_Record_v2._0.Frames.Contacts
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             allContacts = e.Parameter as AllContacts;
+            NavView.SelectedItem = StudentsNavigation;
         }
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)

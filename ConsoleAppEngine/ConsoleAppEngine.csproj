@@ -121,6 +121,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contacts\AllContacts.cs" />
+    <Compile Include="Contacts\Student\EStudentEntry.cs" />
+    <Compile Include="Contacts\Student\EStudents.cs" />
     <Compile Include="Supportive Structures\Abstracts\ECourseElemBase.cs" />
     <Compile Include="Supportive Structures\Abstracts\ECourseElemItemBase.cs" />
     <Compile Include="Course\AllCourses.cs" />
