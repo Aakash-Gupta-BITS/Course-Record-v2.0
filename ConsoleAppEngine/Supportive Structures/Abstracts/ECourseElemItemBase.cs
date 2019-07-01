@@ -59,13 +59,13 @@ namespace ConsoleAppEngine.Abstracts
                     };
                 }
                 // Current control is Hyperlink (Not used anywhere, but can be used later)
-                else if (Input[i].t.Equals(typeof(HyperlinkButton)))
+               /* else if (Input[i].t.Equals(typeof(HyperlinkButton)))
                 {
                     controls[i] = new HyperlinkButton()
                     {
                         HorizontalAlignment = HorizontalAlignment.Left
                     };
-                }
+                }*/
 
                 // Add Control to grid
                 Grid.SetColumn(controls[i], i);

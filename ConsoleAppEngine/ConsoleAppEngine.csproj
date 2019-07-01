@@ -141,9 +141,14 @@
     <Compile Include="Supportive Structures\Enums.cs" />
     <Compile Include="Course\CourseEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Supportive Structures\Log\ILoggingServices.cs" />
+    <Compile Include="Supportive Structures\Log\LoggingServices.cs" />
     <EmbeddedResource Include="Properties\ConsoleAppEngine.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MetroLog">
+      <Version>1.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
     </PackageReference>
