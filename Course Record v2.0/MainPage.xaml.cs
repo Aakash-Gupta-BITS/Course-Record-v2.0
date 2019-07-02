@@ -4,6 +4,7 @@ using ConsoleAppEngine.Contacts;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.Generic;
+using ConsoleAppEngine.Log;
 
 namespace Course_Record_v2._0
 {
@@ -11,12 +12,14 @@ namespace Course_Record_v2._0
     {
         private readonly AllCourses Courses = new AllCourses();
         private readonly AllContacts Contacts = new AllContacts();
+        static LoggingServices log = new LoggingServices();
+        ILoggingServices loggingServices = log as ILoggingServices;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-
+            loggingServices.WriteLine<string>("The App executed successfully.");
             CourseEntry Math3Course = new CourseEntry((CourseType.MATH, "F213"), "Mathematics 3", 3, 0, null);
 
             Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(

@@ -7,7 +7,7 @@ using MetroLog;
 
 namespace ConsoleAppEngine.Log
 {
-    interface ILoggingServices
+    public interface ILoggingServices
     {
         void WriteLine<T>(string message, LogLevel logLevel = LogLevel.Trace, Exception exception = null);
     }
