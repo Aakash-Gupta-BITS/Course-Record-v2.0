@@ -37,9 +37,9 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
 
             Contacts.StudentEntry.AddStudent(new EStudentEntry(
                 "Aakash Gupta",
-                2018,
+                (2018,
                 new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
-                887,
+                887),
                 new string[] { "7496811413", "" },
                 @"uchanahome1@gmail.com",
                 "RAM",
