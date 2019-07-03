@@ -21,22 +21,22 @@ namespace ConsoleAppEngine.Course
         internal readonly TextBlock PhoneViewBlock;
         internal readonly TextBlock EmailViewBlock;
 
-        public EStudentEntry(string name, int year, ExpandedBranch[] branch, int digits, string[] phone, string personalMail, string hostel, int room, string other)
+        public EStudentEntry(string name, (int year, ExpandedBranch[] branch, int digits) id, string[] phone, string personalMail, string hostel, int room, string other)
         {
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
             NameViewBlock = controls[0] as TextBlock;
             PhoneViewBlock = controls[1] as TextBlock;
             EmailViewBlock = controls[2] as TextBlock;
 
-            Update(name, year, branch, digits, phone, personalMail, hostel, room, other);
+            Update(name, id, phone, personalMail, hostel, room, other);
         }
 
-        public void Update(string name, int year, ExpandedBranch[] branch, int digits, string[] phone, string personalMail, string hostel, int room, string other)
+        public void Update(string name, (int year, ExpandedBranch[] branch, int digits) id, string[] phone, string personalMail, string hostel, int room, string other)
         {
             Name = name;
-            Year = year;
-            Branch = branch;
-            Digits = digits;
+            Year = id.year;
+            Branch = id.branch;
+            Digits = id.digits;
             Phone = phone;
             PersonalMail = personalMail;
             Hostel = hostel;
@@ -45,7 +45,11 @@ namespace ConsoleAppEngine.Course
 
             NameViewBlock.Text = Name;
             PhoneViewBlock.Text = Phone.Length > 0 ? Phone[0] : "";
-            EmailViewBlock.Text = PersonalMail == "" ? string.Format(@"f{0}{1}@pilani.bits-pilani.ac.in", Year, Digits.ToString().PadLeft(4, '0')) : PersonalMail;
+
+            if (Year != 0)
+                EmailViewBlock.Text = PersonalMail == "" ? string.Format(@"f{0}{1}@pilani.bits-pilani.ac.in", Year, Digits.ToString().PadLeft(4, '0')) : PersonalMail;
+            else
+                EmailViewBlock.Text = PersonalMail;
         }
 
         internal override object PointerOverObject => null;

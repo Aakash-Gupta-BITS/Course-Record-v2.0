@@ -24,7 +24,6 @@ namespace ConsoleAppEngine.Course
 
         public void SetAllCourses(AllCourses s) => allCourses = s;
 
-
         public override void PostDeleteTasks()
         {
             foreach (CourseEntry s in allCourses.CoursesList)
@@ -37,6 +36,33 @@ namespace ConsoleAppEngine.Course
         {
             lists.AddLast(studentEntry);
             UpdateList();
+        }
+
+        private void SetValidId(out (int year, ExpandedBranch[] branch, int digits) val)
+        {
+            var Id = IdBox.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            int year;
+            int digits;
+            ExpandedBranch br1, br2;
+
+            try
+            {
+                year = int.Parse(Id[0]);
+                digits = int.Parse(Id[2]);
+                br1 = (ExpandedBranch)(int)(BranchId)Enum.Parse(typeof(BranchId), Id[1].Substring(0, 2));
+                br2 = (ExpandedBranch)(int)(BranchId)Enum.Parse(typeof(BranchId), Id[1].Substring(2));
+                if (year < 2012 || year > 2019 || digits < 0 || digits > 2000)
+                    throw new Exception();
+            }
+            catch
+            {
+                val = (0, null, 0);
+                return;
+            }
+
+            val = (year, new ExpandedBranch[] { br1, br2 }, digits);
+            return;
         }
     }
 
@@ -66,24 +92,29 @@ namespace ConsoleAppEngine.Course
 
         protected override void AddNewItem()
         {
-            var Id = IdBox.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            SetValidId(out var x);
+            int.TryParse(RoomBox.Text, out int room);
             AddStudent(new EStudentEntry(
                 NameBox.Text,
-                int.Parse(Id[0]),
-                new ExpandedBranch[] {
-                    (ExpandedBranch)(int)((BranchId)Enum.Parse(typeof(BranchId), Id[1].Substring(0, 2))),
-                    (ExpandedBranch)(int)((BranchId)Enum.Parse(typeof(BranchId), Id[1].Substring(2)))},
-                int.Parse(Id[2]),
+                x,
                 new string[] { Phone1Box.Text, Phone2Box.Text },
                 PersonalEmailBox.Text,
                 HostelBox.Text,
-                int.Parse(RoomBox.Text),
+                room,
                 OtherInput.Text));
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
-
+            Controls.AddLast(NameBox);
+            Controls.AddLast(OtherInput);
+            if (NameBox.Text == "")
+                ErrorWaale.AddLast(NameBox);
+            foreach (var x in (from a in lists
+                               where a != ItemToChange
+                               select a))
+                if (NameBox.Text == x.Name && OtherInput.Text == x.OtherInfo)
+                    ErrorWaale.AddLast(OtherInput);
         }
 
         protected override void ClearAddGrid()
@@ -119,14 +150,10 @@ namespace ConsoleAppEngine.Course
 
         protected override void ItemToChangeUpdate()
         {
-            var Id = IdBox.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            SetValidId(out var x);
             ItemToChange.Update(
                 NameBox.Text,
-                int.Parse(Id[0]),
-                new ExpandedBranch[] {
-                    (ExpandedBranch)(int)((BranchId)Enum.Parse(typeof(BranchId), Id[1].Substring(0, 2))),
-                    (ExpandedBranch)(int)((BranchId)Enum.Parse(typeof(BranchId), Id[1].Substring(2)))},
-                int.Parse(Id[2]),
+                x,
                 new string[] { Phone1Box.Text, Phone2Box.Text },
                 PersonalEmailBox.Text,
                 HostelBox.Text,
@@ -141,7 +168,10 @@ namespace ConsoleAppEngine.Course
             NameBox.Text = ItemToChange.Name;
             Phone1Box.Text = ItemToChange.Phone[0];
             Phone2Box.Text = ItemToChange.Phone[1];
-            IdBox.Text = ItemToChange.Year + " " + ((BranchId)(int)ItemToChange.Branch[0]).ToString() + ((BranchId)(int)ItemToChange.Branch[1]).ToString() + " " + ItemToChange.Digits.ToString().PadRight(4, '0');
+            if (ItemToChange.Year != 0)
+                IdBox.Text = ItemToChange.Year + " " + ((BranchId)(int)ItemToChange.Branch[0]).ToString() + ((BranchId)(int)ItemToChange.Branch[1]).ToString() + " " + ItemToChange.Digits.ToString().PadRight(4, '0');
+            else
+                IdBox.Text = "";
             PersonalEmailBox.Text = ItemToChange.PersonalMail;
             HostelBox.Text = ItemToChange.Hostel;
             RoomBox.Text = ItemToChange.Room.ToString();
@@ -164,8 +194,8 @@ namespace ConsoleAppEngine.Course
                         "Hostel\t\t:\t{4}\n" +
                         "Room No\t\t:\t{5}\n",
                         string.Join(", ", ItemToChange.Phone),
-                        ItemToChange.Year + " " + ((BranchId)(int)ItemToChange.Branch[0]).ToString() + ((BranchId)(int)ItemToChange.Branch[1]).ToString() + " " + ItemToChange.Digits.ToString().PadLeft(4, '0'),
-                        string.Format(@"f{0}{1}@pilani.bits-pilani.ac.in", ItemToChange.Year, ItemToChange.Digits.ToString().PadLeft(4, '0')),
+                        ItemToChange.Year == 0 ? "" : ItemToChange.Year + " " + ((BranchId)(int)ItemToChange.Branch[0]).ToString() + ((BranchId)(int)ItemToChange.Branch[1]).ToString() + " " + ItemToChange.Digits.ToString().PadLeft(4, '0'),
+                        ItemToChange.Year == 0 ? "" : string.Format(@"f{0}{1}@pilani.bits-pilani.ac.in", ItemToChange.Year, ItemToChange.Digits.ToString().PadLeft(4, '0')),
                         ItemToChange.PersonalMail,
                         ItemToChange.Hostel,
                         ItemToChange.Room,
