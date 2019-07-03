@@ -21,7 +21,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,10,10,5" Header="Course Id (For e.g. MATH F211)" x:Name="IdInput"/>
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="10,5,5,10" Header="Course Type (For e.g. MATH)" x:Name="TypeInput"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="5,5,10,10" Header="Course Id (For e.g. F211)" x:Name="IdInput"/>
         <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,5,10,5" Header="Course Title (For e.g. MATHEMTICS 3)" x:Name="TitleInput"/>
         <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1" Margin="10,5,5,10" Header="Lecture Units" x:Name="LectureInput"/>
         <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Margin="5,5,10,10" Header="Practical Units" x:Name="PracticalInput"/>
