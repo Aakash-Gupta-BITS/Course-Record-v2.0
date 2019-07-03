@@ -17,7 +17,7 @@ namespace Course_Record_v2._0.Frames.Course
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
     }
 }
