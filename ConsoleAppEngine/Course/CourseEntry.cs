@@ -6,10 +6,10 @@ namespace ConsoleAppEngine.Course
 {
     public class CourseEntry
     {
-        private readonly (CourseType branchtype, string branchstring) ID;
+        internal readonly (CourseType branchtype, string branchstring) ID;
         public readonly string Title;
-        private readonly byte LectureUnits;
-        private readonly byte PracticalUnits;
+        internal readonly byte LectureUnits;
+        internal readonly byte PracticalUnits;
         public readonly ETeacherEntry IC;
 
         public readonly NavigationViewItem navigationViewItem = new NavigationViewItem();
@@ -51,5 +51,6 @@ namespace ConsoleAppEngine.Course
             foreach (var x in temp)
                 TimeEntry.lists.AddLast(x);
         }
+
     }
 }
