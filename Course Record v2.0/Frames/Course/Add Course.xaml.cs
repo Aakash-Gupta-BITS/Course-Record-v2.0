@@ -26,6 +26,7 @@ namespace Course_Record_v2._0.Frames.Course
     {
         private AllCourses Courses;
         private AllContacts Contacts;
+        private NavigationView NavView;
         public Add_Course()
         {
             this.InitializeComponent();
@@ -77,47 +78,17 @@ namespace Course_Record_v2._0.Frames.Course
             {
                 return;
             }
+
             LoggingServices.Instance.WriteLine<Add_Course>(string.Format("{0} course is added", entry.Title));
+            (sender as Button).BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 
-            //  Restore addbutton color -- only if all inputs are valid
-                (sender as Button).BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-
-            LinkedList<object> temp = new LinkedList<object>();
-            temp.AddLast(Courses);
-            temp.AddLast(Contacts);
-
-            this.Frame.Navigate(typeof(MainPage), temp);
-            // All inputs are valid here
-
-
-            /*
-            OLD CODE
-            byte i = 0;
-            
-            byte length = (byte)System.Enum.GetNames(typeof(CourseType)).Length;
-            CourseType type;
-            while (i < length)
-            {
-                string m = System.Enum.GetName(typeof(CourseType), i);
-
-                if (TypeInput.SelectedItem.ToString() == m)
-                {
-                    type = (CourseType)i;
-
-                    ETeacherEntry eTeacher = null;
-                    foreach (var y in Contacts.TeacherEntry.lists) 
-                        if (y.Name == ICSelect.SelectedItem.ToString())
-                        {
-                            eTeacher = y;
-                            break;
-                        }
-
-                    CourseEntry courseadd = new CourseEntry((type, IdInput.Text.ToString()), TitleInput.Text.ToString(), byte.Parse(LectureInput.Text.ToString()), byte.Parse(PracticalInput.Text.ToString()), eTeacher);
-                    Courses.CoursesList.AddLast(courseadd);
-                    
-                }
-                i++; 
-                }*/
+            var list = NavView.MenuItems.ToArray();
+            NavView.MenuItems.Clear();
+            for (int i = 0; i < list.Length - 4; ++i)
+                NavView.MenuItems.Add(list[i]);
+            NavView.MenuItems.Add(entry.navigationViewItem);
+            for (int i = list.Length - 4; i < list.Length; ++i)
+                NavView.MenuItems.Add(list[i]);
 
         }
 
@@ -127,6 +98,7 @@ namespace Course_Record_v2._0.Frames.Course
 
             Courses = x.First.Value as AllCourses;
             Contacts = x.First.Next.Value as AllContacts;
+            NavView = x.First.Next.Next.Value as NavigationView;
 
             foreach (var y in Contacts.TeacherEntry.lists)
                 ICSelect.Items.Add(y.Name);

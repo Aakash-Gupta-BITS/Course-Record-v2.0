@@ -32,6 +32,7 @@ namespace Course_Record_v2._0.Frames.Course
                 LinkedList<object> temp = new LinkedList<object>();
                 temp.AddLast(allCourses);
                 temp.AddLast(allContacts);
+                temp.AddLast(NavView);
                 ContentFrame.Navigate(typeof(Add_Course), temp);
                 SecNav.Visibility = Visibility.Collapsed;
             }
@@ -138,6 +139,8 @@ namespace Course_Record_v2._0.Frames.Course
                 NavView.SelectedItem = allCourses.CoursesList.First.Value.navigationViewItem;
             }
         }
+        
+        
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
