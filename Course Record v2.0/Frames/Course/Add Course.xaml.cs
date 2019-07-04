@@ -32,7 +32,7 @@ namespace Course_Record_v2._0.Frames.Course
                 if(TypeInput.SelectedItem.ToString()==m)
                 {
                     type = (ConsoleAppEngine.AllEnums.CourseType)i;
-                    ConsoleAppEngine.Course.CourseEntry courseadd = new ConsoleAppEngine.Course.CourseEntry((type, IdInput.ToString()), TitleInput.ToString(), byte.Parse(LectureInput.ToString()), byte.Parse(PracticalInput.ToString()), null);
+                    ConsoleAppEngine.Course.CourseEntry courseadd = new ConsoleAppEngine.Course.CourseEntry((type, IdInput.Text.ToString()), TitleInput.Text.ToString(), byte.Parse(LectureInput.Text.ToString()), byte.Parse(PracticalInput.Text.ToString()), null);
                     Courses.CoursesList.AddLast(courseadd);
                 }
                 i++;
