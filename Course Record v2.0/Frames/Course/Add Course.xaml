@@ -20,9 +20,37 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="10,5,5,10" Header="Course Type (For e.g. MATH)" x:Name="TypeInput"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="5,5,10,10" Header="Course Id (For e.g. F211)" x:Name="IdInput"/>
+
+        <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="10,5,5,10" PlaceholderText="Select Course Type" Header="Course Type (For e.g. MATH)" x:Name="TypeInput">
+            <x:String>BIO</x:String>
+            <x:String>BIOT</x:String>
+            <x:String>BITS</x:String>
+            <x:String>CE</x:String>
+            <x:String>CHE</x:String>
+            <x:String>CHEM</x:String>
+            <x:String>CS</x:String>
+            <x:String>DE</x:String>
+            <x:String>ECON</x:String>
+            <x:String>EEE</x:String>
+            <x:String>FIN</x:String>
+            <x:String>GS</x:String>
+            <x:String>HSS</x:String>
+            <x:String>INSTR</x:String>
+            <x:String>IS</x:String>
+            <x:String>ITEB</x:String>
+            <x:String>MATH</x:String>
+            <x:String>MBA</x:String>
+            <x:String>ME</x:String>
+            <x:String>MEL</x:String>
+            <x:String>MF</x:String>
+            <x:String>MGTS</x:String>
+            <x:String>MSE</x:String>
+            <x:String>MUSIC</x:String>
+            <x:String>PHA</x:String>
+            <x:String>PHY</x:String>
+            <x:String>SS</x:String>
+        </ComboBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="5,5,10,10" Header="Course Id (For e.g. F211)" x:Name="IdInput"/>
         <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,5,10,5" Header="Course Title (For e.g. MATHEMTICS 3)" x:Name="TitleInput"/>
         <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1" Margin="10,5,5,10" Header="Lecture Units" x:Name="LectureInput"/>
         <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Margin="5,5,10,10" Header="Practical Units" x:Name="PracticalInput"/>
