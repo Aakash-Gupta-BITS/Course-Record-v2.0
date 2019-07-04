@@ -29,7 +29,10 @@ namespace Course_Record_v2._0.Frames.Course
 
             if (SelectedItem == AddCoursesNavigation)
             {
-                ContentFrame.Navigate(typeof(Add_Course), allCourses);
+                LinkedList<object> temp = new LinkedList<object>();
+                temp.AddLast(allCourses);
+                temp.AddLast(allContacts);
+                ContentFrame.Navigate(typeof(Add_Course), temp);
                 SecNav.Visibility = Visibility.Collapsed;
             }
             else if (SelectedItem == GoBack)
