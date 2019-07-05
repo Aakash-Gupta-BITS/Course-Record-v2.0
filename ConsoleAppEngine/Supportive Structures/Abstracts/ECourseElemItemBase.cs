@@ -1,30 +1,19 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace ConsoleAppEngine.Abstracts
 {
+    [Serializable]
     public abstract class EElementItemBase
     {
-        /// <summary>
-        /// When an item is removed, it is set true and GC will collect later
-        /// </summary>
+        [NonSerialized]
         public bool IsDeleted = false;
-        /// <summary>
-        /// ListViewItem to be displayed in View
-        /// </summary>
+        [NonSerialized]
         public readonly ListViewItem GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
-        /// <summary>
-        /// An item in GetView, when clicked on it, will not display contentDialog
-        /// </summary>
         internal abstract object PointerOverObject { get; }
 
-        /// <summary>
-        /// Fill the given ListViewItem with current Entry and returns array of controls added
-        /// </summary>
-        /// <param name="GetView">ViewItem in which the current object view will be filled.</param>
-        /// <param name="Input">Decides the type of view and the width in * of Grid.Column.</param>
-        /// <returns></returns>
         protected static FrameworkElement[] GenerateViews(ListViewItem GetView, params (Type t, double Width)[] Input)
         {
             // This grid will be added in GetView beause 

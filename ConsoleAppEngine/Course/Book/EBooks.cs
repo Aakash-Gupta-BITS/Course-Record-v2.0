@@ -1,12 +1,17 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
 using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
-using System.Linq;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.Storage;
+using System.Threading.Tasks;
+using System.Linq;
+using Windows.UI;
 using Windows.UI.Xaml.Media;
+using System.Text;
 
 namespace ConsoleAppEngine.Course
 {
@@ -49,15 +54,27 @@ namespace ConsoleAppEngine.Course
             BestBookBox = null;
         }
 
-        protected override void AddNewItem()
+        protected async override void AddNewItem()
         {
-            AddBook(new EBookItem(
+            EBookItem x = new EBookItem(
                 (TextBookType)Enum.Parse(typeof(TextBookType), BookTypeBox.SelectedItem as string),
                 AuthorBox.Text,
                 NameBox.Text,
                 int.Parse(EditionBox.Text),
                 PressBox.Text,
-                BestBookBox.IsChecked == true));
+                BestBookBox.IsChecked == true);
+            AddBook(x);
+
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            string output = "";
+            using (MemoryStream m = new MemoryStream())
+            {
+                List<EBookItem> list = lists.ToList(); 
+                binaryFormatter.Serialize(m, list);
+                output = Encoding.ASCII.GetString(m.ToArray());
+            }
+
+            await FileIO.WriteTextAsync(await ApplicationData.Current.LocalFolder.CreateFileAsync(@"Database\Books.txt", CreationCollisionOption.OpenIfExists), output);
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)

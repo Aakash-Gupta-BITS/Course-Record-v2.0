@@ -5,6 +5,16 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.Generic;
 using ConsoleAppEngine.Log;
+using System.Runtime.Serialization.Formatters.Binary;
+using Windows.UI.Xaml;
+using Windows.Storage;
+using System.Threading.Tasks;
+using System.Linq;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
+using System.Text;
+using System.IO;
+using System;
 
 namespace Course_Record_v2._0
 {
@@ -50,13 +60,30 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 4136,
                 "Developer of this App"));
             loggingServices.WriteLine<string>("Entered Main Menu");
+
+            /*
+            string x = */
+
+
+            
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (var s = new MemoryStream(Encoding.UTF8.GetBytes(Task.Run(async () =>
+            {
+                return await FileIO.ReadTextAsync(
+                    await ApplicationData.Current.LocalFolder.GetFileAsync(
+                        @"Database\Books.txt"));
+            }).Result ?? "")))
+            {
+                var item = formatter.Deserialize(s) as List<EBookItem>;
+                foreach (var x in item)
+                    Math3Course.BookEntry.lists.AddLast(x);
+            }
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (sender.SelectedItem == null)
             {
-                
                 return;
             }
             
