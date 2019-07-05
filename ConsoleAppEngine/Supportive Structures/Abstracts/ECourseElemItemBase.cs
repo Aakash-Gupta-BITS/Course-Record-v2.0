@@ -11,7 +11,8 @@ namespace ConsoleAppEngine.Abstracts
         [NonSerialized]
         public bool IsDeleted = false;
         [NonSerialized]
-        public readonly ListViewItem GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
+        public ListViewItem GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
+
         internal abstract object PointerOverObject { get; }
 
         protected static FrameworkElement[] GenerateViews(ListViewItem GetView, params (Type t, double Width)[] Input)

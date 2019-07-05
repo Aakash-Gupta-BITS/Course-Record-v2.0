@@ -59,20 +59,12 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 "RAM",
                 4136,
                 "Developer of this App"));
-            loggingServices.WriteLine<string>("Entered Main Menu");
 
-            /*
-            string x = */
-
-
+            loggingServices.WriteLine<MainPage>("Entered Main Menu");
             
+
             BinaryFormatter formatter = new BinaryFormatter();
-            using (var s = new MemoryStream(Encoding.UTF8.GetBytes(Task.Run(async () =>
-            {
-                return await FileIO.ReadTextAsync(
-                    await ApplicationData.Current.LocalFolder.GetFileAsync(
-                        @"Database\Books.txt"));
-            }).Result ?? "")))
+            using (var s = new FileStream(Path.Combine(ApplicationData.Current.LocalFolder.Path, @"Database\Books.txt"), FileMode.OpenOrCreate))
             {
                 var item = formatter.Deserialize(s) as List<EBookItem>;
                 foreach (var x in item)

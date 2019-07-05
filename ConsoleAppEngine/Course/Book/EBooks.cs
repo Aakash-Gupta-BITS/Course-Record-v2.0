@@ -54,27 +54,20 @@ namespace ConsoleAppEngine.Course
             BestBookBox = null;
         }
 
-        protected async override void AddNewItem()
+        protected override void AddNewItem()
         {
-            EBookItem x = new EBookItem(
+            AddBook(new EBookItem(
                 (TextBookType)Enum.Parse(typeof(TextBookType), BookTypeBox.SelectedItem as string),
                 AuthorBox.Text,
                 NameBox.Text,
                 int.Parse(EditionBox.Text),
                 PressBox.Text,
-                BestBookBox.IsChecked == true);
-            AddBook(x);
+                BestBookBox.IsChecked == true));
 
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            string output = "";
-            using (MemoryStream m = new MemoryStream())
+            using (Stream m = new FileStream(Path.Combine(ApplicationData.Current.LocalFolder.Path, @"Database\Books.txt"), FileMode.Create))
             {
-                List<EBookItem> list = lists.ToList(); 
-                binaryFormatter.Serialize(m, list);
-                output = Encoding.ASCII.GetString(m.ToArray());
+                new BinaryFormatter().Serialize(m, lists.ToList());
             }
-
-            await FileIO.WriteTextAsync(await ApplicationData.Current.LocalFolder.CreateFileAsync(@"Database\Books.txt", CreationCollisionOption.OpenIfExists), output);
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)

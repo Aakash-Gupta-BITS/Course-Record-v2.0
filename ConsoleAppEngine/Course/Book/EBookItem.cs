@@ -8,7 +8,7 @@ using System;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
-    public class EBookItem : EElementItemBase//, ISerializable
+    public class EBookItem : EElementItemBase, ISerializable
     {
         public TextBookType BookType { get; private set; }
         public string Author { get; private set; }
@@ -26,8 +26,9 @@ namespace ConsoleAppEngine.Course
         [NonSerialized]
         internal readonly CheckBox IsBestViewBox;
 
-        /*protected EBookItem(SerializationInfo info, StreamingContext context)
+        protected EBookItem(SerializationInfo info, StreamingContext context)
         {
+            GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
             BookType = (TextBookType)Enum.Parse(typeof(TextBookType), info.GetString("BookType"));
             Author = info.GetString("Author");
             Name = info.GetString("Name");
@@ -57,7 +58,7 @@ namespace ConsoleAppEngine.Course
             info.AddValue("Press", Press);
             info.AddValue("IsBest", IsBest);
         }
-*/
+
         public EBookItem(TextBookType bookType, string author, string name, int edition, string press, bool isBest)
         {
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 2), (typeof(string), 1), (typeof(bool), 1));
