@@ -16,7 +16,7 @@ namespace Course_Record_v2._0.Frames.Course
         private AllCourses allCourses;
         private AllContacts allContacts;
         private readonly NavigationViewItem GoBack = new NavigationViewItem() { Content = "Go Back" };
-        
+        private bool logtemp=true;
         public MainPage()
         {
             this.InitializeComponent();
@@ -26,7 +26,10 @@ namespace Course_Record_v2._0.Frames.Course
         {
             var SelectedItem = sender.SelectedItem as NavigationViewItem;
             NavView.Header = SelectedItem.Content;
-
+            if(logtemp)
+                Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>(NavView.Header.ToString() + " is selected.");
+            else
+                Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("Switched to "+ NavView.Header.ToString() );
             if (SelectedItem == AddCoursesNavigation)
             {
                 LinkedList<object> temp = new LinkedList<object>();
@@ -39,7 +42,7 @@ namespace Course_Record_v2._0.Frames.Course
             else if (SelectedItem == GoBack)
             {
                 this.Frame.GoBack();
-                Course_Record_v2._0.MainPage.log.WriteLine<string>("Entered Main Menu");
+                Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("Entered Main Menu");
             }
             else
             {
@@ -47,6 +50,7 @@ namespace Course_Record_v2._0.Frames.Course
                 SecNav.SelectedItem = OverViewItem;
                 SecNav.Visibility = Visibility.Visible;
             }
+            logtemp = false;
         }
 
         private void SecNav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -71,51 +75,52 @@ namespace Course_Record_v2._0.Frames.Course
             {
                 case "Overview":
                     ContentFrame.Navigate(typeof(Overview));
-                    Course_Record_v2._0.MainPage.log.WriteLine<string>("OverView Tab of Course " + NavView.Header.ToString());
+                    Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("OverView Tab of Course " + NavView.Header.ToString());
                     break;
                 case "Books":
                     ContentFrame.Navigate(typeof(Books), SelectedCourse.BookEntry);
-                    Course_Record_v2._0.MainPage.log.WriteLine<string>("Books Tab of Course " + NavView.Header.ToString());
+                    Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("Books Tab of Course " + NavView.Header.ToString());
                     break;
                 case "Handout":
                     ContentFrame.Navigate(typeof(Handout), SelectedCourse.HandoutEntry);
-                    Course_Record_v2._0.MainPage.log.WriteLine<string>("Handout Tab of Course " + NavView.Header.ToString());
+                    Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("Handout Tab of Course " + NavView.Header.ToString());
                     break;
                 case "Teachers":
                     LinkedList<object> lis = new LinkedList<object>();
                     lis.AddLast(SelectedCourse);
                     lis.AddLast(allContacts.TeacherEntry);
                     ContentFrame.Navigate(typeof(Teachers), lis);
-                    Course_Record_v2._0.MainPage.log.WriteLine<string>("Teachers Tab of Course " + NavView.Header.ToString());
+                    Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("Teachers Tab of Course " + NavView.Header.ToString());
                     break;
                 case "CT log":
                     lis = new LinkedList<object>();
                     lis.AddLast(SelectedCourse.CTLog);
                     lis.AddLast(allContacts.StudentEntry);
                     ContentFrame.Navigate(typeof(CT_log), lis);
-                    Course_Record_v2._0.MainPage.log.WriteLine<string>("Displaying CT Log of Course " + NavView.Header.ToString());
+                    Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("Displaying CT Log of Course " + NavView.Header.ToString());
                     break;
                 case "Time Table":
                     ContentFrame.Navigate(typeof(TimeTable), SelectedCourse);
-                    Course_Record_v2._0.MainPage.log.WriteLine<string>("TimeTable of Course " + NavView.Header.ToString());
+                    Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("TimeTable of Course " + NavView.Header.ToString());
                     break;
                 case "Events":
                     ContentFrame.Navigate(typeof(Events), SelectedCourse.EventEntry);
-                    Course_Record_v2._0.MainPage.log.WriteLine<string>("Events of Course " + NavView.Header.ToString());
+                    Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("Events of Course " + NavView.Header.ToString());
                     break;
                 case "Tests":
                     ContentFrame.Navigate(typeof(Tests), SelectedCourse.TestEntry);
-                    Course_Record_v2._0.MainPage.log.WriteLine<string>("Tests Record of Course " + NavView.Header.ToString());
+                    Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("Tests Record of Course " + NavView.Header.ToString());
                     break;
                 case "Files":
                     ContentFrame.Navigate(typeof(Files));
-                    Course_Record_v2._0.MainPage.log.WriteLine<string>("Files of Course " + NavView.Header.ToString());
+                    Course_Record_v2._0.MainPage.log.WriteLine<Course.MainPage>("Files of Course " + NavView.Header.ToString());
                     break;
             }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            logtemp = true;
             var a = (e.Parameter as LinkedList<object>);
             allCourses = a.First.Value as AllCourses;
             allContacts = a.First.Next.Value as AllContacts;

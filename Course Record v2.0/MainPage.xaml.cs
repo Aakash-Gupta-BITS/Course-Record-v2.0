@@ -19,7 +19,7 @@ namespace Course_Record_v2._0
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            loggingServices.WriteLine<string>("The App executed successfully.");
+            loggingServices.WriteLine<MainPage>("The App executed successfully.");
             CourseEntry Math3Course = new CourseEntry((CourseType.MATH, "F213"), "Mathematics 3", 3, 0, null);
             CourseEntry CP = new CourseEntry((CourseType.CS, "F111"), "Computer Programming", 3, 1, null);
             Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
@@ -49,7 +49,7 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 "RAM",
                 4136,
                 "Developer of this App"));
-            loggingServices.WriteLine<string>("Entered Main Menu");
+            loggingServices.WriteLine<MainPage>("Entered Main Menu");
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -67,7 +67,7 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 LinkedList<object> lis = new LinkedList<object>();
                 lis.AddLast(Courses);
                 lis.AddLast(Contacts);
-                loggingServices.WriteLine<string>("Entered Course Menu" );
+                loggingServices.WriteLine<MainPage>("Entered Course Menu" );
                 this.Frame.Navigate(typeof(Frames.Course.MainPage), lis);
             }
             else if (SelectedItem == ContactMenu)
@@ -75,7 +75,7 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 LinkedList<object> lis = new LinkedList<object>();
                 lis.AddLast(Contacts);
                 lis.AddLast(Courses);
-                loggingServices.WriteLine<string>("Entered Contact Menu");
+                loggingServices.WriteLine<MainPage>("Entered Contact Menu");
                 this.Frame.Navigate(typeof(Frames.Contacts.MainPage), lis);
             }
         }

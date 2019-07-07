@@ -32,7 +32,7 @@ namespace Course_Record_v2._0.Frames.Contacts
                 lis.AddLast(allContacts.TeacherEntry);
                 lis.AddLast(allCourses);
                 ContentFrame.Navigate(typeof(TeacherContacts), lis);
-                Course_Record_v2._0.MainPage.log.WriteLine<string>("Showing Teachers' Contacts");
+                Course_Record_v2._0.MainPage.log.WriteLine<Contacts.MainPage>("Showing Teachers' Contacts");
             }
             else if(SelectedItem == StudentsNavigation)
             {
@@ -40,12 +40,12 @@ namespace Course_Record_v2._0.Frames.Contacts
                 lis.AddLast(allContacts.StudentEntry);
                 lis.AddLast(allCourses);
                 ContentFrame.Navigate(typeof(StudentContacts), lis);
-                Course_Record_v2._0.MainPage.log.WriteLine<string>("Showing Students' Contacts");
+                Course_Record_v2._0.MainPage.log.WriteLine<Contacts.MainPage>("Showing Students' Contacts");
             }
             else if (SelectedItem == GoBack)
             {
                 Frame.GoBack();
-                Course_Record_v2._0.MainPage.log.WriteLine<string>("Entered to Main Menu");
+                Course_Record_v2._0.MainPage.log.WriteLine<Contacts.MainPage>("Entered to Main Menu");
 
             }
         }
