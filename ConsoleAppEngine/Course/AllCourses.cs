@@ -20,7 +20,6 @@ namespace ConsoleAppEngine.Course
                 if (y.Title == e.Title ||
                     (y.ID.branchstring == e.ID.branchstring && y.ID.branchtype == e.ID.branchtype))
                     return false;
-
             }
             return true;
         }

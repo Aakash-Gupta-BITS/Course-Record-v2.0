@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ConsoleAppEngine.Contacts;
 using System.Collections.Generic;
+using ConsoleAppEngine.Log;
 
 namespace Course_Record_v2._0.Frames.Contacts
 {
@@ -21,6 +22,7 @@ namespace Course_Record_v2._0.Frames.Contacts
         {
             var SelectedItem = sender.SelectedItem as NavigationViewItem;
 
+            LoggingServices.Instance.WriteLine<MainPage>("\"" + SelectedItem.Content as string + "\" is selected at Teacher Main Page.");
             if (SelectedItem == null)
                 return;
 
@@ -32,7 +34,6 @@ namespace Course_Record_v2._0.Frames.Contacts
                 lis.AddLast(allContacts.TeacherEntry);
                 lis.AddLast(allCourses);
                 ContentFrame.Navigate(typeof(TeacherContacts), lis);
-                Course_Record_v2._0.MainPage.log.WriteLine<string>("Showing Teachers' Contacts");
             }
             else if(SelectedItem == StudentsNavigation)
             {
@@ -40,22 +41,26 @@ namespace Course_Record_v2._0.Frames.Contacts
                 lis.AddLast(allContacts.StudentEntry);
                 lis.AddLast(allCourses);
                 ContentFrame.Navigate(typeof(StudentContacts), lis);
-                Course_Record_v2._0.MainPage.log.WriteLine<string>("Showing Students' Contacts");
             }
             else if (SelectedItem == GoBack)
             {
                 Frame.GoBack();
-                Course_Record_v2._0.MainPage.log.WriteLine<string>("Entered to Main Menu");
-
             }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            LoggingServices.Instance.WriteLine<MainPage>("Constacts Main Page loading...");
             var temp = e.Parameter as LinkedList<object>;
             allContacts = temp.First.Value as AllContacts;
             allCourses = temp.First.Next.Value as AllCourses;
             NavView.SelectedItem = StudentsNavigation;
+            LoggingServices.Instance.WriteLine<MainPage>("Contacts Main Page loaded.");
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            LoggingServices.Instance.WriteLine<MainPage>("Contacts Main Page unloaded.");
         }
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)

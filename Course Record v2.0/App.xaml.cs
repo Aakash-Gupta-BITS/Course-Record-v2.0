@@ -57,7 +57,7 @@ namespace Course_Record_v2._0
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    LoggingServices.Instance.WriteLine<App>("App Executed Successfully.");
+                    LoggingServices.Instance.WriteLine<App>("App Started Successfully.");
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active

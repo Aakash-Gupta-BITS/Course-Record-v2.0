@@ -22,8 +22,6 @@ namespace Course_Record_v2._0
     {
         private readonly AllCourses Courses = new AllCourses();
         private readonly AllContacts Contacts = new AllContacts();
-        public static LoggingServices log = new LoggingServices();
-        public ILoggingServices loggingServices = log as ILoggingServices;
 
         public MainPage()
         {
@@ -36,7 +34,7 @@ namespace Course_Record_v2._0
             CourseEntry Math3Course = null;
 
             #region Deserialize
-
+            /*
             BinaryFormatter formatter = new BinaryFormatter();
             if (!File.Exists(FileLocation))
                 return;
@@ -44,7 +42,7 @@ namespace Course_Record_v2._0
             {
                 Math3Course = formatter.Deserialize(s) as CourseEntry;
             }
-
+            */
             #endregion
 
             #region Serialize
@@ -66,7 +64,7 @@ namespace Course_Record_v2._0
                 Courses.CoursesList.AddLast(Math3Course);
             }
 
-
+            #region ContactsAdd
             Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
                 "Dr. Manoj Kannan",
                 new string[] { @"+91-1596-515-855", "" },
@@ -89,8 +87,7 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 "RAM",
                 4136,
                 "Developer of this App"));
-
-            loggingServices.WriteLine<MainPage>("Entered Main Menu");
+            #endregion
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -99,15 +96,16 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
             {
                 return;
             }
-            
-            object SelectedItem = (sender.SelectedItem as NavigationViewItem);
-            
+
+            NavigationViewItem SelectedItem = (sender.SelectedItem as NavigationViewItem);
+
+            LoggingServices.Instance.WriteLine<MainPage>("\"" + SelectedItem.Content as string + "\" is selected at initial Main Page.");
+
             if (SelectedItem == CourseMenu)
             {
                 LinkedList<object> lis = new LinkedList<object>();
                 lis.AddLast(Courses);
                 lis.AddLast(Contacts);
-                loggingServices.WriteLine<string>("Entered Course Menu" );
                 this.Frame.Navigate(typeof(Frames.Course.MainPage), lis);
             }
             else if (SelectedItem == ContactMenu)
@@ -115,17 +113,16 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 LinkedList<object> lis = new LinkedList<object>();
                 lis.AddLast(Contacts);
                 lis.AddLast(Courses);
-                loggingServices.WriteLine<string>("Entered Contact Menu");
                 this.Frame.Navigate(typeof(Frames.Contacts.MainPage), lis);
             }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
             NavView.SelectedItem = null;
             this.Frame.BackStack.Clear();
             this.Frame.ForwardStack.Clear();
         }
-
     }
 }
