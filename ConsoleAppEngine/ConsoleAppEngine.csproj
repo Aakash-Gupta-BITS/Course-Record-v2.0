@@ -138,6 +138,7 @@
     <Compile Include="Course\Test\ETests.cs" />
     <Compile Include="Course\Time Table\ECourseTimeTable.cs" />
     <Compile Include="Course\Time Table\ETimeTableItem.cs" />
+    <Compile Include="Supportive Structures\Database\GetAllFromHDD.cs" />
     <Compile Include="Supportive Structures\Enums.cs" />
     <Compile Include="Course\CourseEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

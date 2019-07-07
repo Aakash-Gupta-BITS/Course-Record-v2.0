@@ -12,23 +12,43 @@ using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace ConsoleAppEngine.Course
 {
-    public partial class EBooks
+    [Serializable]
+    public partial class EBooks : EElementBase<EBookItem>, ISerializable
     {
+        #region DisplayBoxes
+
         private TextBox NameBox;
         private TextBox AuthorBox;
         private TextBox EditionBox;
         private TextBox PressBox;
         private ComboBox BookTypeBox;
         private CheckBox BestBookBox;
+        
+        #endregion
 
         public void AddBook(EBookItem eBookItem)
         {
             lists.AddLast(eBookItem);
             UpdateList();
         }
+
+        #region Serialization
+
+        public EBooks() : base()
+        {
+
+        }
+
+        protected EBooks(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+
+        }
+        
+        #endregion
     }
 
     public partial class EBooks : EElementBase<EBookItem>
@@ -63,11 +83,7 @@ namespace ConsoleAppEngine.Course
                 int.Parse(EditionBox.Text),
                 PressBox.Text,
                 BestBookBox.IsChecked == true));
-
-            using (Stream m = new FileStream(Path.Combine(ApplicationData.Current.LocalFolder.Path, @"Database\Books.txt"), FileMode.Create))
-            {
-                new BinaryFormatter().Serialize(m, lists.ToList());
-            }
+            // UpdateOnHdd();
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -129,6 +145,7 @@ namespace ConsoleAppEngine.Course
                 int.Parse(EditionBox.Text),
                 PressBox.Text,
                 BestBookBox.IsChecked == true);
+           // UpdateOnHdd();
         }
 
         protected override IOrderedEnumerable<EBookItem> OrderList()

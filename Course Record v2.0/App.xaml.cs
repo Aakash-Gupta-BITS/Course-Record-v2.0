@@ -4,6 +4,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using ConsoleAppEngine.Log;
 
 namespace Course_Record_v2._0
 {
@@ -56,6 +57,7 @@ namespace Course_Record_v2._0
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
+                    LoggingServices.Instance.WriteLine<App>("App Executed Successfully.");
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active

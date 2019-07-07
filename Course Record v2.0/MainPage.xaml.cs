@@ -29,9 +29,44 @@ namespace Course_Record_v2._0
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            loggingServices.WriteLine<string>("The App executed successfully.");
-            CourseEntry Math3Course = new CourseEntry((CourseType.MATH, "F213"), "Mathematics 3", 3, 0, null);
-            CourseEntry CP = new CourseEntry((CourseType.CS, "F111"), "Computer Programming", 3, 1, null);
+
+            string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
+            string FileLocation = Path.Combine(DirectoryLocation, "Math3.txt");
+
+            CourseEntry Math3Course = null;
+
+            #region Deserialize
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            if (!File.Exists(FileLocation))
+                return;
+            using (var s = new FileStream(FileLocation, FileMode.OpenOrCreate))
+            {
+                Math3Course = formatter.Deserialize(s) as CourseEntry;
+            }
+
+            #endregion
+
+            #region Serialize
+
+            Math3Course = new CourseEntry((CourseType.MATH, "F213"), "Mathematics 3", 3, 0, null);
+            Math3Course.BookEntry.AddBook(new EBookItem(TextBookType.Reference, "LALA", "JI", 5, "ABCD", true));
+
+            if (!Directory.Exists(DirectoryLocation))
+                Directory.CreateDirectory(DirectoryLocation);
+            using (Stream m = new FileStream(FileLocation, FileMode.Create))
+            {
+                new BinaryFormatter().Serialize(m, Math3Course);
+            }
+
+            #endregion
+
+            if (Courses.CoursesList.Count == 0)
+            {
+                Courses.CoursesList.AddLast(Math3Course);
+            }
+
+
             Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
                 "Dr. Manoj Kannan",
                 new string[] { @"+91-1596-515-855", "" },
@@ -42,11 +77,6 @@ BITS Pilani, Pilani Campus
 Vidya Vihar, Pilani 333031 (Rajasthan)",
                 @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
                 "Katayi Bdia Master"));
-            if (Courses.CoursesList.Count == 0)
-            {
-                Courses.CoursesList.AddLast(Math3Course);
-                Courses.CoursesList.AddLast(CP);
-            }
 
 
             Contacts.StudentEntry.AddStudent(new EStudentEntry(
@@ -61,15 +91,6 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 "Developer of this App"));
 
             loggingServices.WriteLine<MainPage>("Entered Main Menu");
-            
-
-            BinaryFormatter formatter = new BinaryFormatter();
-            using (var s = new FileStream(Path.Combine(ApplicationData.Current.LocalFolder.Path, @"Database\Books.txt"), FileMode.OpenOrCreate))
-            {
-                var item = formatter.Deserialize(s) as List<EBookItem>;
-                foreach (var x in item)
-                    Math3Course.BookEntry.lists.AddLast(x);
-            }
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

@@ -7,23 +7,58 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
+using Windows.Storage;
+using System.Threading.Tasks;
+using System.Text;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ConsoleAppEngine.Abstracts
 {
-    public abstract class EElementBase<T> where T : EElementItemBase
+    [Serializable]
+    public abstract partial class EElementBase<T> : ISerializable where T : EElementItemBase
     {
-        public readonly LinkedList<T> lists = new LinkedList<T>();
+        private EElementBase(LinkedList<T> List)
+        {
+            lists = List;
+            contentDialog = new ContentDialog()
+            {
+                PrimaryButtonText = "Modify",
+                SecondaryButtonText = "Delete",
+                CloseButtonText = "Ok"
+            };
+        }
+
+        public EElementBase() : this(new LinkedList<T>())
+        {
+
+        }
+
+        #region Serialization
+
+        protected EElementBase(SerializationInfo info, StreamingContext context) : this((LinkedList<T>)info.GetValue(nameof(lists), typeof(LinkedList<T>)))
+        {
+
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(lists), lists, typeof(LinkedList<T>));
+        }
+        
+        #endregion
+    }
+
+    public abstract partial class EElementBase<T> where T : EElementItemBase
+    {
+        public readonly LinkedList<T> lists;
         protected T ItemToChange { get; set; }
         protected Grid ViewGrid;
         protected Grid AddGrid;
         protected ListView ViewList;
         protected Button AddButton;
-        protected readonly ContentDialog contentDialog = new ContentDialog()
-        {
-            PrimaryButtonText = "Modify",
-            SecondaryButtonText = "Delete",
-            CloseButtonText = "Ok"
-        };
+        protected readonly ContentDialog contentDialog;
         protected AppBarButton ViewCommand;
         protected AppBarButton AddCommand;
 

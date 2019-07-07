@@ -10,6 +10,8 @@ namespace ConsoleAppEngine.Course
     [Serializable]
     public class EBookItem : EElementItemBase, ISerializable
     {
+        #region Properties
+
         public TextBookType BookType { get; private set; }
         public string Author { get; private set; }
         public string Name { get; private set; }
@@ -17,24 +19,27 @@ namespace ConsoleAppEngine.Course
         public string Press { get; private set; }
         public bool IsBest { get; private set; }
 
-        [NonSerialized]
+        #endregion
+
+        #region DisplayItems
+
         internal readonly TextBlock NameViewBlock;
-        [NonSerialized]
         internal readonly TextBlock AuthorViewBlock;
-        [NonSerialized]
         internal readonly TextBlock BookTypeViewBlock;
-        [NonSerialized]
         internal readonly CheckBox IsBestViewBox;
 
-        protected EBookItem(SerializationInfo info, StreamingContext context)
+        #endregion
+
+        #region Serialization
+
+        protected EBookItem(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
-            BookType = (TextBookType)Enum.Parse(typeof(TextBookType), info.GetString("BookType"));
-            Author = info.GetString("Author");
-            Name = info.GetString("Name");
-            Edition = info.GetInt32("Edition");
-            Press = info.GetString("Press");
-            IsBest = info.GetBoolean("IsBest");
+            BookType = (TextBookType)info.GetValue("BookType", typeof(TextBookType));
+            Author = (string)info.GetValue("Author", typeof(string));
+            Name = (string)info.GetValue("Name", typeof(string));
+            Edition = (int)info.GetValue("Edition", typeof(int));
+            Press = (string)info.GetValue("Press", typeof(string));
+            IsBest = (bool)info.GetValue("IsBest", typeof(bool));
 
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 2), (typeof(string), 1), (typeof(bool), 1));
 
@@ -49,15 +54,17 @@ namespace ConsoleAppEngine.Course
             IsBestViewBox.IsChecked = IsBest;
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("BookType", BookType.ToString());
-            info.AddValue("Author", Author);
-            info.AddValue("Name", Name);
-            info.AddValue("Edition", Edition);
-            info.AddValue("Press", Press);
-            info.AddValue("IsBest", IsBest);
+            info.AddValue(nameof(BookType), BookType, typeof(TextBookType));
+            info.AddValue(nameof(Author), Author, typeof(string));
+            info.AddValue(nameof(Name), Name, typeof(string));
+            info.AddValue(nameof(Edition), Edition, typeof(int));
+            info.AddValue(nameof(Press), Press, typeof(string));
+            info.AddValue(nameof(IsBest), IsBest, typeof(bool));
         }
+
+        #endregion
 
         public EBookItem(TextBookType bookType, string author, string name, int edition, string press, bool isBest)
         {
