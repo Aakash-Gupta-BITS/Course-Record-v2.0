@@ -2,13 +2,8 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace Course_Record_v2._0.Frames.Course
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class TimeTable : Page
     {
         private ECourseTimeTable TimeEntry;
@@ -42,6 +37,22 @@ namespace Course_Record_v2._0.Frames.Course
                 AddButton);
 
             TimeEntry.SetTeachersEntry((e.Parameter as CourseEntry).TeacherEntry);
+            Teacher1Input.Items.Add("");
+            Teacher2Input.Items.Add("");
+            Teacher3Input.Items.Add("");
+
+            foreach (var y in (e.Parameter as CourseEntry).TeacherEntry.lists)
+            {
+                Teacher1Input.Items.Add(y.Name);
+                Teacher2Input.Items.Add(y.Name);
+                Teacher3Input.Items.Add(y.Name);
+            }
+        }
+
+        private void ReloadCommand_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            foreach (var x in TimeEntry.lists)
+                x.UpdateViews();
         }
     }
 }

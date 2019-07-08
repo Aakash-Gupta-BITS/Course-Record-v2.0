@@ -1,6 +1,8 @@
 ﻿using ConsoleAppEngine.Abstracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -8,14 +10,19 @@ using Windows.UI.Xaml.Media;
 
 namespace ConsoleAppEngine.Course
 {
-    public partial class ETeachers
+    [Serializable]
+    public partial class ETeachers : ISerializable
     {
+        #region DisplayBoxes
+
         private TextBox NameBox;
         private TextBox Phone1Box, Phone2Box;
         private TextBox Email1Box, Email2Box;
         private TextBox AddressBox;
         private TextBox WebsiteBox;
         private TextBox OtherBox;
+
+        #endregion
 
         private AllCourses allCourses;
 
@@ -36,20 +43,22 @@ namespace ConsoleAppEngine.Course
             {
                 s.TeacherEntry.lists.Remove(ItemToChange);
                 s.SyncTimeTablewithTeachers();
-                /*
-                LinkedList<ETeacherEntry> temp = new LinkedList<ETeacherEntry>();
-                foreach (var x in s.TeacherEntry.lists)
-                {
-                    temp.AddLast(x);
-                    if (!lists.Contains(x))
-                        temp.Remove(x);
-                }
-
-                s.TeacherEntry.lists.Clear();
-                foreach (var x in temp)
-                    s.TeacherEntry.lists.AddLast(x);*/
             }
         }
+
+        #region Serialization
+
+        public ETeachers() : base()
+        {
+
+        }
+
+        protected ETeachers(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+
+        }
+
+        #endregion
     }
 
     public partial class ETeachers : EElementBase<ETeacherEntry>

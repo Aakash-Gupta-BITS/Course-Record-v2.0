@@ -17,13 +17,13 @@ namespace ConsoleAppEngine.Course
 
         public readonly NavigationViewItem navigationViewItem = new NavigationViewItem();
 
-        public readonly EHandouts HandoutEntry = new EHandouts();
         public readonly EBooks BookEntry = new EBooks();
-        public readonly ETests TestEntry = new ETests();
-        public readonly ETeachers TeacherEntry = new ETeachers();
-        public readonly ECourseTimeTable TimeEntry = new ECourseTimeTable();
-        public readonly EEvents EventEntry = new EEvents();
         public readonly EStudents CTLog = new EStudents();
+        public readonly EEvents EventEntry = new EEvents();
+        public readonly EHandouts HandoutEntry = new EHandouts();
+        public readonly ETeachers TeacherEntry = new ETeachers();
+        public readonly ETests TestEntry = new ETests();
+        public readonly ECourseTimeTable TimeEntry = new ECourseTimeTable();
 
         public CourseEntry((CourseType branchtype, string branchstring) id, string title, byte lectureUnits, byte practicalUnits, ETeacherEntry iC)
         {
@@ -42,7 +42,7 @@ namespace ConsoleAppEngine.Course
             foreach (var x in TimeEntry.lists)
             {
                 temp.AddLast(x);
-                foreach (var y in x.Teacher)
+                foreach (var y in x.Teachers)
                 {
                     if (!TeacherEntry.lists.Contains(y))            // If teacher is not found
                     {
@@ -60,22 +60,20 @@ namespace ConsoleAppEngine.Course
 
         protected CourseEntry(SerializationInfo info, StreamingContext context)
         {
-
-            navigationViewItem = new NavigationViewItem();
-
-            HandoutEntry = new EHandouts();
-            TestEntry = new ETests();
-            TeacherEntry = new ETeachers();
-            TimeEntry = new ECourseTimeTable();
-            EventEntry = new EEvents();
-            CTLog = new EStudents();
-
             ID = ((CourseType)info.GetValue(nameof(ID.branchtype), typeof(CourseType)), (string)info.GetValue(nameof(ID.branchstring), typeof(string)));
             Title = info.GetString(nameof(Title));
             LectureUnits = info.GetByte(nameof(LectureUnits));
             PracticalUnits = info.GetByte(nameof(PracticalUnits));
 
-            BookEntry = (EBooks)info.GetValue(nameof(BookEntry), typeof(EBooks));
+            BookEntry = info.GetValue(nameof(BookEntry), typeof(EBooks)) as EBooks;
+            CTLog = new EStudents();
+            EventEntry = info.GetValue(nameof(EventEntry), typeof(EEvents)) as EEvents;
+            HandoutEntry = info.GetValue(nameof(HandoutEntry), typeof(EHandouts)) as EHandouts;
+            TestEntry = info.GetValue(nameof(TestEntry), typeof(ETests)) as ETests;
+            TeacherEntry = info.GetValue(nameof(TeacherEntry), typeof(ETeachers)) as ETeachers;
+            TimeEntry = info.GetValue(nameof(TimeEntry), typeof(ECourseTimeTable)) as ECourseTimeTable;
+
+            navigationViewItem = new NavigationViewItem();
             navigationViewItem.Content = Title;
         }
 
@@ -86,7 +84,13 @@ namespace ConsoleAppEngine.Course
             info.AddValue(nameof(Title), Title);
             info.AddValue(nameof(LectureUnits), LectureUnits);
             info.AddValue(nameof(PracticalUnits), PracticalUnits);
+
             info.AddValue(nameof(BookEntry), BookEntry, typeof(EBooks));
+            info.AddValue(nameof(EventEntry), EventEntry, typeof(EEvents));
+            info.AddValue(nameof(HandoutEntry), HandoutEntry, typeof(EHandouts));
+            info.AddValue(nameof(TestEntry), TestEntry, typeof(ETests));
+            info.AddValue(nameof(TeacherEntry), TeacherEntry, typeof(ETeachers));
+            info.AddValue(nameof(TimeEntry), TimeEntry, typeof(ECourseTimeTable));
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,19 +10,38 @@ using Windows.UI.Xaml.Media;
 
 namespace ConsoleAppEngine.Course
 {
-    public partial class EEvents
+    [Serializable]
+    public partial class EEvents : EElementBase<EEventItem>, ISerializable
     {
+        #region DisplayBoxes
+
         private TextBox TitleBox;
         private DatePicker DateBox;
         private TimePicker TimeBox;
         private TextBox LocationBox;
         private TextBox DescriptionBox;
 
+        #endregion
+
         public void AddEvent(EEventItem eventItem)
         {
             lists.AddLast(eventItem);
             UpdateList();
         }
+
+        #region Serialization
+
+        public EEvents() : base()
+        {
+
+        }
+
+        protected EEvents(SerializationInfo info, StreamingContext context) : base (info, context)
+        {
+
+        }
+
+        #endregion
     }
 
     public partial class EEvents : EElementBase<EEventItem>
