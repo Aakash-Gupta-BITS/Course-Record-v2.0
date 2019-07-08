@@ -1,18 +1,15 @@
-﻿using System.Collections.ObjectModel;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI;
-using System;
-using ConsoleAppEngine.Course;
+﻿using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Contacts;
-using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Log;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Text;
-using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using ConsoleAppEngine.Log;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,18 +19,20 @@ namespace Course_Record_v2._0.Frames.Course
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     /// 
-    public sealed partial class Add_Course : Page
+    public sealed partial class AllCoursesView : Page
     {
         private AllCourses Courses;
         private AllContacts Contacts;
         private NavigationView NavView;
-        public Add_Course()
+        public AllCoursesView()
         {
             this.InitializeComponent();
 
             // dynamically fill CourseType
             foreach (var x in Enum.GetValues(typeof(CourseType)))
+            {
                 TyeInput.Items.Add(x.ToString());
+            }
         }
 
 
@@ -55,13 +54,14 @@ namespace Course_Record_v2._0.Frames.Course
 
             ETeacherEntry eTeacher = null;
             foreach (var y in Contacts.TeacherEntry.lists)
+            {
                 if (y.Name == ICSelect.SelectedItem.ToString())
                 {
                     eTeacher = y;
                     break;
                 }
+            }
 
-             
             CourseType ctype = (CourseType)Enum.Parse(typeof(CourseType), TyeInput.SelectedItem as string);
             CourseEntry entry = new CourseEntry(
                 (ctype, IdInput.Text),
@@ -79,17 +79,23 @@ namespace Course_Record_v2._0.Frames.Course
                 return;
             }
 
-            LoggingServices.Instance.WriteLine<Add_Course>(string.Format("{0} course is added", entry.Title));
+            LoggingServices.Instance.WriteLine<AllCoursesView>(string.Format("{0} course is added", entry.Title));
             (sender as Button).BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 
             var list = NavView.MenuItems.ToArray();
             NavView.MenuItems.Clear();
             for (int i = 0; i < list.Length - 4; ++i)
+            {
                 NavView.MenuItems.Add(list[i]);
+            }
+
             NavView.MenuItems.Add(entry.navigationViewItem);
             for (int i = list.Length - 4; i < list.Length; ++i)
+            {
                 NavView.MenuItems.Add(list[i]);
+            } (sender as Button).BorderBrush = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
 
+            NavView.IsPaneOpen = true;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -101,9 +107,9 @@ namespace Course_Record_v2._0.Frames.Course
             NavView = x.First.Next.Next.Value as NavigationView;
 
             foreach (var y in Contacts.TeacherEntry.lists)
+            {
                 ICSelect.Items.Add(y.Name);
+            }
         }
-
     }
-
 }

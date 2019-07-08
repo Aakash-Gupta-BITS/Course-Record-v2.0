@@ -1,9 +1,9 @@
-﻿using System.Runtime.Serialization;
-using ConsoleAppEngine.Abstracts;
+﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using System;
+using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System;
 
 namespace ConsoleAppEngine.Course
 {

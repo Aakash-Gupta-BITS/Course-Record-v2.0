@@ -1,18 +1,13 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
 using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.Storage;
-using System.Threading.Tasks;
-using System.Linq;
-using Windows.UI;
 using Windows.UI.Xaml.Media;
-using System.Text;
-using System.Runtime.Serialization;
 
 namespace ConsoleAppEngine.Course
 {
@@ -27,7 +22,7 @@ namespace ConsoleAppEngine.Course
         private TextBox PressBox;
         private ComboBox BookTypeBox;
         private CheckBox BestBookBox;
-        
+
         #endregion
 
         public void AddBook(EBookItem eBookItem)
@@ -47,7 +42,7 @@ namespace ConsoleAppEngine.Course
         {
 
         }
-        
+
         #endregion
     }
 
@@ -145,7 +140,7 @@ namespace ConsoleAppEngine.Course
                 int.Parse(EditionBox.Text),
                 PressBox.Text,
                 BestBookBox.IsChecked == true);
-           // UpdateOnHdd();
+            // UpdateOnHdd();
         }
 
         protected override IOrderedEnumerable<EBookItem> OrderList()

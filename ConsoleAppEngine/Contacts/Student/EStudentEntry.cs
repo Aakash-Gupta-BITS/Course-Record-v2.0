@@ -1,7 +1,7 @@
 ﻿using ConsoleAppEngine.Abstracts;
+using ConsoleAppEngine.AllEnums;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using ConsoleAppEngine.AllEnums;
 
 namespace ConsoleAppEngine.Course
 {
@@ -47,9 +47,13 @@ namespace ConsoleAppEngine.Course
             PhoneViewBlock.Text = Phone.Length > 0 ? Phone[0] : "";
 
             if (Year != 0)
+            {
                 EmailViewBlock.Text = PersonalMail == "" ? string.Format(@"f{0}{1}@pilani.bits-pilani.ac.in", Year, Digits.ToString().PadLeft(4, '0')) : PersonalMail;
+            }
             else
+            {
                 EmailViewBlock.Text = PersonalMail;
+            }
         }
 
         internal override object PointerOverObject => null;

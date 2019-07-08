@@ -19,7 +19,10 @@ namespace ConsoleAppEngine.Course
 
         private AllCourses allCourses;
 
-        public void SetAllCourses(AllCourses s) => allCourses = s;
+        public void SetAllCourses(AllCourses s)
+        {
+            allCourses = s;
+        }
 
         public void AddTeacher(ETeacherEntry t)
         {
@@ -86,12 +89,14 @@ namespace ConsoleAppEngine.Course
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
             foreach (var x in (from a in lists where a != ItemToChange select a.Name))
+            {
                 if (NameBox.Text == x)
                 {
                     Controls.AddLast(NameBox);
                     ErrorWaale.AddLast(NameBox);
                     break;
                 }
+            }
         }
 
         protected override void ClearAddGrid()

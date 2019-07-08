@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleAppEngine.Contacts;
+﻿using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Course;
+using System;
 
 namespace ConsoleAppEngine.Database
 {
@@ -13,8 +9,8 @@ namespace ConsoleAppEngine.Database
         private static bool IsOperationCompleted = false;
         public static bool Completed => IsOperationCompleted;
 
-        static AllCourses allCourses;
-        static AllContacts allContacts;
+        private static readonly AllCourses allCourses;
+        private static readonly AllContacts allContacts;
 
         private delegate Tuple<AllCourses, AllContacts> GetOperation();
 
@@ -30,7 +26,7 @@ namespace ConsoleAppEngine.Database
             return new Tuple<AllCourses, AllContacts>(allCourses, allContacts);
         }
 
-        static void OnOperationComplete(IAsyncResult asyncResult)
+        private static void OnOperationComplete(IAsyncResult asyncResult)
         {
 
             IsOperationCompleted = true;

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Course;
-using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.Log;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine.Log;
 
 namespace Course_Record_v2._0.Frames.Course
 {
@@ -13,7 +13,7 @@ namespace Course_Record_v2._0.Frames.Course
         private AllCourses allCourses;
         private AllContacts allContacts;
         private readonly NavigationViewItem GoBack = new NavigationViewItem() { Content = "Go Back" };
-        
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -32,7 +32,7 @@ namespace Course_Record_v2._0.Frames.Course
                 temp.AddLast(allCourses);
                 temp.AddLast(allContacts);
                 temp.AddLast(NavView);
-                ContentFrame.Navigate(typeof(Add_Course), temp);
+                ContentFrame.Navigate(typeof(AllCoursesView), temp);
                 SecNav.Visibility = Visibility.Collapsed;
             }
             else if (SelectedItem == GoBack)
@@ -132,7 +132,7 @@ namespace Course_Record_v2._0.Frames.Course
             }
             LoggingServices.Instance.WriteLine<MainPage>("Course Main Page loaded.");
         }
-        
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             NavView.MenuItems.Clear();

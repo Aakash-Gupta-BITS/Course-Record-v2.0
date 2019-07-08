@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ConsoleAppEngine.Log;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine.Log;
 
 namespace Course_Record_v2._0
 {

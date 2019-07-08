@@ -1,10 +1,8 @@
 ﻿using ConsoleAppEngine.AllEnums;
-using Windows.UI.Xaml.Controls;
-using System.Collections.Generic;
 using System;
-
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Windows.UI.Xaml.Controls;
 
 namespace ConsoleAppEngine.Course
 {
@@ -45,15 +43,19 @@ namespace ConsoleAppEngine.Course
             {
                 temp.AddLast(x);
                 foreach (var y in x.Teacher)
+                {
                     if (!TeacherEntry.lists.Contains(y))            // If teacher is not found
                     {
                         temp.Remove(x);
                         break;
                     }
+                }
             }
             TimeEntry.lists.Clear();
             foreach (var x in temp)
+            {
                 TimeEntry.lists.AddLast(x);
+            }
         }
 
         protected CourseEntry(SerializationInfo info, StreamingContext context)

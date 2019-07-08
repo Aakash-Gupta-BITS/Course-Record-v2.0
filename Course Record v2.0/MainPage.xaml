@@ -20,6 +20,7 @@
                 <NavigationViewItem Content="Time Table" x:Name="TimeMenu"/>
                 <NavigationViewItemSeparator/>
             </NavigationView.MenuItems>
+            <TextBlock x:Name="Directory" IsTextSelectionEnabled="True"/>
         </NavigationView>
     </Grid>
 </Page>

@@ -1,12 +1,12 @@
 ﻿using ConsoleAppEngine.Abstracts;
+using ConsoleAppEngine.AllEnums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using System;
-using ConsoleAppEngine.AllEnums;
 
 namespace ConsoleAppEngine.Course
 {
@@ -22,7 +22,10 @@ namespace ConsoleAppEngine.Course
 
         private AllCourses allCourses;
 
-        public void SetAllCourses(AllCourses s) => allCourses = s;
+        public void SetAllCourses(AllCourses s)
+        {
+            allCourses = s;
+        }
 
         public override void PostDeleteTasks()
         {
@@ -53,7 +56,9 @@ namespace ConsoleAppEngine.Course
                 br1 = (ExpandedBranch)(int)(BranchId)Enum.Parse(typeof(BranchId), Id[1].Substring(0, 2));
                 br2 = (ExpandedBranch)(int)(BranchId)Enum.Parse(typeof(BranchId), Id[1].Substring(2));
                 if (year < 2012 || year > 2019 || digits < 0 || digits > 2000)
+                {
                     throw new Exception();
+                }
             }
             catch
             {
@@ -109,12 +114,19 @@ namespace ConsoleAppEngine.Course
             Controls.AddLast(NameBox);
             Controls.AddLast(OtherInput);
             if (NameBox.Text == "")
+            {
                 ErrorWaale.AddLast(NameBox);
+            }
+
             foreach (var x in (from a in lists
                                where a != ItemToChange
                                select a))
+            {
                 if (NameBox.Text == x.Name && OtherInput.Text == x.OtherInfo)
+                {
                     ErrorWaale.AddLast(OtherInput);
+                }
+            }
         }
 
         protected override void ClearAddGrid()
@@ -133,7 +145,10 @@ namespace ConsoleAppEngine.Course
             OtherInput.Text = "";
         }
 
-        protected override Grid Header() => GenerateHeader(("Name", 1), ("Phone", 1), ("Email", 1));
+        protected override Grid Header()
+        {
+            return GenerateHeader(("Name", 1), ("Phone", 1), ("Email", 1));
+        }
 
         protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
         {
@@ -161,7 +176,10 @@ namespace ConsoleAppEngine.Course
                 OtherInput.Text);
         }
 
-        protected override IOrderedEnumerable<EStudentEntry> OrderList() => lists.OrderBy(a => a.Name);
+        protected override IOrderedEnumerable<EStudentEntry> OrderList()
+        {
+            return lists.OrderBy(a => a.Name);
+        }
 
         protected override void SetAddGrid_ItemToChange()
         {
@@ -169,9 +187,14 @@ namespace ConsoleAppEngine.Course
             Phone1Box.Text = ItemToChange.Phone[0];
             Phone2Box.Text = ItemToChange.Phone[1];
             if (ItemToChange.Year != 0)
+            {
                 IdBox.Text = ItemToChange.Year + " " + ((BranchId)(int)ItemToChange.Branch[0]).ToString() + ((BranchId)(int)ItemToChange.Branch[1]).ToString() + " " + ItemToChange.Digits.ToString().PadRight(4, '0');
+            }
             else
+            {
                 IdBox.Text = "";
+            }
+
             PersonalEmailBox.Text = ItemToChange.PersonalMail;
             HostelBox.Text = ItemToChange.Hostel;
             RoomBox.Text = ItemToChange.Room.ToString();
