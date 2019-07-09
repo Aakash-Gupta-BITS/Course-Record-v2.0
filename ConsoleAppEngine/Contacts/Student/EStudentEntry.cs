@@ -1,12 +1,16 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using System;
+using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace ConsoleAppEngine.Course
 {
-    public class EStudentEntry : EElementItemBase
+    [Serializable]
+    public class EStudentEntry : EElementItemBase, ISerializable
     {
+        #region Properties
         public string Name { get; private set; }
         public int Year { get; private set; }
         public ExpandedBranch[] Branch { get; private set; }
@@ -16,10 +20,43 @@ namespace ConsoleAppEngine.Course
         public string Hostel { get; private set; }
         public int Room { get; private set; }
         public string OtherInfo { get; private set; }
+        #endregion
 
+        #region DisplayItems
         internal readonly TextBlock NameViewBlock;
         internal readonly TextBlock PhoneViewBlock;
         internal readonly TextBlock EmailViewBlock;
+        #endregion
+
+        #region Serialization
+        protected EStudentEntry(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+
+            #region DND
+            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+            NameViewBlock = controls[0] as TextBlock;
+            PhoneViewBlock = controls[1] as TextBlock;
+            EmailViewBlock = controls[2] as TextBlock;
+
+            NameViewBlock.Text = Name;
+            PhoneViewBlock.Text = Phone.Length > 0 ? Phone[0] : "";
+
+            if (Year != 0)
+            {
+                EmailViewBlock.Text = PersonalMail == "" ? string.Format(@"f{0}{1}@pilani.bits-pilani.ac.in", Year, Digits.ToString().PadLeft(4, '0')) : PersonalMail;
+            }
+            else
+            {
+                EmailViewBlock.Text = PersonalMail;
+            }
+            #endregion
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+        }
+
+        #endregion
 
         public EStudentEntry(string name, (int year, ExpandedBranch[] branch, int digits) id, string[] phone, string personalMail, string hostel, int room, string other)
         {

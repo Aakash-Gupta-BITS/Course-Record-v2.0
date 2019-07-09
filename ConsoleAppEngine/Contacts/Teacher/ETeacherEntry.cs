@@ -37,6 +37,9 @@ namespace ConsoleAppEngine.Course
             Website = (string)info.GetValue(nameof(Website), typeof(string));
             OtherInfo = (string)info.GetValue(nameof(OtherInfo), typeof(string));
 
+
+            // YE COPY PASTE THA, isse upar ka dekh Dekh liya. to studen tmein implement kar
+            // 
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 2));
 
             NameViewBlock = controls[0] as TextBlock;

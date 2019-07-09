@@ -3,6 +3,7 @@ using ConsoleAppEngine.AllEnums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,8 +11,10 @@ using Windows.UI.Xaml.Media;
 
 namespace ConsoleAppEngine.Course
 {
-    public partial class EStudents
+    [Serializable]
+    public partial class EStudents : ISerializable
     {
+        #region DisplayBoxes
         private TextBox NameBox;
         private TextBox Phone1Box, Phone2Box;
         private TextBox IdBox;
@@ -19,6 +22,7 @@ namespace ConsoleAppEngine.Course
         private TextBox HostelBox;
         private TextBox RoomBox;
         private TextBox OtherInput;
+        #endregion
 
         private AllCourses allCourses;
 
@@ -69,6 +73,20 @@ namespace ConsoleAppEngine.Course
             val = (year, new ExpandedBranch[] { br1, br2 }, digits);
             return;
         }
+
+        #region Serialization
+
+        public ETeachers() : base()
+        {
+
+        }
+
+        protected ETeachers(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+
+        }
+
+        #endregion
     }
 
     public partial class EStudents : EElementBase<EStudentEntry>
