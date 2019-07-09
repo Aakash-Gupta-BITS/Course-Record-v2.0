@@ -66,15 +66,15 @@ namespace ConsoleAppEngine.Course
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue(nameof(Name), typeof(string));
-            info.AddValue(nameof(Year), typeof(int));
+            info.AddValue(nameof(Name),Name, typeof(string));
+            info.AddValue(nameof(Year),Year, typeof(int));
             info.AddValue(nameof(Branch), new List<ExpandedBranch>(Branch), typeof(List<ExpandedBranch>));
-            info.AddValue(nameof(Digits), typeof(int));
+            info.AddValue(nameof(Digits),Digits, typeof(int));
             info.AddValue(nameof(Phone), new List<string>(Phone), typeof(List<string>));
-            info.AddValue(nameof(PersonalMail), typeof(string));
-            info.AddValue(nameof(Hostel), typeof(string));
-            info.AddValue(nameof(Room), typeof(int));
-            info.AddValue(nameof(OtherInfo), typeof(string));
+            info.AddValue(nameof(PersonalMail),PersonalMail, typeof(string));
+            info.AddValue(nameof(Hostel),Hostel, typeof(string));
+            info.AddValue(nameof(Room),Room, typeof(int));
+            info.AddValue(nameof(OtherInfo),OtherInfo, typeof(string));
 
         }
 
