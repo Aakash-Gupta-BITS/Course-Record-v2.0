@@ -1,6 +1,7 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -31,6 +32,17 @@ namespace ConsoleAppEngine.Course
         #region Serialization
         protected EStudentEntry(SerializationInfo info, StreamingContext context) : base(info, context)
         {
+            Name = (string)info.GetValue(nameof(Name), typeof(string));
+            Year =  (int)info.GetValue(nameof(Year), typeof(int));
+            Branch = (info.GetValue(nameof(Branch), typeof(List<ExpandedBranch>)) as List<ExpandedBranch>).ToArray();
+            Digits = (int)info.GetValue(nameof(Digits), typeof(int));
+            Phone = (info.GetValue(nameof(Phone), typeof(List<string>)) as List<string>).ToArray();
+            PersonalMail = (string)info.GetValue(nameof(PersonalMail), typeof(string));
+            Hostel = (string)info.GetValue(nameof(Hostel), typeof(string));
+            Room = (int)info.GetValue(nameof(Room), typeof(int));
+            OtherInfo = (string)info.GetValue(nameof(OtherInfo), typeof(string));
+
+
 
             #region DND
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));

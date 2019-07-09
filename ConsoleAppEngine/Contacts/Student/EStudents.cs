@@ -76,12 +76,12 @@ namespace ConsoleAppEngine.Course
 
         #region Serialization
 
-        public ETeachers() : base()
+        public EStudents() : base()
         {
 
         }
 
-        protected ETeachers(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected EStudents(SerializationInfo info, StreamingContext context) : base(info, context)
         {
 
         }
