@@ -127,8 +127,8 @@
     <Compile Include="Frames\Contacts\TeacherContacts.xaml.cs">
       <DependentUpon>TeacherContacts.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Frames\Course\Add Course.xaml.cs">
-      <DependentUpon>Add Course.xaml</DependentUpon>
+    <Compile Include="Frames\Course\AllCoursesView.xaml.cs">
+      <DependentUpon>AllCoursesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Frames\Course\Books.xaml.cs">
       <DependentUpon>Books.xaml</DependentUpon>
@@ -197,7 +197,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Frames\Course\Add Course.xaml">
+    <Page Include="Frames\Course\AllCoursesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

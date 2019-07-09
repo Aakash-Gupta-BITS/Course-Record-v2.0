@@ -3,6 +3,7 @@ using ConsoleAppEngine.AllEnums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,71 +11,40 @@ using Windows.UI.Xaml.Media;
 
 namespace ConsoleAppEngine.Course
 {
-    public partial class ECourseTimeTable
+    [Serializable]
+    public partial class ECourseTimeTable : ISerializable
     {
+        #region DisplayBoxes
+
         private ComboBox EntryTypeBox;
         private TextBox SectionBox;
         private readonly ComboBox[] TeachersBox = new ComboBox[3];
         private TextBox RoomBox;
         private TextBox DaysBox;
         private TextBox HoursBox;
-        private ETeachers EquivalentTeacherEntry;
+
+        #endregion
+
+        public ETeachers EquivalentTeacherEntry;
+
+        public void SetTeachersEntry(ETeachers t) => EquivalentTeacherEntry = t;
 
         private LinkedList<ETeacherEntry> GenerateTeacherFromAddGrid()
         {
-            ETeacherEntry Helper(string teacher_name)
-            {
-                foreach (var x in EquivalentTeacherEntry.lists)
-                {
-                    if (x.Name == teacher_name)
-                    {
-                        return x;
-                    }
-                }
-
-                return null;
-            }
-
             LinkedList<ETeacherEntry> eTeachers = new LinkedList<ETeacherEntry>();
-            for (int i = 0; i < 3; ++i)
+
+            foreach (var x in TeachersBox)
             {
-                if (TeachersBox[i].SelectedItem == null)
-                {
+                if (x.SelectedIndex == 0)
                     continue;
-                }
-
-                ETeacherEntry temp = Helper(TeachersBox[i].SelectedItem.ToString());
-                if (temp == null)
-                {
-                    continue;
-                }
-
-                if (!eTeachers.Contains(temp))
-                {
-                    eTeachers.AddLast(temp);
-                }
+                foreach (var teacher in EquivalentTeacherEntry.lists)
+                    if (teacher.Name == x.SelectedItem as string)
+                        eTeachers.AddLast(teacher);
             }
+
+            eTeachers = new LinkedList<ETeacherEntry>(eTeachers.OrderBy(a => a.Name));
 
             return eTeachers;
-        }
-
-        public void SetTeachersEntry(ETeachers eTeachers)
-        {
-            EquivalentTeacherEntry = eTeachers;
-            TeachersBox[0].Items.Add("");
-            TeachersBox[1].Items.Add("");
-            TeachersBox[2].Items.Add("");
-            for (int i = 0; i < 3; ++i)
-            {
-                foreach (ETeacherEntry x in EquivalentTeacherEntry.lists)
-                {
-                    TeachersBox[i].Items.Add(x.Name);
-                }
-            }
-
-            TeachersBox[0].SelectedIndex = 0;
-            TeachersBox[1].SelectedIndex = 0;
-            TeachersBox[2].SelectedIndex = 0;
         }
 
         public void AddTimeEntry(ETimeTableItem eTimeTableItem)
@@ -82,6 +52,20 @@ namespace ConsoleAppEngine.Course
             lists.AddLast(eTimeTableItem);
             UpdateList();
         }
+
+        #region Serialization
+
+        public ECourseTimeTable() : base()
+        {
+
+        }
+
+        protected ECourseTimeTable(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+
+        }
+
+        #endregion
     }
 
     public partial class ECourseTimeTable : EElementBase<ETimeTableItem>
@@ -269,21 +253,17 @@ namespace ConsoleAppEngine.Course
             EntryTypeBox.SelectedIndex = (int)ItemToChange.EntryType;
             SectionBox.Text = ItemToChange.Section.ToString();
 
-            for (int i = 0; i < 3; ++i)
-            {
-                if (ItemToChange.Teacher[i] != null)
-                {
-                    TeachersBox[i].SelectedItem = ItemToChange.Teacher[i].Name;
-                }
-                else
-                {
-                    TeachersBox[i].SelectedIndex = 0;
-                }
-            }
+            foreach (var y in TeachersBox)
+                y.SelectedIndex = 0;
+
+            var arr = ItemToChange.Teachers.ToArray();
+
+            for (int i = 0; i < arr.Length; ++i)
+                TeachersBox[i].SelectedItem = arr[i].Name;
 
             RoomBox.Text = ItemToChange.Room;
             DaysBox.Text = ETimeTableItem.GetDayListString(ItemToChange.WeekDays);
-            HoursBox.Text = String.Join(' ', ItemToChange.Hours);
+            HoursBox.Text = string.Join(' ', ItemToChange.Hours);
         }
 
         protected override void SetContentDialog()
@@ -296,9 +276,9 @@ namespace ConsoleAppEngine.Course
                 "Room\t: {2}\n" +
                 "Timing\t: {3}",
                 ItemToChange.Section,
-                ItemToChange.TeacherViewBlock.Text,
+                string.Join(", ", (from a in ItemToChange.Teachers where a != null select a.Name).ToArray()),
                 ItemToChange.Room,
-                ItemToChange.DaysViewBlock.Text + "\t" + ItemToChange.HourViewBlock.Text);
+                ETimeTableItem.GetDayListString(ItemToChange.WeekDays) + "\t" + ItemToChange.HourViewBlock.Text);
         }
     }
 }

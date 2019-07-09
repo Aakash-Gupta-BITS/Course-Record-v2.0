@@ -1,17 +1,16 @@
-﻿using ConsoleAppEngine.Course;
-using Windows.UI.Xaml;
+﻿using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Log;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine.Contacts;
-using System.Collections.Generic;
-using ConsoleAppEngine.Log;
 
 namespace Course_Record_v2._0.Frames.Contacts
 {
     public sealed partial class MainPage : Page
     {
-        AllContacts allContacts;
-        AllCourses allCourses;
+        private AllContacts allContacts;
+        private AllCourses allCourses;
 
         public MainPage()
         {
@@ -24,7 +23,9 @@ namespace Course_Record_v2._0.Frames.Contacts
 
             LoggingServices.Instance.WriteLine<MainPage>("\"" + SelectedItem.Content as string + "\" is selected at Teacher Main Page.");
             if (SelectedItem == null)
+            {
                 return;
+            }
 
             NavView.Header = SelectedItem.Content;
 
@@ -35,7 +36,7 @@ namespace Course_Record_v2._0.Frames.Contacts
                 lis.AddLast(allCourses);
                 ContentFrame.Navigate(typeof(TeacherContacts), lis);
             }
-            else if(SelectedItem == StudentsNavigation)
+            else if (SelectedItem == StudentsNavigation)
             {
                 LinkedList<object> lis = new LinkedList<object>();
                 lis.AddLast(allContacts.StudentEntry);

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MetroLog;
+﻿using MetroLog;
 using MetroLog.Targets;
+using System;
 
 namespace ConsoleAppEngine.Log
 {
@@ -15,7 +11,7 @@ namespace ConsoleAppEngine.Log
 
         public static int RetainDays { get; } = 10;
 
-        public static bool Enabled{ get; set; } = true;
+        public static bool Enabled { get; set; } = true;
         #endregion
 
         static LoggingServices()
@@ -30,17 +26,29 @@ namespace ConsoleAppEngine.Log
             {
                 var logger = LogManagerFactory.DefaultLogManager.GetLogger<T>();
                 if (logLevel == LogLevel.Trace && logger.IsTraceEnabled)
+                {
                     logger.Trace(message);
+                }
                 else if (logLevel == LogLevel.Debug && logger.IsDebugEnabled)
+                {
                     logger.Debug(message);
+                }
                 else if (logLevel == LogLevel.Error && logger.IsErrorEnabled)
+                {
                     logger.Error(message);
+                }
                 else if (logLevel == LogLevel.Fatal && logger.IsFatalEnabled)
+                {
                     logger.Fatal(message);
+                }
                 else if (logLevel == LogLevel.Info && logger.IsInfoEnabled)
+                {
                     logger.Info(message);
+                }
                 else if (logLevel == LogLevel.Warn && logger.IsWarnEnabled)
+                {
                     logger.Warn(message);
+                }
             }
         }
     }

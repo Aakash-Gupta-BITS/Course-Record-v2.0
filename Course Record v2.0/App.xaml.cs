@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ConsoleAppEngine.Log;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine.Log;
 
 namespace Course_Record_v2._0
 {
@@ -58,7 +58,14 @@ namespace Course_Record_v2._0
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     LoggingServices.Instance.WriteLine<App>("App Started Successfully.");
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    try
+                    {
+                        rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    }
+                    catch(Exception ex)
+                    {
+                        LoggingServices.Instance.WriteLine<App>(ex.Message, MetroLog.LogLevel.Error, ex);
+                    }
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

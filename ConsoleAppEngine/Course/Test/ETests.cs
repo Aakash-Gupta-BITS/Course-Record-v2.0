@@ -3,6 +3,7 @@ using ConsoleAppEngine.AllEnums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,8 +11,11 @@ using Windows.UI.Xaml.Media;
 
 namespace ConsoleAppEngine.Course
 {
-    public partial class ETests
+    [Serializable]
+    public partial class ETests : EElementBase<ETestItem>, ISerializable
     {
+        #region DisplayBoxes
+
         private DatePicker DateBox;
         private ComboBox TestTypeBox;
         private TextBox TestIndexBox;
@@ -19,11 +23,27 @@ namespace ConsoleAppEngine.Course
         private TextBox TotalMarksBox;
         private TextBox DescriptionBox;
 
+        #endregion
+
         public void AddTest(ETestItem testItem)
         {
             lists.AddLast(testItem);
             UpdateList();
         }
+
+        #region Serialization
+
+        public ETests() : base()
+        {
+
+        }
+
+        protected ETests(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+
+        }
+
+        #endregion
     }
 
     public partial class ETests : EElementBase<ETestItem>

@@ -1,24 +1,19 @@
-﻿using ConsoleAppEngine.Course;
-using ConsoleAppEngine.Contacts;
-using ConsoleAppEngine.AllEnums;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+﻿using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Course;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI;
-using Windows.UI.Text;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 
 namespace Course_Record_v2._0.Frames.Course
 {
     public sealed partial class CT_log : Page
     {
-        EStudents ctLog;
-        EStudents allStudents;
+        private EStudents ctLog;
+        private EStudents allStudents;
 
         public CT_log()
         {
@@ -40,7 +35,9 @@ namespace Course_Record_v2._0.Frames.Course
 
             // Fill only those names that are not not yet added in course
             foreach (var x in (from a in allStudents.lists where !ViewList.Items.Contains(a.GetView) select a.Name))
+            {
                 comboBox.Items.Add(x);
+            }
 
             // Instance of Content Dialog thaat will be displayed
             ContentDialog contentDialog = new ContentDialog()
@@ -58,8 +55,9 @@ namespace Course_Record_v2._0.Frames.Course
                 contentDialog.IsPrimaryButtonEnabled = false;
             }
             else
+            {
                 comboBox.SelectedItem = comboBox.Items.First();
-
+            }
 
             switch (await contentDialog.ShowAsync())
             {
@@ -68,23 +66,29 @@ namespace Course_Record_v2._0.Frames.Course
 
                     // Find the selected student
                     foreach (var x in allStudents.lists)
+                    {
                         if (x.Name == comboBox.SelectedItem.ToString())
                         {
                             ctLog.lists.AddLast(x);
                             break;
                         }
+                    }
 
 
                     // Sort ctLog
                     List<EStudentEntry> v = ctLog.lists.OrderBy(a => a.Name).ToList();
                     ctLog.lists.Clear();
                     foreach (var x in v)
+                    {
                         ctLog.lists.AddLast(x);
+                    }
 
                     // Fill ViewList with new sorted order
                     ViewList.Items.Clear();
                     foreach (var a in from a in ctLog.lists select a.GetView)
+                    {
                         ViewList.Items.Add(a);
+                    }
 
                     break;
             }
@@ -93,16 +97,20 @@ namespace Course_Record_v2._0.Frames.Course
         private async void ViewList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ViewList.SelectedItem == null)
+            {
                 return;
+            }
 
             // Get selected student first
             EStudentEntry ItemSelected = null;
             foreach (var x in ctLog.lists)
+            {
                 if (x.GetView == (ViewList.SelectedItem))
                 {
                     ItemSelected = x;
                     break;
                 }
+            }
 
             // Unselect the selected item, it will again call this function but null check return it
             ViewList.SelectedItem = null;
@@ -132,7 +140,7 @@ namespace Course_Record_v2._0.Frames.Course
                         ItemSelected.OtherInfo),
                     IsTextSelectionEnabled = true
                 }
-        };
+            };
 
             switch (await contentDialog.ShowAsync())
             {
@@ -153,7 +161,9 @@ namespace Course_Record_v2._0.Frames.Course
             allStudents = a.First.Next.Value as EStudents;
 
             foreach (var x in (from x in ctLog.lists where allStudents.lists.Contains(x) select x.GetView))
+            {
                 ViewList.Items.Add(x);
+            }
         }
     }
 }

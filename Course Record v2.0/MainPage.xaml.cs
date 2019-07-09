@@ -1,20 +1,11 @@
 ﻿using ConsoleAppEngine.AllEnums;
-using ConsoleAppEngine.Course;
 using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Log;
+using System.Collections.Generic;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System.Collections.Generic;
-using ConsoleAppEngine.Log;
-using System.Runtime.Serialization.Formatters.Binary;
-using Windows.UI.Xaml;
-using Windows.Storage;
-using System.Threading.Tasks;
-using System.Linq;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
-using System.Text;
-using System.IO;
-using System;
 
 namespace Course_Record_v2._0
 {
@@ -27,42 +18,8 @@ namespace Course_Record_v2._0
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-
-            string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
-            string FileLocation = Path.Combine(DirectoryLocation, "Math3.txt");
-
-            CourseEntry Math3Course = null;
-
-            #region Deserialize
-            /*
-            BinaryFormatter formatter = new BinaryFormatter();
-            if (!File.Exists(FileLocation))
-                return;
-            using (var s = new FileStream(FileLocation, FileMode.OpenOrCreate))
-            {
-                Math3Course = formatter.Deserialize(s) as CourseEntry;
-            }
-            */
-            #endregion
-
-            #region Serialize
-
-            Math3Course = new CourseEntry((CourseType.MATH, "F213"), "Mathematics 3", 3, 0, null);
-            Math3Course.BookEntry.AddBook(new EBookItem(TextBookType.Reference, "LALA", "JI", 5, "ABCD", true));
-
-            if (!Directory.Exists(DirectoryLocation))
-                Directory.CreateDirectory(DirectoryLocation);
-            using (Stream m = new FileStream(FileLocation, FileMode.Create))
-            {
-                new BinaryFormatter().Serialize(m, Math3Course);
-            }
-
-            #endregion
-
-            if (Courses.CoursesList.Count == 0)
-            {
-                Courses.CoursesList.AddLast(Math3Course);
-            }
+            Directory.Text = ApplicationData.Current.LocalFolder.Path;
+            Courses.GetFromHdd();
 
             #region ContactsAdd
             Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
@@ -123,6 +80,7 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
             NavView.SelectedItem = null;
             this.Frame.BackStack.Clear();
             this.Frame.ForwardStack.Clear();
+            Courses.AddToHdd_NewThread();
         }
     }
 }

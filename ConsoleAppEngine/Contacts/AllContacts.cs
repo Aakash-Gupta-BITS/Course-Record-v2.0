@@ -1,6 +1,4 @@
-﻿using ConsoleAppEngine.AllEnums;
-using Windows.UI.Xaml.Controls;
-using ConsoleAppEngine.Course;
+﻿using ConsoleAppEngine.Course;
 
 namespace ConsoleAppEngine.Contacts
 {

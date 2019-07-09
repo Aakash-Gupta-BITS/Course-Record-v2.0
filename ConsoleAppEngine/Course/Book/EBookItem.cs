@@ -1,9 +1,9 @@
-﻿using System.Runtime.Serialization;
-using ConsoleAppEngine.Abstracts;
+﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using System;
+using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System;
 
 namespace ConsoleAppEngine.Course
 {
@@ -34,12 +34,12 @@ namespace ConsoleAppEngine.Course
 
         protected EBookItem(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            BookType = (TextBookType)info.GetValue("BookType", typeof(TextBookType));
-            Author = (string)info.GetValue("Author", typeof(string));
-            Name = (string)info.GetValue("Name", typeof(string));
-            Edition = (int)info.GetValue("Edition", typeof(int));
-            Press = (string)info.GetValue("Press", typeof(string));
-            IsBest = (bool)info.GetValue("IsBest", typeof(bool));
+            BookType = (TextBookType)info.GetValue(nameof(BookType), typeof(TextBookType));
+            Author = (string)info.GetValue(nameof(Author), typeof(string));
+            Name = (string)info.GetValue(nameof(Name), typeof(string));
+            Edition = (int)info.GetValue(nameof(Edition), typeof(int));
+            Press = (string)info.GetValue(nameof(Press), typeof(string));
+            IsBest = (bool)info.GetValue(nameof(IsBest), typeof(bool));
 
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 2), (typeof(string), 1), (typeof(bool), 1));
 
@@ -51,7 +51,8 @@ namespace ConsoleAppEngine.Course
             NameViewBlock.Text = Name;
             AuthorViewBlock.Text = Author;
             BookTypeViewBlock.Text = BookType.ToString();
-            IsBestViewBox.IsChecked = IsBest;
+
+            IsBestViewBox.IsChecked = IsBest; IsBestViewBox.Click += (object sender, RoutedEventArgs e) => IsBest = IsBestViewBox.IsChecked == true ? true : false;
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)

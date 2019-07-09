@@ -1,7 +1,7 @@
 ﻿using ConsoleAppEngine.Course;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System.Collections.Generic;
 
 
 namespace Course_Record_v2._0.Frames.Contacts
