@@ -13,6 +13,7 @@ using Windows.UI.Text;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using ConsoleAppEngine.Log;
+using Course_Record_v2._0.Frames;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -89,6 +90,8 @@ namespace Course_Record_v2._0.Frames.Course
             NavView.MenuItems.Add(entry.navigationViewItem);
             for (int i = list.Length - 4; i < list.Length; ++i)
                 NavView.MenuItems.Add(list[i]);
+
+            this.Frame.Navigate(typeof(Course.MainPage));
 
         }
 
