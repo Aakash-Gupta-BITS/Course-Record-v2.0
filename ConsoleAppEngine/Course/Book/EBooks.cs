@@ -78,7 +78,6 @@ namespace ConsoleAppEngine.Course
                 int.Parse(EditionBox.Text),
                 PressBox.Text,
                 BestBookBox.IsChecked == true));
-            // UpdateOnHdd();
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -140,7 +139,6 @@ namespace ConsoleAppEngine.Course
                 int.Parse(EditionBox.Text),
                 PressBox.Text,
                 BestBookBox.IsChecked == true);
-            // UpdateOnHdd();
         }
 
         protected override IOrderedEnumerable<EBookItem> OrderList()

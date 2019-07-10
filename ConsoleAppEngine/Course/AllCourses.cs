@@ -1,18 +1,26 @@
 ﻿using ConsoleAppEngine.Abstracts;
+using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.AllEnums;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace ConsoleAppEngine.Course
 {
-    public partial class AllCourses
+    [Serializable]
+    public partial class AllCourses : EElementBase<CourseEntry>, ISerializable
     {
+        public AllContacts Contacts;
+
         #region DisplayBoxes
 
         private ComboBox TypeBox;
@@ -41,9 +49,11 @@ namespace ConsoleAppEngine.Course
             {
                 CoursesList.AddLast(y);
             }
+
+            UpdateList();
         }
 
-        public bool Consistent(CourseEntry e)
+        bool Consistent(CourseEntry e)
         {
             foreach (var y in CoursesList)
             {
@@ -55,6 +65,20 @@ namespace ConsoleAppEngine.Course
             }
             return true;
         }
+
+        #region Serialization
+
+        public AllCourses() : base()
+        {
+
+        }
+
+        protected AllCourses(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+
+        }
+
+        #endregion
 
         #region ToMoveToHDDSync
         public void AddToHdd()
@@ -77,9 +101,11 @@ namespace ConsoleAppEngine.Course
 
         public void AddToHdd_NewThread()
         {
-            Thread thread = new Thread(new ThreadStart(AddToHdd));
-            thread.Name = "Add Courses to Hdd";
-            thread.IsBackground = false;
+            Thread thread = new Thread(new ThreadStart(AddToHdd))
+            {
+                Name = "Add Courses to Hdd",
+                IsBackground = false
+            };
             thread.Start();
         }
 
@@ -105,9 +131,11 @@ namespace ConsoleAppEngine.Course
 
         public void GetFromHdd_NewThread()
         {
-            Thread thread = new Thread(new ThreadStart(GetFromHdd));
-            thread.Name = "Add Courses to Hdd";
-            thread.IsBackground = false;
+            Thread thread = new Thread(new ThreadStart(GetFromHdd))
+            {
+                Name = "Add Courses to Hdd",
+                IsBackground = false
+            };
             thread.Start();
         }
 
@@ -118,53 +146,174 @@ namespace ConsoleAppEngine.Course
     {
         public override void DestructViews()
         {
-            throw new NotImplementedException();
+            ViewGrid.Children.Clear();
+            AddGrid.Children.Clear();
+            ViewList.Items.Clear();
+
+            ViewGrid = null;
+            AddGrid = null;
+            ViewList = null;
+            AddButton = null;
+            ViewCommand = null;
+            AddCommand = null;
+
+            TypeBox = null;
+            IdBox = null;
+            TitleBox = null;
+            LectureBox = null;
+            PracticalBox = null;
+            ICBox = null;
         }
 
         protected override void AddNewItem()
         {
-            throw new NotImplementedException();
+            ETeacherEntry eTeacher = null;
+            foreach (var y in Contacts.TeacherEntry.lists)
+            {
+                if (y.Name == ICBox.SelectedItem as string)
+                {
+                    eTeacher = y;
+                    break;
+                }
+            }
+
+            AddCourse(new CourseEntry(
+                ((CourseType)Enum.Parse(typeof(CourseType), TypeBox.SelectedItem as string), IdBox.Text),
+                TitleBox.Text,
+                byte.Parse(LectureBox.Text),
+                byte.Parse(PracticalBox.Text),
+                eTeacher));
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
-            throw new NotImplementedException();
+            Controls.AddLast(TypeBox);
+            Controls.AddLast(IdBox);
+            Controls.AddLast(TitleBox);
+            Controls.AddLast(LectureBox);
+            Controls.AddLast(PracticalBox);
+            Controls.AddLast(ICBox);
+
+            if (TypeBox.SelectedItem == null)
+                ErrorWaale.AddLast(TypeBox);
+
+            if (IdBox.Text == "")
+                ErrorWaale.AddLast(IdBox);
+
+            if (TitleBox.Text == "")
+                ErrorWaale.AddLast(TitleBox);
+
+            if (!byte.TryParse(LectureBox.Text, out _))
+                ErrorWaale.AddLast(LectureBox);
+
+            if (!byte.TryParse(PracticalBox.Text, out _))
+                ErrorWaale.AddLast(PracticalBox);
+
+            if (ICBox.SelectedItem == null)
+                ErrorWaale.AddLast(ICBox);
+
+            if (ErrorWaale.Count != 0)
+                return;
+
+            foreach (var y in (from x in CoursesList where x != ItemToChange select x))
+            {
+                if (y.Title == TitleBox.Text)
+                {
+                    ErrorWaale.AddLast(TitleBox);
+                    break;
+                }
+                if (y.ID.branchstring == IdBox.Text && y.ID.branchtype.ToString() == TypeBox.Text)
+                {
+                    ErrorWaale.AddLast(IdBox);
+                    ErrorWaale.AddLast(TypeBox);
+                    break;
+                }
+            }
+
         }
 
         protected override void ClearAddGrid()
         {
-            throw new NotImplementedException();
+            ItemToChange = null;
+            AddButton.BorderBrush =
+            TypeBox.BorderBrush =
+            IdBox.BorderBrush =
+            TitleBox.BorderBrush =
+            LectureBox.BorderBrush =
+            PracticalBox.BorderBrush =
+            ICBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
+            AddButton.Content = "Add";
+
+            TypeBox.SelectedItem = null;
+            IdBox.Text =
+            TitleBox.Text =
+            LectureBox.Text =
+            PracticalBox.Text = "";
+            ICBox.SelectedItem = null;
         }
 
         protected override Grid Header()
         {
-            throw new NotImplementedException();
+            return GenerateHeader(("Id", 1), ("Title", 1), ("IC", 1));
         }
 
         protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
         {
-            throw new NotImplementedException();
+            TypeBox = AddViewGridControls[0] as ComboBox;
+            IdBox = AddViewGridControls[1] as TextBox;
+            TitleBox = AddViewGridControls[2] as TextBox;
+            LectureBox = AddViewGridControls[3] as TextBox;
+            PracticalBox = AddViewGridControls[4] as TextBox;
+            ICBox = AddViewGridControls[5] as ComboBox;
+            AddButton = AddViewGridControls[6] as Button;
         }
 
         protected override void ItemToChangeUpdate()
         {
-            throw new NotImplementedException();
+            ETeacherEntry eTeacher = null;
+            foreach (var y in Contacts.TeacherEntry.lists)
+            {
+                if (y.Name == ICBox.SelectedItem as string)
+                {
+                    eTeacher = y;
+                    break;
+                }
+            }
+
+            ItemToChange.Update(
+                ((CourseType)Enum.Parse(typeof(CourseType), TypeBox.SelectedItem as string), IdBox.Text),
+                TitleBox.Text,
+                byte.Parse(LectureBox.Text),
+                byte.Parse(PracticalBox.Text),
+                eTeacher);
         }
 
         protected override IOrderedEnumerable<CourseEntry> OrderList()
         {
-            throw new NotImplementedException();
+            return CoursesList.OrderBy(a => a.Title.ToUpper());
         }
 
         protected override void SetAddGrid_ItemToChange()
         {
-            throw new NotImplementedException();
+            TypeBox.SelectedItem = ItemToChange.ID.branchtype.ToString();
+            IdBox.Text = ItemToChange.ID.branchstring;
+            TitleBox.Text = ItemToChange.Title;
+            LectureBox.Text = ItemToChange.LectureUnits.ToString();
+            PracticalBox.Text = ItemToChange.PracticalUnits.ToString();
+            ICBox.SelectedItem = ItemToChange.IC.Name;
         }
 
         protected override void SetContentDialog()
         {
-            throw new NotImplementedException();
+            contentDialog.Title = ItemToChange.Title;
+            contentDialog.Content = string.Format(
+                "Id\t\t:\t{0}\n" +
+                "Lecture/Practical Units\t:\t{1}/{2}\n" +
+                "IC\t\t:\t{3}",
+                ItemToChange.ID.branchtype.ToString() + " " + ItemToChange.ID.branchstring,
+                ItemToChange.LectureUnits,
+                ItemToChange.PracticalUnits,
+                ItemToChange.IC.Name);
         }
     }
-
 }
