@@ -94,6 +94,6 @@ namespace ConsoleAppEngine.Course
             MarksViewBlock.Text = MarksObtained + "/" + TotalMarks;
         }
 
-        internal override object PointerOverObject => null;
+        
     }
 }

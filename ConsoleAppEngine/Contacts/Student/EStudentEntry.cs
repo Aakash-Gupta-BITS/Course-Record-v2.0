@@ -115,6 +115,6 @@ namespace ConsoleAppEngine.Course
             }
         }
 
-        internal override object PointerOverObject => null;
+        
     }
 }

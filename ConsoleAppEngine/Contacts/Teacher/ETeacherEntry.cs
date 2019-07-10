@@ -87,6 +87,6 @@ namespace ConsoleAppEngine.Course
             SiteViewBlock.IsTextSelectionEnabled = true;
         }
 
-        internal override object PointerOverObject => null;
+        
     }
 }

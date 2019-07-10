@@ -98,7 +98,7 @@ namespace ConsoleAppEngine.Course
             HourViewBlock.Text = string.Join(" ", Array.ConvertAll(Hours, (x) => x.ToString()));
         }
 
-        internal override object PointerOverObject => null;
+        
 
         #region Helpers
 

@@ -79,6 +79,6 @@ namespace ConsoleAppEngine.Course
             LocationViewBlock.Text = Location;
         }
 
-        internal override object PointerOverObject => null;
+        
     }
 }

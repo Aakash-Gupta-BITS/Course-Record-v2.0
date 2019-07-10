@@ -1,16 +1,30 @@
-﻿using System;
+﻿using ConsoleAppEngine.Abstracts;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace ConsoleAppEngine.Course
 {
-    public class AllCourses
+    public partial class AllCourses
     {
-        public readonly LinkedList<CourseEntry> CoursesList = new LinkedList<CourseEntry>();
+        #region DisplayBoxes
+
+        private ComboBox TypeBox;
+        private TextBox IdBox;
+        private TextBox TitleBox;
+        private TextBox LectureBox;
+        private TextBox PracticalBox;
+        private ComboBox ICBox;
+
+        #endregion
+
+        public LinkedList<CourseEntry> CoursesList => lists; //  new LinkedList<CourseEntry>();
 
         public void AddCourse(CourseEntry e)
         {
@@ -42,6 +56,7 @@ namespace ConsoleAppEngine.Course
             return true;
         }
 
+        #region ToMoveToHDDSync
         public void AddToHdd()
         {
             string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
@@ -95,5 +110,61 @@ namespace ConsoleAppEngine.Course
             thread.IsBackground = false;
             thread.Start();
         }
+
+        #endregion
     }
+
+    public partial class AllCourses : EElementBase<CourseEntry>
+    {
+        public override void DestructViews()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void AddNewItem()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void ClearAddGrid()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Grid Header()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void ItemToChangeUpdate()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override IOrderedEnumerable<CourseEntry> OrderList()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetAddGrid_ItemToChange()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetContentDialog()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }
