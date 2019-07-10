@@ -36,34 +36,8 @@ namespace ConsoleAppEngine.Course
 
         public void AddCourse(CourseEntry e)
         {
-            if (!Consistent(e))
-            {
-                throw new Exception();
-            }
-
             CoursesList.AddLast(e);
-            var list = CoursesList.OrderBy(a => a.Title.ToUpper()).ToArray();
-            CoursesList.Clear();
-
-            foreach (var y in list)
-            {
-                CoursesList.AddLast(y);
-            }
-
             UpdateList();
-        }
-
-        bool Consistent(CourseEntry e)
-        {
-            foreach (var y in CoursesList)
-            {
-                if (y.Title == e.Title ||
-                    (y.ID.branchstring == e.ID.branchstring && y.ID.branchtype == e.ID.branchtype))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         #region Serialization
@@ -300,7 +274,7 @@ namespace ConsoleAppEngine.Course
             TitleBox.Text = ItemToChange.Title;
             LectureBox.Text = ItemToChange.LectureUnits.ToString();
             PracticalBox.Text = ItemToChange.PracticalUnits.ToString();
-            ICBox.SelectedItem = ItemToChange.IC.Name;
+            ICBox.SelectedItem =  ItemToChange.IC.Name;
         }
 
         protected override void SetContentDialog()

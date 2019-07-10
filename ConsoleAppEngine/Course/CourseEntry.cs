@@ -53,9 +53,19 @@ namespace ConsoleAppEngine.Course
             TestEntry = info.GetValue(nameof(TestEntry), typeof(ETests)) as ETests;
             TeacherEntry = info.GetValue(nameof(TeacherEntry), typeof(ETeachers)) as ETeachers;
             TimeEntry = info.GetValue(nameof(TimeEntry), typeof(ECourseTimeTable)) as ECourseTimeTable;
+            IC = info.GetValue(nameof(IC), typeof(ETeacherEntry)) as ETeacherEntry;
+
+            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+            IdViewBlock = controls[0] as TextBlock;
+            TitleViewBlock = controls[1] as TextBlock;
+            ICViewBlock = controls[2] as TextBlock;
 
             navigationViewItem = new NavigationViewItem();
             navigationViewItem.Content = Title;
+
+            IdViewBlock.Text = ID.branchtype.ToString() + " " + ID.branchstring;
+            TitleViewBlock.Text = Title;
+            ICViewBlock.Text =  IC.Name;
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -65,6 +75,7 @@ namespace ConsoleAppEngine.Course
             info.AddValue(nameof(Title), Title);
             info.AddValue(nameof(LectureUnits), LectureUnits);
             info.AddValue(nameof(PracticalUnits), PracticalUnits);
+            info.AddValue(nameof(IC), IC, typeof(ETeacherEntry));
 
             info.AddValue(nameof(BookEntry), BookEntry, typeof(EBooks));
             info.AddValue(nameof(EventEntry), EventEntry, typeof(EEvents));
