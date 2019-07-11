@@ -48,5 +48,40 @@ namespace ConsoleAppEngine.Contacts
                 }
             
         }
+
+        public void AddToHdd_NewThread()
+        {
+            Thread thread = new Thread(new ThreadStart(AddToHdd));
+            thread.Name = "Add Contacts to Hdd";
+            thread.IsBackground = false;
+            thread.Start();
+        }
+
+        public void GetFromHdd()
+        {
+            string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Contacts");
+
+            if (!Directory.Exists(DirectoryLocation))
+            {
+                return;
+            }
+
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            foreach(string file in Directory.GetFiles(DirectoryLocation))
+            {
+                if(file == "Teachers.bin")
+                using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
+                {
+                    TeacherEntry.lists.AddLast(formatter.Deserialize(s) as ETeacherEntry);
+                }
+                else if(file == "Students.bin")
+                using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
+                {
+                        StudentEntry.lists.AddLast(formatter.Deserialize(s) as EStudentEntry);
+                }
+            }
+        }
     }
+
 }
