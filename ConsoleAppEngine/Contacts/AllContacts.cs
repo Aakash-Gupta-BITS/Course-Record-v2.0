@@ -7,7 +7,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using Windows.Storage;
 
-
 namespace ConsoleAppEngine.Contacts
 {
     public class AllContacts
@@ -62,6 +61,13 @@ namespace ConsoleAppEngine.Contacts
                 StudentEntry = new BinaryFormatter().Deserialize(s) as EStudents;
             }
         }
-    }
 
+        public void GetFromHdd_NewThread()
+        {
+            Thread thread = new Thread(new ThreadStart(GetFromHdd));
+            thread.Name = "Get Contacts from Hdd";
+            thread.IsBackground = false;
+            thread.Start();
+        }
+    }
 }

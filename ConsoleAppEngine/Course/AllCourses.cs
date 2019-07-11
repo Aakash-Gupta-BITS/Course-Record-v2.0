@@ -91,7 +91,7 @@ namespace ConsoleAppEngine.Course
         public void GetFromHdd_NewThread()
         {
             Thread thread = new Thread(new ThreadStart(GetFromHdd));
-            thread.Name = "Add Courses to Hdd";
+            thread.Name = "Get Courses from Hdd";
             thread.IsBackground = false;
             thread.Start();
         }
