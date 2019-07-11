@@ -22,8 +22,8 @@ namespace Course_Record_v2._0
             Courses.GetFromHdd();
             Contacts.GetFromHdd();
 
-          /*  #region ContactsAdd
-            Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
+          #region ContactsAdd
+         /*   Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
                 "Dr. Manoj Kannan",
                 new string[] { @"+91-1596-515-855", "" },
                 new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
@@ -44,8 +44,8 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 @"uchanahome1@gmail.com",
                 "RAM",
                 4136,
-                "Developer of this App"));
-            #endregion */
+                "Developer of this App"));*/
+            #endregion 
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

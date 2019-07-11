@@ -70,12 +70,12 @@ namespace ConsoleAppEngine.Contacts
 
             foreach(string file in Directory.GetFiles(DirectoryLocation))
             {
-                if(file == "Teachers.bin")
+                if (file == Path.Combine(DirectoryLocation, "Teachers.bin"))
                 using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
                 {
-                    TeacherEntry = formatter.Deserialize(s) as ETeachers;
+                        TeacherEntry = formatter.Deserialize(s) as ETeachers;
                 }
-                else if(file == "Students.bin")
+                else if (file == Path.Combine(DirectoryLocation, "Students.bin"))
                 using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
                 {
                         StudentEntry = formatter.Deserialize(s) as EStudents;
