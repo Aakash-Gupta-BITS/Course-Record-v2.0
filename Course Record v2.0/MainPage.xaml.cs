@@ -20,8 +20,9 @@ namespace Course_Record_v2._0
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
             Directory.Text = ApplicationData.Current.LocalFolder.Path;
             Courses.GetFromHdd();
+            Contacts.GetFromHdd();
 
-            #region ContactsAdd
+          /*  #region ContactsAdd
             Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
                 "Dr. Manoj Kannan",
                 new string[] { @"+91-1596-515-855", "" },
@@ -44,7 +45,7 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 "RAM",
                 4136,
                 "Developer of this App"));
-            #endregion
+            #endregion */
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

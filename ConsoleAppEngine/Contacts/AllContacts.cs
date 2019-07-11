@@ -12,8 +12,8 @@ namespace ConsoleAppEngine.Contacts
 {
     public class AllContacts
     {
-        public readonly ETeachers TeacherEntry = new ETeachers();
-        public readonly EStudents StudentEntry = new EStudents();
+        public ETeachers TeacherEntry { get; private set; } = new ETeachers();
+        public EStudents StudentEntry { get; private set; } = new EStudents();
 
 
 
@@ -73,12 +73,12 @@ namespace ConsoleAppEngine.Contacts
                 if(file == "Teachers.bin")
                 using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
                 {
-                    TeacherEntry.lists.AddLast(formatter.Deserialize(s) as ETeacherEntry);
+                    TeacherEntry = formatter.Deserialize(s) as ETeachers;
                 }
                 else if(file == "Students.bin")
                 using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
                 {
-                        StudentEntry.lists.AddLast(formatter.Deserialize(s) as EStudentEntry);
+                        StudentEntry = formatter.Deserialize(s) as EStudents;
                 }
             }
         }
