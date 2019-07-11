@@ -27,13 +27,12 @@ namespace ConsoleAppEngine.Contacts
                 Directory.CreateDirectory(DirectoryLocation);
             }
 
-            foreach (ETeacherEntry e in TeacherEntry.lists)
-            {
+           
                 using (Stream m = new FileStream(Path.Combine(DirectoryLocation, "Teachers" + ".bin"), FileMode.Create, FileAccess.Write))
                 {
-                    new BinaryFormatter().Serialize(m, e);
+                    new BinaryFormatter().Serialize(m, TeacherEntry);
                 }
-            }
+           
             DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Contacts");
 
             if (!Directory.Exists(DirectoryLocation))
@@ -41,13 +40,13 @@ namespace ConsoleAppEngine.Contacts
                 Directory.CreateDirectory(DirectoryLocation);
             }
 
-            foreach (EStudentEntry e in StudentEntry.lists)
-            {
+            
+            
                 using (Stream m = new FileStream(Path.Combine(DirectoryLocation, "Students" + ".bin"), FileMode.Create, FileAccess.Write))
                 {
-                    new BinaryFormatter().Serialize(m, e);
+                    new BinaryFormatter().Serialize(m, StudentEntry);
                 }
-            }
+            
         }
     }
 }
