@@ -38,6 +38,7 @@ namespace Course_Record_v2._0.Frames.Course
             NavView = x.First.Next.Next.Value as NavigationView;
 
             Courses.Contacts = Contacts;
+            Courses.NavView = NavView;
 
             foreach (var y in Contacts.TeacherEntry.lists)
             {

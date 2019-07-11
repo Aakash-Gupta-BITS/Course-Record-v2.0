@@ -20,7 +20,7 @@ namespace ConsoleAppEngine.Course
     public partial class AllCourses : EElementBase<CourseEntry>, ISerializable
     {
         public AllContacts Contacts;
-
+        public NavigationView NavView;
         #region DisplayBoxes
 
         private ComboBox TypeBox;
@@ -151,12 +151,27 @@ namespace ConsoleAppEngine.Course
                 }
             }
 
-            AddCourse(new CourseEntry(
+            CourseEntry entry = new CourseEntry(
                 ((CourseType)Enum.Parse(typeof(CourseType), TypeBox.SelectedItem as string), IdBox.Text),
                 TitleBox.Text,
                 byte.Parse(LectureBox.Text),
                 byte.Parse(PracticalBox.Text),
-                eTeacher));
+                eTeacher);
+            AddCourse(entry);
+
+            var list = NavView.MenuItems.ToArray();
+            NavView.MenuItems.Clear();
+
+            for (int i = 0; i < 5; ++i)
+            {
+                NavView.MenuItems.Add(list[i]);
+            }
+            foreach (var item in CoursesList)
+                NavView.MenuItems.Add(item.navigationViewItem);
+            for (int i = list.Length - 4; i < list.Length; ++i)
+            {
+                NavView.MenuItems.Add(list[i]);
+            }
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -282,7 +297,8 @@ namespace ConsoleAppEngine.Course
             contentDialog.Title = ItemToChange.Title;
             contentDialog.Content = string.Format(
                 "Id\t\t:\t{0}\n" +
-                "Lecture/Practical Units\t:\t{1}/{2}\n" +
+                "Lecture Units\t:\t{1}\n" +
+                "Practical Units\t:\t{2}\n" +
                 "IC\t\t:\t{3}",
                 ItemToChange.ID.branchtype.ToString() + " " + ItemToChange.ID.branchstring,
                 ItemToChange.LectureUnits,
