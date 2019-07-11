@@ -7,16 +7,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using Windows.Storage;
 
-
 namespace ConsoleAppEngine.Contacts
 {
     public class AllContacts
     {
         public ETeachers TeacherEntry { get; private set; } = new ETeachers();
         public EStudents StudentEntry { get; private set; } = new EStudents();
-
-
-
 
         public void AddToHdd()
         {
@@ -27,26 +23,16 @@ namespace ConsoleAppEngine.Contacts
                 Directory.CreateDirectory(DirectoryLocation);
             }
 
-           
-                using (Stream m = new FileStream(Path.Combine(DirectoryLocation, "Teachers" + ".bin"), FileMode.Create, FileAccess.Write))
-                {
-                    new BinaryFormatter().Serialize(m, TeacherEntry);
-                }
-           
-            DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Contacts");
-
-            if (!Directory.Exists(DirectoryLocation))
+            using (Stream m = new FileStream(Path.Combine(DirectoryLocation, "Teachers" + ".bin"), FileMode.Create, FileAccess.Write))
             {
-                Directory.CreateDirectory(DirectoryLocation);
+                new BinaryFormatter().Serialize(m, TeacherEntry);
             }
 
-            
-            
-                using (Stream m = new FileStream(Path.Combine(DirectoryLocation, "Students" + ".bin"), FileMode.Create, FileAccess.Write))
-                {
-                    new BinaryFormatter().Serialize(m, StudentEntry);
-                }
-            
+            using (Stream m = new FileStream(Path.Combine(DirectoryLocation, "Students" + ".bin"), FileMode.Create, FileAccess.Write))
+            {
+                new BinaryFormatter().Serialize(m, StudentEntry);
+            }
+
         }
 
         public void AddToHdd_NewThread()
@@ -66,22 +52,22 @@ namespace ConsoleAppEngine.Contacts
                 return;
             }
 
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            foreach(string file in Directory.GetFiles(DirectoryLocation))
+            using (var s = new FileStream(Path.Combine(DirectoryLocation, "Teachers" + ".bin"), FileMode.OpenOrCreate, FileAccess.Read))
             {
-                if (file == Path.Combine(DirectoryLocation, "Teachers.bin"))
-                using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
-                {
-                        TeacherEntry = formatter.Deserialize(s) as ETeachers;
-                }
-                else if (file == Path.Combine(DirectoryLocation, "Students.bin"))
-                using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
-                {
-                        StudentEntry = formatter.Deserialize(s) as EStudents;
-                }
+                TeacherEntry = new BinaryFormatter().Deserialize(s) as ETeachers;
+            }
+            using (var s = new FileStream(Path.Combine(DirectoryLocation, "Students" + ".bin"), FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                StudentEntry = new BinaryFormatter().Deserialize(s) as EStudents;
             }
         }
-    }
 
+        public void GetFromHdd_NewThread()
+        {
+            Thread thread = new Thread(new ThreadStart(GetFromHdd));
+            thread.Name = "Get Contacts from Hdd";
+            thread.IsBackground = false;
+            thread.Start();
+        }
+    }
 }
