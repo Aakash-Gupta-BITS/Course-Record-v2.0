@@ -6,6 +6,7 @@ using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using System;
+using System.Linq;
 
 namespace Course_Record_v2._0
 {
@@ -23,32 +24,45 @@ namespace Course_Record_v2._0
             Contacts.GetFromHdd();
 
             #region ContactsAdd
-          /*  Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
-                "Dr. Manoj Kannan",
-                new string[] { @"+91-1596-515-855", "" },
-                new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
-                @"#3270, New Science Block
-Faculty Division III
-BITS Pilani, Pilani Campus
-Vidya Vihar, Pilani 333031 (Rajasthan)",
-                @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
-                "Katayi Bdia Master"));
+            /*  Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
+                  "Dr. Manoj Kannan",
+                  new string[] { @"+91-1596-515-855", "" },
+                  new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
+                  @"#3270, New Science Block
+  Faculty Division III
+  BITS Pilani, Pilani Campus
+  Vidya Vihar, Pilani 333031 (Rajasthan)",
+                  @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
+                  "Katayi Bdia Master"));
 
 
-            Contacts.StudentEntry.AddStudent(new EStudentEntry(
-                "Aakash Gupta",
-                (2018,
-                new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
-                887),
-                new string[] { "7496811413", "" },
-                @"uchanahome1@gmail.com",
-                "RAM",
-                4136,
-                "Developer of this App"));*/
-            #endregion 
+              Contacts.StudentEntry.AddStudent(new EStudentEntry(
+                  "Aakash Gupta",
+                  (2018,
+                  new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
+                  887),
+                  new string[] { "7496811413", "" },
+                  @"uchanahome1@gmail.com",
+                  "RAM",
+                  4136,
+                  "Developer of this App"));*/
+            #endregion
+
+            #region WebsitesAdd
+            LinkedList<string> list = new LinkedList<string>();
+            list.AddLast("AUGS/AUGR");
+            list.AddLast("SWD");
+            list.AddLast("Nalanda");
+            list.AddLast("ID");
+            list.AddLast("ERP");
+            list.AddLast("Library");
+            foreach (var s in list.OrderBy(a => a))
+                WebsiteBox.Items.Add(s);
+            WebsiteBox.SelectedIndex = 0;
+            #endregion
         }
 
-        private async void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (sender.SelectedItem == null)
             {
@@ -73,7 +87,21 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 lis.AddLast(Courses);
                 this.Frame.Navigate(typeof(Frames.Contacts.MainPage), lis);
             }
-            else if (SelectedItem == SWD)
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
+            NavView.SelectedItem = null;
+            this.Frame.BackStack.Clear();
+            this.Frame.ForwardStack.Clear();
+            Courses.AddToHdd_NewThread();
+            Contacts.AddToHdd_NewThread();
+        }
+
+        private async void HyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (WebsiteBox.SelectedItem.ToString() == "SWD")
             {
                 var uriBing = new Uri(@"http://swd.bits-pilani.ac.in");
                 var options = new Windows.System.LauncherOptions();
@@ -92,7 +120,7 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
                 }
 
             }
-            else if (SelectedItem == ERP)
+            else if (WebsiteBox.SelectedItem.ToString() == "ERP")
             {
                 var uriBing = new Uri(@"http://erp.bits-pilani.ac.in");
                 var options = new Windows.System.LauncherOptions();
@@ -102,16 +130,16 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
 
                 if (success)
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " opened successfully");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
                     NavView.SelectedItem = null;
                 }
                 else
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " was not opened");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
                 }
 
             }
-            else if (SelectedItem == Nalanda)
+            else if (WebsiteBox.SelectedItem.ToString() == "Nalanda")
             {
                 var uriBing = new Uri(@"http://nalanda.bits-pilani.ac.in");
                 var options = new Windows.System.LauncherOptions();
@@ -121,16 +149,16 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
 
                 if (success)
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " opened successfully");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
                     NavView.SelectedItem = null;
                 }
                 else
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " was not opened");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
                 }
 
             }
-            else if (SelectedItem == ID)
+            else if (WebsiteBox.SelectedItem.ToString() == "ID")
             {
                 var uriBing = new Uri(@"http://id");
                 var options = new Windows.System.LauncherOptions();
@@ -140,16 +168,16 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
 
                 if (success)
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " opened successfully");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
                     NavView.SelectedItem = null;
                 }
                 else
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " was not opened");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
                 }
 
             }
-            else if (SelectedItem == RC)
+            else if (WebsiteBox.SelectedItem.ToString() == "AUGS/AUGR")
             {
                 var uriBing = new Uri(@"http://rc.bits-pilani.ac.in/");
                 var options = new Windows.System.LauncherOptions();
@@ -159,16 +187,16 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
 
                 if (success)
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " opened successfully");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
                     NavView.SelectedItem = null;
                 }
                 else
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " was not opened");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
                 }
 
             }
-            else if (SelectedItem == LIB)
+            else if (WebsiteBox.SelectedItem.ToString() == "Library")
             {
                 var uriBing = new Uri(@"http://www.bits-pilani.ac.in:12354/");
                 var options = new Windows.System.LauncherOptions();
@@ -178,28 +206,15 @@ Vidya Vihar, Pilani 333031 (Rajasthan)",
 
                 if (success)
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " opened successfully");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
                     NavView.SelectedItem = null;
                 }
                 else
                 {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + SelectedItem.Content.ToString() + " was not opened");
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
                 }
 
             }
-
-
         }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
-            NavView.SelectedItem = null;
-            this.Frame.BackStack.Clear();
-            this.Frame.ForwardStack.Clear();
-            Courses.AddToHdd_NewThread();
-            Contacts.AddToHdd_NewThread();
-        }
-        
     }
 }
