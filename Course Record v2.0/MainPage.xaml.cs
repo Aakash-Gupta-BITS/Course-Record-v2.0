@@ -101,120 +101,44 @@ namespace Course_Record_v2._0
 
         private async void HyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (WebsiteBox.SelectedItem.ToString() == "SWD")
+            var uriBing = new Uri(@"http://google.co.in/");
+            var options = new Windows.System.LauncherOptions();
+            switch (WebsiteBox.SelectedItem.ToString())
             {
-                var uriBing = new Uri(@"http://swd.bits-pilani.ac.in");
-                var options = new Windows.System.LauncherOptions();
-                // Launch the URI with a warning prompt
-                options.TreatAsUntrusted = false;
-                var success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
-
-                if (success)
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage opened successfully");
-                    NavView.SelectedItem = null;
-                }
-                else
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage was not opened");
-                }
+                case "SWD":
+                    uriBing = new Uri(@"http://swd.bits-pilani.ac.in");
+                    break;
+                case "ERP":
+                    uriBing = new Uri(@"http://erp.bits-pilani.ac.in");
+                    break;
+                case "Nalanda":
+                    uriBing = new Uri(@"http://nalanda.bits-pilani.ac.in");
+                    break;
+                case "ID":
+                    uriBing = new Uri(@"http://id");
+                    break;
+                case "AUGS/AUGR":
+                    uriBing = new Uri(@"http://rc.bits-pilani.ac.in/");
+                    break;
+                case "Library":
+                    uriBing = new Uri(@"http://www.bits-pilani.ac.in:12354/");
+                    break;
 
             }
-            else if (WebsiteBox.SelectedItem.ToString() == "ERP")
+            // Launch the URI with a warning prompt
+            options.TreatAsUntrusted = false;
+            var success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
+
+            if (success)
             {
-                var uriBing = new Uri(@"http://erp.bits-pilani.ac.in");
-                var options = new Windows.System.LauncherOptions();
-                // Launch the URI with a warning prompt
-                options.TreatAsUntrusted = false;
-                var success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
-
-                if (success)
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
-                    NavView.SelectedItem = null;
-                }
-                else
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
-                }
-
+                LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
+                NavView.SelectedItem = null;
             }
-            else if (WebsiteBox.SelectedItem.ToString() == "Nalanda")
+            else
             {
-                var uriBing = new Uri(@"http://nalanda.bits-pilani.ac.in");
-                var options = new Windows.System.LauncherOptions();
-                // Launch the URI with a warning prompt
-                options.TreatAsUntrusted = false;
-                var success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
-
-                if (success)
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
-                    NavView.SelectedItem = null;
-                }
-                else
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
-                }
-
-            }
-            else if (WebsiteBox.SelectedItem.ToString() == "ID")
-            {
-                var uriBing = new Uri(@"http://id");
-                var options = new Windows.System.LauncherOptions();
-                // Launch the URI with a warning prompt
-                options.TreatAsUntrusted = false;
-                var success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
-
-                if (success)
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
-                    NavView.SelectedItem = null;
-                }
-                else
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
-                }
-
-            }
-            else if (WebsiteBox.SelectedItem.ToString() == "AUGS/AUGR")
-            {
-                var uriBing = new Uri(@"http://rc.bits-pilani.ac.in/");
-                var options = new Windows.System.LauncherOptions();
-                // Launch the URI with a warning prompt
-                options.TreatAsUntrusted = false;
-                var success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
-
-                if (success)
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
-                    NavView.SelectedItem = null;
-                }
-                else
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
-                }
-
-            }
-            else if (WebsiteBox.SelectedItem.ToString() == "Library")
-            {
-                var uriBing = new Uri(@"http://www.bits-pilani.ac.in:12354/");
-                var options = new Windows.System.LauncherOptions();
-                // Launch the URI with a warning prompt
-                options.TreatAsUntrusted = false;
-                var success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
-
-                if (success)
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
-                    NavView.SelectedItem = null;
-                }
-                else
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
-                }
-
-            }
+                LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
+            }                                               
+            
         }
     }
 }
