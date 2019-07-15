@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Course_Record_v2._0.Frames.Course
     public sealed partial class CT_log : Page
     {
         private EStudents ctLog;
-        private EStudents allStudents;
+        private EStudents AllStudents => AllContacts.Instance.StudentEntry;
 
         public CT_log()
         {
@@ -34,7 +35,7 @@ namespace Course_Record_v2._0.Frames.Course
             };
 
             // Fill only those names that are not not yet added in course
-            foreach (var x in (from a in allStudents.lists where !ViewList.Items.Contains(a.GetView) select a.Name))
+            foreach (var x in (from a in AllStudents.lists where !ViewList.Items.Contains(a.GetView) select a.Name))
             {
                 comboBox.Items.Add(x);
             }
@@ -65,7 +66,7 @@ namespace Course_Record_v2._0.Frames.Course
                 case ContentDialogResult.Primary:
 
                     // Find the selected student
-                    foreach (var x in allStudents.lists)
+                    foreach (var x in AllStudents.lists)
                     {
                         if (x.Name == comboBox.SelectedItem.ToString())
                         {
@@ -156,11 +157,9 @@ namespace Course_Record_v2._0.Frames.Course
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var a = e.Parameter as LinkedList<object>;
-            ctLog = a.First.Value as EStudents;
-            allStudents = a.First.Next.Value as EStudents;
+            ctLog = e.Parameter as EStudents;
 
-            foreach (var x in (from x in ctLog.lists where allStudents.lists.Contains(x) select x.GetView))
+            foreach (var x in (from x in ctLog.lists where AllStudents.lists.Contains(x) select x.GetView))
             {
                 ViewList.Items.Add(x);
             }

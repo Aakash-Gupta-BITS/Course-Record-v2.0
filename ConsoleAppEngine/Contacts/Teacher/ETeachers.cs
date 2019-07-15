@@ -24,12 +24,7 @@ namespace ConsoleAppEngine.Course
 
         #endregion
 
-        private AllCourses allCourses;
-
-        public void SetAllCourses(AllCourses s)
-        {
-            allCourses = s;
-        }
+        private AllCourses allCourses => AllCourses.Instance;
 
         public void AddTeacher(ETeacherEntry t)
         {

@@ -1,5 +1,4 @@
-﻿using ConsoleAppEngine.Contacts;
-using ConsoleAppEngine.Course;
+﻿using ConsoleAppEngine.Globals;
 using ConsoleAppEngine.Log;
 using System.Collections.Generic;
 using Windows.Storage;
@@ -12,16 +11,19 @@ namespace Course_Record_v2._0
 {
     public sealed partial class MainPage
     {
-        private readonly AllCourses Courses = new AllCourses();
-        private readonly AllContacts Contacts = new AllContacts();
+        public delegate void GetDelegate();
 
         public MainPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
+
+            ContactMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE779) };
+            TimeMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE787) };
+            CourseMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE7BE) };
             Directory.Text = ApplicationData.Current.LocalFolder.Path;
-            Courses.GetFromHdd();
-            Contacts.GetFromHdd();
+
+            //HDDSync.GetAllFromHDD();
 
             #region ContactsAdd
             /*  Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
@@ -75,28 +77,21 @@ namespace Course_Record_v2._0
 
             if (SelectedItem == CourseMenu)
             {
-                LinkedList<object> lis = new LinkedList<object>();
-                lis.AddLast(Courses);
-                lis.AddLast(Contacts);
-                this.Frame.Navigate(typeof(Frames.Course.MainPage), lis);
+                this.Frame.Navigate(typeof(Frames.Course.MainPage));
             }
             else if (SelectedItem == ContactMenu)
             {
-                LinkedList<object> lis = new LinkedList<object>();
-                lis.AddLast(Contacts);
-                lis.AddLast(Courses);
-                this.Frame.Navigate(typeof(Frames.Contacts.MainPage), lis);
+                this.Frame.Navigate(typeof(Frames.Contacts.MainPage));
             }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+         //   HDDSync.AddAllToHDD();
             LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
             NavView.SelectedItem = null;
             this.Frame.BackStack.Clear();
             this.Frame.ForwardStack.Clear();
-            Courses.AddToHdd_NewThread();
-            Contacts.AddToHdd_NewThread();
         }
 
         private async void HyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

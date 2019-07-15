@@ -1,4 +1,5 @@
 ﻿using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace Course_Record_v2._0.Frames.Course
 {
     public sealed partial class Teachers : Page
     {
-        private CourseEntry entry;
+        private CourseEntry SelectedCourse;
 
-        private ETeachers teachers => entry.TeacherEntry;
+        private ETeachers CourseTeachers => SelectedCourse.TeacherEntry;
 
-        private ETeachers allTeachers;
+        private ETeachers AllTeachers => AllContacts.Instance.TeacherEntry;
 
         public Teachers()
         {
@@ -25,7 +26,7 @@ namespace Course_Record_v2._0.Frames.Course
             };
         }
 
-        private async void AddCommand_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void AddCommand_Click(object sender, RoutedEventArgs e)
         {
             // Define Combobox for Display in ContentDialog
             ComboBox comboBox = new ComboBox()
@@ -35,12 +36,12 @@ namespace Course_Record_v2._0.Frames.Course
             };
 
             // Fill only those names that are not not yet added in course
-            foreach (var x in (from a in allTeachers.lists where !ViewList.Items.Contains(a.GetView) select a.Name))
+            foreach (var x in (from a in AllTeachers.lists where !ViewList.Items.Contains(a.GetView) select a.Name))
             {
                 comboBox.Items.Add(x);
             }
 
-            // Instance of Content Dialog thaat will be displayed
+            // Instance of Content Dialog that will be displayed
             ContentDialog contentDialog = new ContentDialog()
             {
                 PrimaryButtonText = "Add",
@@ -66,27 +67,27 @@ namespace Course_Record_v2._0.Frames.Course
                 case ContentDialogResult.Primary:
 
                     // Find the selected teacher
-                    foreach (var x in allTeachers.lists)
+                    foreach (var x in AllTeachers.lists)
                     {
                         if (x.Name == comboBox.SelectedItem.ToString())
                         {
-                            teachers.lists.AddLast(x);
+                            CourseTeachers.lists.AddLast(x);
                             break;
                         }
                     }
 
 
                     // Sort Teachers
-                    List<ETeacherEntry> v = teachers.lists.OrderBy(a => a.Name).ToList();
-                    teachers.lists.Clear();
+                    List<ETeacherEntry> v = CourseTeachers.lists.OrderBy(a => a.Name).ToList();
+                    CourseTeachers.lists.Clear();
                     foreach (var x in v)
                     {
-                        teachers.lists.AddLast(x);
+                        CourseTeachers.lists.AddLast(x);
                     }
 
                     // Fill ViewList with new sorted order
                     ViewList.Items.Clear();
-                    foreach (var a in from a in teachers.lists select a.GetView)
+                    foreach (var a in from a in CourseTeachers.lists select a.GetView)
                     {
                         ViewList.Items.Add(a);
                     }
@@ -103,12 +104,12 @@ namespace Course_Record_v2._0.Frames.Course
             }
 
             // Get selected teacher first
-            ETeacherEntry ItemSelected = null;
-            foreach (var x in teachers.lists)
+            ETeacherEntry SelectedTeacher = null;
+            foreach (var x in CourseTeachers.lists)
             {
                 if (x.GetView == (ViewList.SelectedItem))
                 {
-                    ItemSelected = x;
+                    SelectedTeacher = x;
                     break;
                 }
             }
@@ -116,11 +117,12 @@ namespace Course_Record_v2._0.Frames.Course
             // Unselect the selected item, it will again call this function but null check return it
             ViewList.SelectedItem = null;
 
+            // Content Dialog that will be displayed
             ContentDialog contentDialog = new ContentDialog()
             {
                 PrimaryButtonText = "Remove from this course",
                 CloseButtonText = "Ok",
-                Title = ItemSelected.Name,
+                Title = SelectedTeacher.Name,
                 Content =
                 new TextBlock()
                 {
@@ -130,13 +132,13 @@ namespace Course_Record_v2._0.Frames.Course
                         "Email   \t:\t{3}, {4}\n" +
                         "Website \t:\t{5}\n" +
                         "Other Info :\t{6}",
-                        ItemSelected.Address,
-                        ItemSelected.Phone[0],
-                        ItemSelected.Phone[1],
-                        ItemSelected.Email[0],
-                        ItemSelected.Email[1],
-                        ItemSelected.Website,
-                        ItemSelected.OtherInfo),
+                        SelectedTeacher.Address,
+                        SelectedTeacher.Phone[0],
+                        SelectedTeacher.Phone[1],
+                        SelectedTeacher.Email[0],
+                        SelectedTeacher.Email[1],
+                        SelectedTeacher.Website,
+                        SelectedTeacher.OtherInfo),
                     IsTextSelectionEnabled = true
                 }
             };
@@ -145,22 +147,19 @@ namespace Course_Record_v2._0.Frames.Course
             {
                 // Delete
                 case ContentDialogResult.Primary:
-
                     // Important : Item not to be removed from AllContacts
-                    ViewList.Items.Remove(ItemSelected.GetView);
-                    teachers.lists.Remove(ItemSelected);
-                    entry.SyncTimeTablewithTeachers();
+                    ViewList.Items.Remove(SelectedTeacher.GetView);
+                    CourseTeachers.lists.Remove(SelectedTeacher);
+                    SelectedCourse.SyncTimeTablewithTeachers();
                     break;
             }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var a = e.Parameter as LinkedList<object>;
-            entry = a.First.Value as CourseEntry;
-            allTeachers = a.First.Next.Value as ETeachers;
+            SelectedCourse = e.Parameter as CourseEntry;
 
-            foreach (var x in (from x in teachers.lists where teachers.lists.Contains(x) select x.GetView))
+            foreach (var x in (from x in CourseTeachers.lists where x.IsDeleted != true select x.GetView))
             {
                 ViewList.Items.Add(x);
             }

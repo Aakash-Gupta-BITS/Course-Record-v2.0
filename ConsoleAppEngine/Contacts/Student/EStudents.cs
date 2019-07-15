@@ -24,16 +24,11 @@ namespace ConsoleAppEngine.Course
         private TextBox OtherInput;
         #endregion
 
-        private AllCourses allCourses;
-
-        public void SetAllCourses(AllCourses s)
-        {
-            allCourses = s;
-        }
+        private AllCourses AllCourses => AllCourses.Instance;
 
         public override void PostDeleteTasks()
         {
-            foreach (CourseEntry s in allCourses.CoursesList)
+            foreach (CourseEntry s in AllCourses.CoursesList)
             {
                 s.CTLog.lists.Remove(ItemToChange);
             }
