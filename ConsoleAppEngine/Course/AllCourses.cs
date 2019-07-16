@@ -19,9 +19,12 @@ namespace ConsoleAppEngine.Course
     [Serializable]
     public partial class AllCourses : EElementBase<CourseEntry>, ISerializable
     {
-        public AllContacts Contacts;
-        public NavigationView NavView;
+        public static AllCourses Instance = new AllCourses();
+
+        public AllContacts Contacts => AllContacts.Instance;
+
         #region DisplayBoxes
+        public NavigationView NavView;
 
         private ComboBox TypeBox;
         private TextBox IdBox;
@@ -42,7 +45,7 @@ namespace ConsoleAppEngine.Course
 
         #region Serialization
 
-        public AllCourses() : base()
+        private AllCourses() : base()
         {
 
         }
@@ -55,7 +58,7 @@ namespace ConsoleAppEngine.Course
         #endregion
 
         #region ToMoveToHDDSync
-        public void AddToHdd()
+        public static void AddToHdd()
         {
             string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
 
@@ -64,7 +67,7 @@ namespace ConsoleAppEngine.Course
                 Directory.CreateDirectory(DirectoryLocation);
             }
 
-            foreach (CourseEntry e in CoursesList)
+            foreach (CourseEntry e in Instance.CoursesList)
             {
                 using (Stream m = new FileStream(Path.Combine(DirectoryLocation, e.Title + ".bin"), FileMode.Create, FileAccess.Write))
                 {
@@ -73,7 +76,7 @@ namespace ConsoleAppEngine.Course
             }
         }
 
-        public void AddToHdd_NewThread()
+        public static void AddToHdd_NewThread()
         {
             Thread thread = new Thread(new ThreadStart(AddToHdd))
             {
@@ -83,7 +86,7 @@ namespace ConsoleAppEngine.Course
             thread.Start();
         }
 
-        public void GetFromHdd()
+        public static void GetFromHdd()
         {
             string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
 
@@ -98,12 +101,12 @@ namespace ConsoleAppEngine.Course
             {
                 using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
                 {
-                    CoursesList.AddLast(formatter.Deserialize(s) as CourseEntry);
+                    Instance.CoursesList.AddLast(formatter.Deserialize(s) as CourseEntry);
                 }
             }
         }
 
-        public void GetFromHdd_NewThread()
+        public static void GetFromHdd_NewThread()
         {
             Thread thread = new Thread(new ThreadStart(GetFromHdd))
             {
@@ -137,6 +140,8 @@ namespace ConsoleAppEngine.Course
             LectureBox = null;
             PracticalBox = null;
             ICBox = null;
+
+            NavView = null;
         }
 
         protected override void AddNewItem()

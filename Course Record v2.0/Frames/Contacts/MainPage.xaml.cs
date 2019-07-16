@@ -9,12 +9,12 @@ namespace Course_Record_v2._0.Frames.Contacts
 {
     public sealed partial class MainPage : Page
     {
-        private AllContacts allContacts;
-        private AllCourses allCourses;
-
         public MainPage()
         {
             InitializeComponent();
+
+            GoBack.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE72B) };
+            OthersNavigation.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE7EE) };
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -30,31 +30,17 @@ namespace Course_Record_v2._0.Frames.Contacts
             NavView.Header = SelectedItem.Content;
 
             if (SelectedItem == TeachersNavigation)
-            {
-                LinkedList<object> lis = new LinkedList<object>();
-                lis.AddLast(allContacts.TeacherEntry);
-                lis.AddLast(allCourses);
-                ContentFrame.Navigate(typeof(TeacherContacts), lis);
-            }
+                ContentFrame.Navigate(typeof(TeacherContacts));
             else if (SelectedItem == StudentsNavigation)
-            {
-                LinkedList<object> lis = new LinkedList<object>();
-                lis.AddLast(allContacts.StudentEntry);
-                lis.AddLast(allCourses);
-                ContentFrame.Navigate(typeof(StudentContacts), lis);
-            }
+                ContentFrame.Navigate(typeof(StudentContacts));
             else if (SelectedItem == GoBack)
-            {
                 Frame.GoBack();
-            }
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             LoggingServices.Instance.WriteLine<MainPage>("Constacts Main Page loading...");
-            var temp = e.Parameter as LinkedList<object>;
-            allContacts = temp.First.Value as AllContacts;
-            allCourses = temp.First.Next.Value as AllCourses;
             NavView.SelectedItem = StudentsNavigation;
             LoggingServices.Instance.WriteLine<MainPage>("Contacts Main Page loaded.");
         }

@@ -1,4 +1,5 @@
 ﻿using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Contacts;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -8,7 +9,7 @@ namespace Course_Record_v2._0.Frames.Contacts
 {
     public sealed partial class StudentContacts : Page
     {
-        private EStudents StudentEntry;
+        private EStudents StudentEntry => AllContacts.Instance.StudentEntry;
 
         public StudentContacts()
         {
@@ -21,9 +22,6 @@ namespace Course_Record_v2._0.Frames.Contacts
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var temp = e.Parameter as LinkedList<object>;
-            StudentEntry = temp.First.Value as EStudents;
-            StudentEntry.SetAllCourses(temp.First.Next.Value as AllCourses);
             StudentEntry.InitializeViews(
                 ViewGrid,
                 AddGrid,

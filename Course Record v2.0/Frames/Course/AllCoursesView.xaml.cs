@@ -10,9 +10,8 @@ namespace Course_Record_v2._0.Frames.Course
 {
     public sealed partial class AllCoursesView : Page
     {
-        private AllCourses Courses;
-        private AllContacts Contacts;
-        private NavigationView NavView;
+        private AllCourses Courses => AllCourses.Instance;
+        private AllContacts Contacts => AllContacts.Instance;
 
         public AllCoursesView()
         {
@@ -31,14 +30,7 @@ namespace Course_Record_v2._0.Frames.Course
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var x = e.Parameter as LinkedList<object>;
-
-            Courses = x.First.Value as AllCourses;
-            Contacts = x.First.Next.Value as AllContacts;
-            NavView = x.First.Next.Next.Value as NavigationView;
-
-            Courses.Contacts = Contacts;
-            Courses.NavView = NavView;
+            Courses.NavView = e.Parameter as NavigationView;
 
             foreach (var y in Contacts.TeacherEntry.lists)
             {

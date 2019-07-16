@@ -11,7 +11,7 @@
     <Grid>
 
 
-        <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False"
+        <NavigationView PaneDisplayMode="LeftCompact" IsBackButtonVisible="Collapsed" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False"
                         x:Name="NavView" 
                         SelectionChanged="NavView_SelectionChanged" HorizontalAlignment="Stretch" Margin="0,0,0.2,0" VerticalAlignment="Stretch">
             <NavigationView.MenuItems>

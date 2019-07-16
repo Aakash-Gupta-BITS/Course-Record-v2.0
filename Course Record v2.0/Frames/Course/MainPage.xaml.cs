@@ -10,9 +10,7 @@ namespace Course_Record_v2._0.Frames.Course
 {
     public sealed partial class MainPage : Page
     {
-        private AllCourses allCourses;
-        private AllContacts allContacts;
-        private readonly NavigationViewItem GoBack = new NavigationViewItem() { Content = "Go Back" };
+        private readonly NavigationViewItem GoBack = new NavigationViewItem() { Content = "Go Back", Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE72B) } };
 
         public MainPage()
         {
@@ -28,11 +26,7 @@ namespace Course_Record_v2._0.Frames.Course
 
             if (SelectedItem == AddCoursesNavigation)
             {
-                LinkedList<object> temp = new LinkedList<object>();
-                temp.AddLast(allCourses);
-                temp.AddLast(allContacts);
-                temp.AddLast(NavView);
-                ContentFrame.Navigate(typeof(AllCoursesView), temp);
+                ContentFrame.Navigate(typeof(AllCoursesView), NavView);
                 SecNav.Visibility = Visibility.Collapsed;
             }
             else if (SelectedItem == GoBack)
@@ -56,7 +50,7 @@ namespace Course_Record_v2._0.Frames.Course
             }
 
             CourseEntry SelectedCourse = null;
-            foreach (var x in allCourses.CoursesList)
+            foreach (var x in AllCourses.Instance.CoursesList)
             {
                 if (NavView.SelectedItem == x.navigationViewItem)
                 {
@@ -79,16 +73,10 @@ namespace Course_Record_v2._0.Frames.Course
                     ContentFrame.Navigate(typeof(Handout), SelectedCourse.HandoutEntry);
                     break;
                 case "Teachers":
-                    LinkedList<object> lis = new LinkedList<object>();
-                    lis.AddLast(SelectedCourse);
-                    lis.AddLast(allContacts.TeacherEntry);
-                    ContentFrame.Navigate(typeof(Teachers), lis);
+                    ContentFrame.Navigate(typeof(Teachers), SelectedCourse);
                     break;
                 case "CT log":
-                    lis = new LinkedList<object>();
-                    lis.AddLast(SelectedCourse.CTLog);
-                    lis.AddLast(allContacts.StudentEntry);
-                    ContentFrame.Navigate(typeof(CT_log), lis);
+                    ContentFrame.Navigate(typeof(CT_log), SelectedCourse.CTLog);
                     break;
                 case "Time Table":
                     ContentFrame.Navigate(typeof(TimeTable), SelectedCourse);
@@ -108,11 +96,8 @@ namespace Course_Record_v2._0.Frames.Course
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             LoggingServices.Instance.WriteLine<MainPage>("Course Main Page loading...");
-            var a = (e.Parameter as LinkedList<object>);
-            allCourses = a.First.Value as AllCourses;
-            allContacts = a.First.Next.Value as AllContacts;
 
-            foreach (var x in allCourses.CoursesList)
+            foreach (var x in AllCourses.Instance.CoursesList)
             {
                 NavView.MenuItems.Add(x.navigationViewItem);
             }
@@ -122,13 +107,13 @@ namespace Course_Record_v2._0.Frames.Course
             NavView.MenuItems.Add(GoBack);
             NavView.MenuItems.Add(new NavigationViewItemSeparator());
 
-            if (allCourses.CoursesList.Count == 0)
+            if (AllCourses.Instance.CoursesList.Count == 0)
             {
                 NavView.SelectedItem = AddCoursesNavigation;
             }
             else
             {
-                NavView.SelectedItem = allCourses.CoursesList.First.Value.navigationViewItem;
+                NavView.SelectedItem = AllCourses.Instance.CoursesList.First.Value.navigationViewItem;
             }
             LoggingServices.Instance.WriteLine<MainPage>("Course Main Page loaded.");
         }
