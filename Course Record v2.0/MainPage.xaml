@@ -29,7 +29,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                 <!--   <ColumnDefinition Width="1*"/>-->
+                    <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10" x:Name="Directory" IsTextSelectionEnabled="True" HorizontalAlignment="Center"/>

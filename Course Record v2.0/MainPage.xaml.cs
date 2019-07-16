@@ -53,7 +53,7 @@ namespace Course_Record_v2._0
             list.AddLast("AUGS/AUGR");
             list.AddLast("SWD");
             list.AddLast("Nalanda");
-            list.AddLast("ID");
+            list.AddLast("ID (Only Intranet)");
             list.AddLast("ERP");
             list.AddLast("Library");
             foreach (var s in list.OrderBy(a => a))
@@ -101,44 +101,53 @@ namespace Course_Record_v2._0
 
         private async void HyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var uriBing = new Uri(@"http://google.co.in/");
-            var options = new Windows.System.LauncherOptions();
-            switch (WebsiteBox.SelectedItem.ToString())
-            {
-                case "SWD":
-                    uriBing = new Uri(@"http://swd.bits-pilani.ac.in");
-                    break;
-                case "ERP":
-                    uriBing = new Uri(@"http://erp.bits-pilani.ac.in");
-                    break;
-                case "Nalanda":
-                    uriBing = new Uri(@"http://nalanda.bits-pilani.ac.in");
-                    break;
-                case "ID":
-                    uriBing = new Uri(@"http://id");
-                    break;
-                case "AUGS/AUGR":
-                    uriBing = new Uri(@"http://rc.bits-pilani.ac.in/");
-                    break;
-                case "Library":
-                    uriBing = new Uri(@"http://www.bits-pilani.ac.in:12354/");
+           
+                var uriBing = new Uri(@"http://google.co.in/");
+                var uriBing1 = new Uri(@"http://google.co.in/");
+                var options = new Windows.System.LauncherOptions();
+                switch (WebsiteBox.SelectedItem.ToString())
+                {
+                    case "SWD":
+                        uriBing = new Uri(@"http://swd.bits-pilani.ac.in");
+                        uriBing1 = new Uri(@"http://swd.bits-pilani.ac.in");
+                        break;
+                    case "ERP":
+                        uriBing = new Uri(@"http://erp.bits-pilani.ac.in");
+                        uriBing1 = new Uri(@"http://erp.bits-pilani.ac.in");
+                        break;
+                    case "Nalanda":
+                        uriBing = new Uri(@"http://nalanda.bits-pilani.ac.in");
+                        uriBing1 = new Uri(@"http://nalanda.bits-pilani.ac.in");
+                        break;
+                    case "ID (Only Intranet)":
+                        uriBing1 = new Uri(@"http://id");
+                        break;
+                    case "AUGS/AUGR":
+                        uriBing = new Uri(@"http://rc.bits-pilani.ac.in/");
+                        uriBing1 = new Uri(@"http://rc.bits-pilani.ac.in/");
+                        break;
+                    case "Library":
+                        uriBing = new Uri(@"http://www.bits-pilani.ac.in:12354/");
+                        uriBing1 = new Uri(@"http://www.bits-pilani.ac.in:12354/");
                     break;
 
-            }
-            // Launch the URI with a warning prompt
-            options.TreatAsUntrusted = false;
-            var success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
-
-            if (success)
+                }
+                // Launch the URI with a warning prompt
+                options.TreatAsUntrusted = false;
+            var success = false;
+            if (sender.Equals(Link1))
             {
-                LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
-                NavView.SelectedItem = null;
+                success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
             }
-            else
-            {
-                LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
-            }                                               
-            
+                if (success)
+                {
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
+                    NavView.SelectedItem = null;
+                }
+                else
+                {
+                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
+                }
         }
     }
 }
