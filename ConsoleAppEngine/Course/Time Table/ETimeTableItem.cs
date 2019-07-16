@@ -40,7 +40,7 @@ namespace ConsoleAppEngine.Course
             Section = (uint)info.GetValue(nameof(Section), typeof(uint));
             Teachers = info.GetValue(nameof(Teachers), typeof(LinkedList<ETeacherEntry>)) as LinkedList<ETeacherEntry>;
             Room = info.GetValue(nameof(Room), typeof(string)) as string;
-            WeekDays = info.GetValue(nameof(WeekDays), typeof(LinkedList<DayOfWeek>)) as LinkedList<DayOfWeek>;
+            WeekDays = (info.GetValue(nameof(WeekDays), typeof(LinkedList<DayOfWeek>))) as LinkedList<DayOfWeek>;
             Hours = (info.GetValue(nameof(Hours), typeof(List<uint>)) as List<uint>).ToArray();
 
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
@@ -81,7 +81,7 @@ namespace ConsoleAppEngine.Course
             Section = section;
             Teachers = teacher;
             Room = room;
-            WeekDays = new LinkedList<DayOfWeek>(weekDays.OrderBy(a => a));
+            WeekDays = new LinkedList<DayOfWeek>(weekDays.OrderBy(a => a)) as LinkedList<DayOfWeek>;
 
             Array.Sort(hours);
             Hours = hours;
@@ -93,11 +93,9 @@ namespace ConsoleAppEngine.Course
         {
             TypeViewBlock.Text = EntryType.ToString();
             TeacherViewBlock.Text = string.Join(", ", (from a in Teachers where a != null select a.Name).ToArray());
-            System.Threading.Thread.Sleep(500);
             DaysViewBlock.Text = GetDayListString(WeekDays);
             HourViewBlock.Text = string.Join(" ", Array.ConvertAll(Hours, (x) => x.ToString()));
         }
-
         
 
         #region Helpers

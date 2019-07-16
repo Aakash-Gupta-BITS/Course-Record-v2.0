@@ -144,6 +144,8 @@
     <Compile Include="Supportive Structures\Globals\HDDSync.cs" />
     <Compile Include="Supportive Structures\Log\ILoggingServices.cs" />
     <Compile Include="Supportive Structures\Log\LoggingServices.cs" />
+    <Compile Include="TimeTable\TimeTableOverallItem.cs" />
+    <Compile Include="TimeTable\TimeTableOverallView.cs" />
     <EmbeddedResource Include="Properties\ConsoleAppEngine.rd.xml" />
   </ItemGroup>
   <ItemGroup>

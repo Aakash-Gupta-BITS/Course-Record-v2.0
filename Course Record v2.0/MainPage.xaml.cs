@@ -1,4 +1,7 @@
 ﻿using ConsoleAppEngine.Globals;
+using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.Course;
+using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Log;
 using System.Collections.Generic;
 using Windows.Storage;
@@ -23,10 +26,10 @@ namespace Course_Record_v2._0
             CourseMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE7BE) };
             Directory.Text = ApplicationData.Current.LocalFolder.Path;
 
-            //HDDSync.GetAllFromHDD();
+            HDDSync.GetAllFromHDD();
 
             #region ContactsAdd
-            /*  Contacts.TeacherEntry.AddTeacher(new ETeacherEntry(
+          /*    AllContacts.Instance.TeacherEntry.AddTeacher(new ETeacherEntry(
                   "Dr. Manoj Kannan",
                   new string[] { @"+91-1596-515-855", "" },
                   new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
@@ -38,7 +41,7 @@ namespace Course_Record_v2._0
                   "Katayi Bdia Master"));
 
 
-              Contacts.StudentEntry.AddStudent(new EStudentEntry(
+            AllContacts.Instance.StudentEntry.AddStudent(new EStudentEntry(
                   "Aakash Gupta",
                   (2018,
                   new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
@@ -87,7 +90,7 @@ namespace Course_Record_v2._0
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-         //   HDDSync.AddAllToHDD();
+            HDDSync.AddAllToHDD();
             LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
             NavView.SelectedItem = null;
             this.Frame.BackStack.Clear();
