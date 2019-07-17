@@ -1,12 +1,10 @@
-﻿using ConsoleAppEngine.Globals;
-using ConsoleAppEngine.Log;
+﻿using ConsoleAppEngine.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 
 namespace Course_Record_v2._0.Frames

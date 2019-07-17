@@ -1,10 +1,9 @@
-﻿using ConsoleAppEngine.Course;
-using ConsoleAppEngine.Contacts;
-using ConsoleAppEngine.Abstracts;
+﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Course;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,23 +27,40 @@ namespace ConsoleAppEngine.TimeTable
                     {
                         bool[] arr = new bool[20];
                         foreach (var temp in y.Hours)
+                        {
                             arr[temp - 1] = true;
+                        }
 
                         LinkedList<int> startindexes = new LinkedList<int>();
-                        if (arr[0] == true) startindexes.AddLast(0);
+                        if (arr[0] == true)
+                        {
+                            startindexes.AddLast(0);
+                        }
+
                         for (int i = 1; i < arr.Length - 1; ++i)
+                        {
                             if (arr[i] == false && arr[i + 1] == true)
+                            {
                                 startindexes.AddLast(i + 1);
+                            }
+                        }
 
                         var finl = startindexes.ToArray();
                         for (int i = 0; i < finl.Length; ++i)
                         {
                             int Len = 0;
                             for (int j = i; j < arr.Length; ++j)
+                            {
                                 if (arr[j] == false)
+                                {
                                     break;
+                                }
                                 else
+                                {
                                     ++Len;
+                                }
+                            }
+
                             InitialList.AddLast((x.Title,
                                 y.EntryType,
                                 y.Teachers,
@@ -62,7 +78,9 @@ namespace ConsoleAppEngine.TimeTable
             var list = InitialList.OrderBy(a => a.WeekDay).ThenBy(a => a.Hour).ToArray();
             InitialList.Clear();
             foreach (var x in list)
+            {
                 InitialList.AddLast(x);
+            }
         }
 
         public void InitializeViews()

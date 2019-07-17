@@ -1,15 +1,9 @@
-﻿using ConsoleAppEngine.Globals;
+﻿using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Course;
 using ConsoleAppEngine.Log;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Windows.Storage;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine.AllEnums;
 
 namespace Course_Record_v2._0
 {
@@ -66,9 +60,13 @@ namespace Course_Record_v2._0
             LoggingServices.Instance.WriteLine<MainPage>("\"" + SelectedItem.Content as string + "\" is selected at initial Main Page.");
 
             if (SelectedItem == HomeMenu)
+            {
                 ContentFrame.Navigate(typeof(Frames.HomePage));
+            }
             else if (SelectedItem == TimeMenu)
+            {
                 ContentFrame.Navigate(typeof(Frames.OverallTimeTableView));
+            }
             else if (SelectedItem == CourseMenu)
             {
                 this.Frame.Navigate(typeof(Frames.Course.MainPage));
