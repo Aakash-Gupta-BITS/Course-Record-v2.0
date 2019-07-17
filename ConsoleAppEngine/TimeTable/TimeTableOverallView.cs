@@ -49,7 +49,7 @@ namespace ConsoleAppEngine.TimeTable
                         for (int i = 0; i < finl.Length; ++i)
                         {
                             int Len = 0;
-                            for (int j = finl[i]; j < arr.Length; ++j)
+                            for (int j = i; j < arr.Length; ++j)
                             {
                                 if (arr[j] == false)
                                 {
