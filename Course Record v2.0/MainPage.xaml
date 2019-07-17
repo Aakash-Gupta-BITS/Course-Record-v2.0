@@ -9,35 +9,20 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
-
         <NavigationView PaneDisplayMode="LeftCompact" IsBackButtonVisible="Collapsed" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False"
-                        x:Name="NavView" 
+                        x:Name="NavView" IsPaneOpen="False"
                         SelectionChanged="NavView_SelectionChanged" HorizontalAlignment="Stretch" Margin="0,0,0.2,0" VerticalAlignment="Stretch">
             <NavigationView.MenuItems>
                 <NavigationViewItemSeparator/>
-                <NavigationViewItemHeader Content="All Courses Record"/>
+                <NavigationViewItem Content="Home" x:Name="HomeMenu" Icon="Home"/>
+                <NavigationViewItemSeparator/>
+                <NavigationViewItemHeader Content="Records"/>
                 <NavigationViewItem Content="Contacts" x:Name="ContactMenu"/>
                 <NavigationViewItem Content="Courses" x:Name="CourseMenu"/>
                 <NavigationViewItem Content="Time Table" x:Name="TimeMenu"/>
                 <NavigationViewItemSeparator/>
             </NavigationView.MenuItems>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10" x:Name="Directory" IsTextSelectionEnabled="True" HorizontalAlignment="Center"/>
-
-                <ComboBox x:Name="WebsiteBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,10,5,5" Header="Destination WebSite"/>
-                <HyperlinkButton Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,10,5,5"  x:Name="Link1" Click="HyperlinkButton_Click" Content="Intranet (Inside Campus)"/>
-                <HyperlinkButton Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,10,5,5"  x:Name="Link2" Click="HyperlinkButton_Click" Content="Internet (Outside Campus)"/>
-            </Grid>
+            <Frame x:Name="ContentFrame"/>
         </NavigationView>
     </Grid>
 </Page>

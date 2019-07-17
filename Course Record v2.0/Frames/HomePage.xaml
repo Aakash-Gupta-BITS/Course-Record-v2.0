@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="Course_Record_v2._0.Frames.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Course_Record_v2._0.Frames"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10" x:Name="Directory" IsTextSelectionEnabled="True" HorizontalAlignment="Center"/>
+
+        <ComboBox x:Name="WebsiteBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,10,5,5" Header="Destination WebSite"/>
+        <HyperlinkButton Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,10,5,5"  x:Name="Link1" Click="HyperlinkButton_Click" Content="Intranet (Inside Campus)"/>
+        <HyperlinkButton Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,10,5,5"  x:Name="Link2" Click="HyperlinkButton_Click" Content="Internet (Outside Campus)"/>
+    </Grid>
+</Page>
