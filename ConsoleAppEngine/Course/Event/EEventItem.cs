@@ -56,7 +56,7 @@ namespace ConsoleAppEngine.Course
         }
 
         #endregion
-        
+
         public EEventItem(string title, DateTime timing, string location, string description)
         {
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 1), (typeof(string), 1));
@@ -79,6 +79,6 @@ namespace ConsoleAppEngine.Course
             LocationViewBlock.Text = Location;
         }
 
-        
+
     }
 }

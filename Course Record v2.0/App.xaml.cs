@@ -62,7 +62,7 @@ namespace Course_Record_v2._0
                     {
                         rootFrame.Navigate(typeof(MainPage), e.Arguments);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         LoggingServices.Instance.WriteLine<App>(ex.Message, MetroLog.LogLevel.Error, ex);
                     }

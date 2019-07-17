@@ -1,7 +1,5 @@
-﻿using ConsoleAppEngine.Contacts;
-using ConsoleAppEngine.Course;
+﻿using ConsoleAppEngine.Course;
 using ConsoleAppEngine.Log;
-using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;

@@ -1,6 +1,6 @@
 ﻿using ConsoleAppEngine.AllEnums;
-using ConsoleAppEngine.Course;
 using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.Course;
 using System;
 using System.Collections.Generic;
 using System.Linq;

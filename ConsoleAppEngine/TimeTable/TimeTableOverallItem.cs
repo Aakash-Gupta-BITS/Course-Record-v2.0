@@ -1,10 +1,7 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.Course;
-using ConsoleAppEngine.AllEnums;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

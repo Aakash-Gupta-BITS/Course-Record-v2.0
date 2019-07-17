@@ -2,7 +2,6 @@
 using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Course;
 using System;
-using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 

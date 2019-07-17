@@ -96,7 +96,7 @@ namespace ConsoleAppEngine.Course
             DaysViewBlock.Text = GetDayListString(WeekDays);
             HourViewBlock.Text = string.Join(" ", Array.ConvertAll(Hours, (x) => x.ToString()));
         }
-        
+
 
         #region Helpers
 

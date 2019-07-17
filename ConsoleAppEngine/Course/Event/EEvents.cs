@@ -36,7 +36,7 @@ namespace ConsoleAppEngine.Course
 
         }
 
-        protected EEvents(SerializationInfo info, StreamingContext context) : base (info, context)
+        protected EEvents(SerializationInfo info, StreamingContext context) : base(info, context)
         {
 
         }

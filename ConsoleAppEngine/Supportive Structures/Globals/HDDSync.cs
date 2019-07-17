@@ -1,27 +1,15 @@
-﻿using ConsoleAppEngine.Abstracts;
+﻿using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Course;
-using ConsoleAppEngine.Contacts;
-using ConsoleAppEngine.AllEnums;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading;
 using Windows.Storage;
-using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using System.Threading.Tasks;
 
 namespace ConsoleAppEngine.Globals
 {
     public static class HDDSync
     {
         public static void GetAllFromHDD()
-        { 
+        {
             string CourseDirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
 
             if (!Directory.Exists(CourseDirectoryLocation))
@@ -49,16 +37,24 @@ namespace ConsoleAppEngine.Globals
             using (var s = new FileStream(Path.Combine(ContactDirectoryLocation, "Teachers" + ".bin"), FileMode.OpenOrCreate, FileAccess.Read))
             {
                 if (s.Length == 0)
-                   AllContacts.Instance.TeacherEntry = new ETeachers();
+                {
+                    AllContacts.Instance.TeacherEntry = new ETeachers();
+                }
                 else
-                   AllContacts.Instance.TeacherEntry = new BinaryFormatter().Deserialize(s) as ETeachers;
+                {
+                    AllContacts.Instance.TeacherEntry = new BinaryFormatter().Deserialize(s) as ETeachers;
+                }
             }
             using (var s = new FileStream(Path.Combine(ContactDirectoryLocation, "Students" + ".bin"), FileMode.OpenOrCreate, FileAccess.Read))
             {
                 if (s.Length == 0)
-                   AllContacts.Instance.StudentEntry = new EStudents();
+                {
+                    AllContacts.Instance.StudentEntry = new EStudents();
+                }
                 else
-                   AllContacts.Instance.StudentEntry = new BinaryFormatter().Deserialize(s) as EStudents;
+                {
+                    AllContacts.Instance.StudentEntry = new BinaryFormatter().Deserialize(s) as EStudents;
+                }
             }
         }
 

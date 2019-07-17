@@ -1,6 +1,6 @@
 ﻿using ConsoleAppEngine.Abstracts;
-using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -172,7 +172,10 @@ namespace ConsoleAppEngine.Course
                 NavView.MenuItems.Add(list[i]);
             }
             foreach (var item in CoursesList)
+            {
                 NavView.MenuItems.Add(item.navigationViewItem);
+            }
+
             for (int i = list.Length - 4; i < list.Length; ++i)
             {
                 NavView.MenuItems.Add(list[i]);
@@ -189,25 +192,39 @@ namespace ConsoleAppEngine.Course
             Controls.AddLast(ICBox);
 
             if (TypeBox.SelectedItem == null)
+            {
                 ErrorWaale.AddLast(TypeBox);
+            }
 
             if (IdBox.Text == "")
+            {
                 ErrorWaale.AddLast(IdBox);
+            }
 
             if (TitleBox.Text == "")
+            {
                 ErrorWaale.AddLast(TitleBox);
+            }
 
             if (!byte.TryParse(LectureBox.Text, out _))
+            {
                 ErrorWaale.AddLast(LectureBox);
+            }
 
             if (!byte.TryParse(PracticalBox.Text, out _))
+            {
                 ErrorWaale.AddLast(PracticalBox);
+            }
 
             if (ICBox.SelectedItem == null)
+            {
                 ErrorWaale.AddLast(ICBox);
+            }
 
             if (ErrorWaale.Count != 0)
+            {
                 return;
+            }
 
             foreach (var y in (from x in CoursesList where x != ItemToChange select x))
             {
@@ -294,7 +311,7 @@ namespace ConsoleAppEngine.Course
             TitleBox.Text = ItemToChange.Title;
             LectureBox.Text = ItemToChange.LectureUnits.ToString();
             PracticalBox.Text = ItemToChange.PracticalUnits.ToString();
-            ICBox.SelectedItem =  ItemToChange.IC.Name;
+            ICBox.SelectedItem = ItemToChange.IC.Name;
         }
 
         protected override void SetContentDialog()

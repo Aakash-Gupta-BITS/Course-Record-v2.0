@@ -1,7 +1,4 @@
-﻿using ConsoleAppEngine.Contacts;
-using ConsoleAppEngine.Course;
-using ConsoleAppEngine.Log;
-using System.Collections.Generic;
+﻿using ConsoleAppEngine.Log;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -30,12 +27,17 @@ namespace Course_Record_v2._0.Frames.Contacts
             NavView.Header = SelectedItem.Content;
 
             if (SelectedItem == TeachersNavigation)
+            {
                 ContentFrame.Navigate(typeof(TeacherContacts));
+            }
             else if (SelectedItem == StudentsNavigation)
+            {
                 ContentFrame.Navigate(typeof(StudentContacts));
+            }
             else if (SelectedItem == GoBack)
+            {
                 Frame.GoBack();
-
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

@@ -27,7 +27,10 @@ namespace ConsoleAppEngine.Course
 
         public ETeachers EquivalentTeacherEntry;
 
-        public void SetTeachersEntry(ETeachers t) => EquivalentTeacherEntry = t;
+        public void SetTeachersEntry(ETeachers t)
+        {
+            EquivalentTeacherEntry = t;
+        }
 
         private LinkedList<ETeacherEntry> GenerateTeacherFromAddGrid()
         {
@@ -36,10 +39,17 @@ namespace ConsoleAppEngine.Course
             foreach (var x in TeachersBox)
             {
                 if (x.SelectedIndex == 0)
+                {
                     continue;
+                }
+
                 foreach (var teacher in EquivalentTeacherEntry.lists)
+                {
                     if (teacher.Name == x.SelectedItem as string)
+                    {
                         eTeachers.AddLast(teacher);
+                    }
+                }
             }
 
             eTeachers = new LinkedList<ETeacherEntry>(eTeachers.OrderBy(a => a.Name));
@@ -254,12 +264,16 @@ namespace ConsoleAppEngine.Course
             SectionBox.Text = ItemToChange.Section.ToString();
 
             foreach (var y in TeachersBox)
+            {
                 y.SelectedIndex = 0;
+            }
 
             var arr = ItemToChange.Teachers.ToArray();
 
             for (int i = 0; i < arr.Length; ++i)
+            {
                 TeachersBox[i].SelectedItem = arr[i].Name;
+            }
 
             RoomBox.Text = ItemToChange.Room;
             DaysBox.Text = ETimeTableItem.GetDayListString(ItemToChange.WeekDays);

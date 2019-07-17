@@ -35,12 +35,12 @@ namespace ConsoleAppEngine.Course
         protected ETestItem(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             DayOfTest = (DateTime)info.GetValue(nameof(DayOfTest), typeof(DateTime));
-            TypeOfTest = (TestType)info.GetValue(nameof(TypeOfTest),  typeof(TestType));
+            TypeOfTest = (TestType)info.GetValue(nameof(TypeOfTest), typeof(TestType));
             TestIndex = (int)info.GetValue(nameof(TestIndex), typeof(int));
             MarksObtained = (float)info.GetValue(nameof(MarksObtained), typeof(float));
             TotalMarks = (float)info.GetValue(nameof(TotalMarks), typeof(float));
             Description = (string)info.GetValue(nameof(Description), typeof(string));
-            
+
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 2), (typeof(string), 1));
 
             NameViewBlock = controls[0] as TextBlock;
@@ -94,6 +94,6 @@ namespace ConsoleAppEngine.Course
             MarksViewBlock.Text = MarksObtained + "/" + TotalMarks;
         }
 
-        
+
     }
 }

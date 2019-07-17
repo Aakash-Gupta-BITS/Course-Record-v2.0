@@ -34,7 +34,7 @@ namespace ConsoleAppEngine.Course
             Topic = (string)info.GetValue(nameof(Topic), typeof(string));
             DoneByMe = (bool)info.GetValue(nameof(DoneByMe), typeof(bool));
             Description = (string)info.GetValue(nameof(Description), typeof(string));
-            
+
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 3), (typeof(bool), 0.5));
 
             LectureViewBlock = controls[0] as TextBlock;

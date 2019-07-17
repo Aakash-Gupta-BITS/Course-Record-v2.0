@@ -65,7 +65,7 @@ namespace ConsoleAppEngine.Course
 
             IdViewBlock.Text = ID.branchtype.ToString() + " " + ID.branchstring;
             TitleViewBlock.Text = Title;
-            ICViewBlock.Text =  IC.Name;
+            ICViewBlock.Text = IC.Name;
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)

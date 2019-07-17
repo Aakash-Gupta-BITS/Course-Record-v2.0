@@ -52,7 +52,9 @@ namespace Course_Record_v2._0.Frames.Course
         private void ReloadCommand_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             foreach (var x in TimeEntry.lists)
+            {
                 x.UpdateViews();
+            }
         }
     }
 }

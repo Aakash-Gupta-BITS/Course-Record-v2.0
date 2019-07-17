@@ -1,14 +1,12 @@
 ﻿using ConsoleAppEngine.Globals;
-using ConsoleAppEngine.Contacts;
-using ConsoleAppEngine.Course;
-using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Log;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System;
-using System.Linq;
 
 namespace Course_Record_v2._0
 {
@@ -29,28 +27,28 @@ namespace Course_Record_v2._0
             HDDSync.GetAllFromHDD();
 
             #region ContactsAdd
-          /*    AllContacts.Instance.TeacherEntry.AddTeacher(new ETeacherEntry(
-                  "Dr. Manoj Kannan",
-                  new string[] { @"+91-1596-515-855", "" },
-                  new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
-                  @"#3270, New Science Block
-  Faculty Division III
-  BITS Pilani, Pilani Campus
-  Vidya Vihar, Pilani 333031 (Rajasthan)",
-                  @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
-                  "Katayi Bdia Master"));
+            /*    AllContacts.Instance.TeacherEntry.AddTeacher(new ETeacherEntry(
+                    "Dr. Manoj Kannan",
+                    new string[] { @"+91-1596-515-855", "" },
+                    new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
+                    @"#3270, New Science Block
+    Faculty Division III
+    BITS Pilani, Pilani Campus
+    Vidya Vihar, Pilani 333031 (Rajasthan)",
+                    @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
+                    "Katayi Bdia Master"));
 
 
-            AllContacts.Instance.StudentEntry.AddStudent(new EStudentEntry(
-                  "Aakash Gupta",
-                  (2018,
-                  new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
-                  887),
-                  new string[] { "7496811413", "" },
-                  @"uchanahome1@gmail.com",
-                  "RAM",
-                  4136,
-                  "Developer of this App"));*/
+              AllContacts.Instance.StudentEntry.AddStudent(new EStudentEntry(
+                    "Aakash Gupta",
+                    (2018,
+                    new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
+                    887),
+                    new string[] { "7496811413", "" },
+                    @"uchanahome1@gmail.com",
+                    "RAM",
+                    4136,
+                    "Developer of this App"));*/
             #endregion
 
             #region WebsitesAdd
@@ -58,11 +56,14 @@ namespace Course_Record_v2._0
             list.AddLast("AUGS/AUGR");
             list.AddLast("SWD");
             list.AddLast("Nalanda");
-            list.AddLast("ID (Only Intranet)");
+            list.AddLast("ID");
             list.AddLast("ERP");
             list.AddLast("Library");
             foreach (var s in list.OrderBy(a => a))
+            {
                 WebsiteBox.Items.Add(s);
+            }
+
             WebsiteBox.SelectedIndex = 0;
             #endregion
         }
@@ -97,55 +98,49 @@ namespace Course_Record_v2._0
             this.Frame.ForwardStack.Clear();
         }
 
-        private async void HyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-           
-                var uriBing = new Uri(@"http://google.co.in/");
-                var uriBing1 = new Uri(@"http://google.co.in/");
-                var options = new Windows.System.LauncherOptions();
-                switch (WebsiteBox.SelectedItem.ToString())
-                {
-                    case "SWD":
-                        uriBing = new Uri(@"http://swd.bits-pilani.ac.in");
-                        uriBing1 = new Uri(@"http://swd.bits-pilani.ac.in");
-                        break;
-                    case "ERP":
-                        uriBing = new Uri(@"http://erp.bits-pilani.ac.in");
-                        uriBing1 = new Uri(@"http://erp.bits-pilani.ac.in");
-                        break;
-                    case "Nalanda":
-                        uriBing = new Uri(@"http://nalanda.bits-pilani.ac.in");
-                        uriBing1 = new Uri(@"http://nalanda.bits-pilani.ac.in");
-                        break;
-                    case "ID (Only Intranet)":
-                        uriBing1 = new Uri(@"http://id");
-                        break;
-                    case "AUGS/AUGR":
-                        uriBing = new Uri(@"http://rc.bits-pilani.ac.in/");
-                        uriBing1 = new Uri(@"http://rc.bits-pilani.ac.in/");
-                        break;
-                    case "Library":
-                        uriBing = new Uri(@"http://www.bits-pilani.ac.in:12354/");
-                        uriBing1 = new Uri(@"http://www.bits-pilani.ac.in:12354/");
+            string URL1, URL2;
+            URL1 = URL2 = @"https://www.google.com";
+
+            switch (WebsiteBox.SelectedItem as string)
+            {
+                case "SWD":
+                    URL1 = @"swd/";
+                    URL2 = @"http://swd.bits-pilani.ac.in";
+                    break;
+                case "ERP":
+                    URL1 = @"erp/";
+                    URL2 = @"http://erp.bits-pilani.ac.in";
+                    break;
+                case "Nalanda":
+                    URL1 = @"nalanda/";
+                    URL2 = @"http://nalanda.bits-pilani.ac.in";
+                    break;
+                case "ID":
+                    URL1 = @"http://id";
+                    break;
+                case "AUGS/AUGR":
+                    URL2 = @"http://rc.bits-pilani.ac.in/";
+                    break;
+                case "Library":
+                    URL1 = @"library/";
+                    URL2 = @"http://www.bits-pilani.ac.in:12354/";
                     break;
 
-                }
-                // Launch the URI with a warning prompt
-                options.TreatAsUntrusted = false;
-            var success = false;
-            if (sender.Equals(Link1))
-            {
-                success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
             }
-                if (success)
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
-                    NavView.SelectedItem = null;
-                }
-                else
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
-                }
+
+            if (await Windows.System.Launcher.LaunchUriAsync(
+                    new Uri(
+                        sender.Equals(Link1) ? URL1 : URL2),
+                        new Windows.System.LauncherOptions { TreatAsUntrusted = true }))
+            {
+                LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " opened successfully");
+            }
+            else
+            {
+                LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
+            }
         }
     }
 }
