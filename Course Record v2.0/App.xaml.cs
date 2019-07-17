@@ -13,10 +13,6 @@ namespace Course_Record_v2._0
     /// </summary>
     public sealed partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
         public App()
         {
             this.InitializeComponent();
@@ -41,35 +37,15 @@ namespace Course_Record_v2._0
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                if (e.PreviousExecutionState != ApplicationExecutionState.Running)
                 {
-                    //TODO: Load state from previously suspended application
+                    bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
+                    ExtendedSplash extendedSplash = new ExtendedSplash(e.SplashScreen, loadState);
+                    rootFrame.Content = extendedSplash;
+                    Window.Current.Content = rootFrame;
                 }
-
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
             }
-
-            if (e.PrelaunchActivated == false)
-            {
-                if (rootFrame.Content == null)
-                {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    LoggingServices.Instance.WriteLine<App>("App Started Successfully.");
-                    try
-                    {
-                        rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                    }
-                    catch (Exception ex)
-                    {
-                        LoggingServices.Instance.WriteLine<App>(ex.Message, MetroLog.LogLevel.Error, ex);
-                    }
-                }
-                // Ensure the current window is active
-                Window.Current.Activate();
-            }
+            Window.Current.Activate();
         }
 
         /// <summary>

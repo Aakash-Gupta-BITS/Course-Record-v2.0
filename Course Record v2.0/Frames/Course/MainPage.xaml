@@ -20,13 +20,17 @@
         <NavigationView x:Name="SecNav" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False" Grid.Row="1" SelectionChanged="SecNav_SelectionChanged">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Overview" x:Name="OverViewItem"/>
+                <NavigationViewItemSeparator/>
                 <NavigationViewItem Content="Books"/>
                 <NavigationViewItem Content="Handout"/>
+                <NavigationViewItem Content="Tests"/>
+                <NavigationViewItemSeparator/>
                 <NavigationViewItem Content="Teachers"/>
                 <NavigationViewItem Content="CT log"/>
+                <NavigationViewItemSeparator/>
                 <NavigationViewItem Content="Time Table"/>
                 <NavigationViewItem Content="Events"/>
-                <NavigationViewItem Content="Tests"/>
+                <NavigationViewItemSeparator/>
                 <NavigationViewItem Content="Files"/>
             </NavigationView.MenuItems>
         </NavigationView>
