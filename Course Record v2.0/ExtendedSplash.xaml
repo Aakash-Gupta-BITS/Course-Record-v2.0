@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Image x:Name="extendedSplashImage" Source="Assets/BITS.jpg" Stretch="UniformToFill"/>
+        <Image x:Name="extendedSplashImage" Stretch="UniformToFill"/>
         <ProgressRing Name="splashProgressRing" IsActive="True" Width="20" HorizontalAlignment="Center"/>
     </Grid>
 </Page>

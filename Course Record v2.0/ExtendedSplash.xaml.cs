@@ -14,6 +14,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI;
+using Windows.UI.Xaml.Media.Imaging;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,10 +30,18 @@ namespace Course_Record_v2._0
         internal bool dismissed = false; // Variable to track splash screen dismissal status.
         internal Frame rootFrame;
 
-        // Define methods and constructor
+        private void ExtendAcrylicIntoTitleBar()
+        {
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+        }
+
         public ExtendedSplash(SplashScreen splashscreen, bool loadState)
         {
             InitializeComponent();
+            extendedSplashImage.Source = new BitmapImage { UriSource = new Uri("ms-appx:///Assets/BITS.jpg") };
 
             splash = splashscreen;
             if (splash != null)
@@ -45,13 +57,13 @@ namespace Course_Record_v2._0
         void DismissedEventHandler(SplashScreen sender, object e)
         {
             dismissed = true;
-
+            // ConsoleAppEngine.Globals.HDDSync.GetAllFromHDD();
             DismissExtendedSplash();
         }
 
         async void DismissExtendedSplash()
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
                 rootFrame = new Frame();
                 Window.Current.Content = rootFrame;
                 rootFrame.Navigate(typeof(MainPage));
