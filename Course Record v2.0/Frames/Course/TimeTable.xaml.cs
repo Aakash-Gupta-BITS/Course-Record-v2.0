@@ -6,7 +6,7 @@ namespace Course_Record_v2._0.Frames.Course
 {
     public sealed partial class TimeTable : Page
     {
-        private ECourseTimeTable TimeEntry;
+        private ETimeTable TimeEntry;
 
         public TimeTable()
         {

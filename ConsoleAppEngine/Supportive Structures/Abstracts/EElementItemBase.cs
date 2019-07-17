@@ -36,7 +36,7 @@ namespace ConsoleAppEngine.Abstracts
 
         #endregion
 
-        protected static FrameworkElement[] GenerateViews(ListViewItem GetView, params (Type t, double Width)[] Input)
+        internal static FrameworkElement[] GenerateViews(ListViewItem GetView, params (Type t, double Width)[] Input)
         {
             Grid grid = new Grid();
             FrameworkElement[] controls = new FrameworkElement[Input.Length];

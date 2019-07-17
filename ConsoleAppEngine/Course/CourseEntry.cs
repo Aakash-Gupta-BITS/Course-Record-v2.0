@@ -35,7 +35,7 @@ namespace ConsoleAppEngine.Course
         public readonly EHandouts HandoutEntry = new EHandouts();
         public readonly ETeachers TeacherEntry = new ETeachers();
         public readonly ETests TestEntry = new ETests();
-        public readonly ECourseTimeTable TimeEntry = new ECourseTimeTable();
+        public readonly ETimeTable TimeEntry = new ETimeTable();
         #endregion
 
         #region Serialization
@@ -52,7 +52,7 @@ namespace ConsoleAppEngine.Course
             HandoutEntry = info.GetValue(nameof(HandoutEntry), typeof(EHandouts)) as EHandouts;
             TestEntry = info.GetValue(nameof(TestEntry), typeof(ETests)) as ETests;
             TeacherEntry = info.GetValue(nameof(TeacherEntry), typeof(ETeachers)) as ETeachers;
-            TimeEntry = info.GetValue(nameof(TimeEntry), typeof(ECourseTimeTable)) as ECourseTimeTable;
+            TimeEntry = info.GetValue(nameof(TimeEntry), typeof(ETimeTable)) as ETimeTable;
             IC = info.GetValue(nameof(IC), typeof(ETeacherEntry)) as ETeacherEntry;
 
             FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
@@ -82,7 +82,7 @@ namespace ConsoleAppEngine.Course
             info.AddValue(nameof(HandoutEntry), HandoutEntry, typeof(EHandouts));
             info.AddValue(nameof(TestEntry), TestEntry, typeof(ETests));
             info.AddValue(nameof(TeacherEntry), TeacherEntry, typeof(ETeachers));
-            info.AddValue(nameof(TimeEntry), TimeEntry, typeof(ECourseTimeTable));
+            info.AddValue(nameof(TimeEntry), TimeEntry, typeof(ETimeTable));
         }
         #endregion
 

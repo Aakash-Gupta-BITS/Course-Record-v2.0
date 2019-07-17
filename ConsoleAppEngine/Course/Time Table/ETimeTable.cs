@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Media;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
-    public partial class ECourseTimeTable : ISerializable
+    public partial class ETimeTable : ISerializable
     {
         #region DisplayBoxes
 
@@ -65,12 +65,12 @@ namespace ConsoleAppEngine.Course
 
         #region Serialization
 
-        public ECourseTimeTable() : base()
+        public ETimeTable() : base()
         {
 
         }
 
-        protected ECourseTimeTable(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected ETimeTable(SerializationInfo info, StreamingContext context) : base(info, context)
         {
 
         }
@@ -78,7 +78,7 @@ namespace ConsoleAppEngine.Course
         #endregion
     }
 
-    public partial class ECourseTimeTable : EElementBase<ETimeTableItem>
+    public partial class ETimeTable : EElementBase<ETimeTableItem>
     {
         public override void DestructViews()
         {

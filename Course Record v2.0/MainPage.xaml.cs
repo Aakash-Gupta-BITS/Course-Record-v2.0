@@ -1,4 +1,6 @@
 ﻿using ConsoleAppEngine.Globals;
+using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.Course;
 using ConsoleAppEngine.Log;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using ConsoleAppEngine.AllEnums;
 
 namespace Course_Record_v2._0
 {
@@ -23,33 +26,31 @@ namespace Course_Record_v2._0
             TimeMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE787) };
             CourseMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE7BE) };
 
-            ContentFrame.Navigate(typeof(Frames.HomePage));
-            NavView.SelectedItem = HomeMenu;
             //      HDDSync.GetAllFromHDD();
 
             #region ContactsAdd
-            /*    AllContacts.Instance.TeacherEntry.AddTeacher(new ETeacherEntry(
-                    "Dr. Manoj Kannan",
-                    new string[] { @"+91-1596-515-855", "" },
-                    new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
-                    @"#3270, New Science Block
+            AllContacts.Instance.TeacherEntry.AddTeacher(new ETeacherEntry(
+                "Dr. Manoj Kannan",
+                new string[] { @"+91-1596-515-855", "" },
+                new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
+                @"#3270, New Science Block
     Faculty Division III
     BITS Pilani, Pilani Campus
     Vidya Vihar, Pilani 333031 (Rajasthan)",
-                    @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
-                    "Katayi Bdia Master"));
+                @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
+                "Katayi Bdia Master"));
 
 
-              AllContacts.Instance.StudentEntry.AddStudent(new EStudentEntry(
-                    "Aakash Gupta",
-                    (2018,
-                    new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
-                    887),
-                    new string[] { "7496811413", "" },
-                    @"uchanahome1@gmail.com",
-                    "RAM",
-                    4136,
-                    "Developer of this App"));*/
+            AllContacts.Instance.StudentEntry.AddStudent(new EStudentEntry(
+                  "Aakash Gupta",
+                  (2018,
+                  new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
+                  887),
+                  new string[] { "7496811413", "" },
+                  @"uchanahome1@gmail.com",
+                  "RAM",
+                  4136,
+                  "Developer of this App"));
             #endregion
         }
 
@@ -64,7 +65,11 @@ namespace Course_Record_v2._0
 
             LoggingServices.Instance.WriteLine<MainPage>("\"" + SelectedItem.Content as string + "\" is selected at initial Main Page.");
 
-            if (SelectedItem == CourseMenu)
+            if (SelectedItem == HomeMenu)
+                ContentFrame.Navigate(typeof(Frames.HomePage));
+            else if (SelectedItem == TimeMenu)
+                ContentFrame.Navigate(typeof(Frames.OverallTimeTableView));
+            else if (SelectedItem == CourseMenu)
             {
                 this.Frame.Navigate(typeof(Frames.Course.MainPage));
             }
@@ -76,11 +81,13 @@ namespace Course_Record_v2._0
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-           // HDDSync.AddAllToHDD();
+            // HDDSync.AddAllToHDD();
             LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
             NavView.SelectedItem = HomeMenu;
             this.Frame.BackStack.Clear();
             this.Frame.ForwardStack.Clear();
+            ContentFrame.ForwardStack.Clear();
+            ContentFrame.BackStack.Clear();
         }
     }
 }

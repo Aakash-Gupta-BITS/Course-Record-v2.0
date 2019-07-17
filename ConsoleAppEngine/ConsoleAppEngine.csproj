@@ -123,8 +123,8 @@
     <Compile Include="Contacts\AllContacts.cs" />
     <Compile Include="Contacts\Student\EStudentEntry.cs" />
     <Compile Include="Contacts\Student\EStudents.cs" />
-    <Compile Include="Supportive Structures\Abstracts\ECourseElemBase.cs" />
-    <Compile Include="Supportive Structures\Abstracts\ECourseElemItemBase.cs" />
+    <Compile Include="Supportive Structures\Abstracts\EElementBase.cs" />
+    <Compile Include="Supportive Structures\Abstracts\EElementItemBase.cs" />
     <Compile Include="Course\AllCourses.cs" />
     <Compile Include="Course\Book\EBookItem.cs" />
     <Compile Include="Course\Book\EBooks.cs" />
@@ -136,7 +136,7 @@
     <Compile Include="Contacts\Teacher\ETeachers.cs" />
     <Compile Include="Course\Test\ETestItem.cs" />
     <Compile Include="Course\Test\ETests.cs" />
-    <Compile Include="Course\Time Table\ECourseTimeTable.cs" />
+    <Compile Include="Course\Time Table\ETimeTable.cs" />
     <Compile Include="Course\Time Table\ETimeTableItem.cs" />
     <Compile Include="Supportive Structures\Enums.cs" />
     <Compile Include="Course\CourseEntry.cs" />
@@ -144,7 +144,6 @@
     <Compile Include="Supportive Structures\Globals\HDDSync.cs" />
     <Compile Include="Supportive Structures\Log\ILoggingServices.cs" />
     <Compile Include="Supportive Structures\Log\LoggingServices.cs" />
-    <Compile Include="TimeTable\TimeTableOverallItem.cs" />
     <Compile Include="TimeTable\TimeTableOverallView.cs" />
     <EmbeddedResource Include="Properties\ConsoleAppEngine.rd.xml" />
   </ItemGroup>
