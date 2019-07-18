@@ -67,17 +67,22 @@ namespace ConsoleAppEngine.Course
             PressBox = null;
             BookTypeBox = null;
             BestBookBox = null;
+
+            foreach (var x in lists)
+                x.DestructViews();
         }
 
         protected override void AddNewItem()
         {
-            AddBook(new EBookItem(
+            EBookItem item = new EBookItem(
                 (TextBookType)Enum.Parse(typeof(TextBookType), BookTypeBox.SelectedItem as string),
                 AuthorBox.Text,
                 NameBox.Text,
                 int.Parse(EditionBox.Text),
                 PressBox.Text,
-                BestBookBox.IsChecked == true));
+                BestBookBox.IsChecked == true);
+            item.InitializeViews();
+            AddBook(item);
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -128,11 +133,14 @@ namespace ConsoleAppEngine.Course
             BookTypeBox = AddViewGridControls[4] as ComboBox;
             BestBookBox = AddViewGridControls[5] as CheckBox;
             AddButton = AddViewGridControls[6] as Button;
+
+            foreach (var x in lists)
+                x.InitializeViews();
         }
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update(
+            ItemToChange.UpdateDataWithViews(
                 (TextBookType)Enum.Parse(typeof(TextBookType), BookTypeBox.SelectedItem as string),
                 AuthorBox.Text,
                 NameBox.Text,

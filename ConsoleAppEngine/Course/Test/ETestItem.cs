@@ -41,7 +41,7 @@ namespace ConsoleAppEngine.Course
             TotalMarks = (float)info.GetValue(nameof(TotalMarks), typeof(float));
             Description = (string)info.GetValue(nameof(Description), typeof(string));
 
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 2), (typeof(string), 1));
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 2), (typeof(string), 1));
 
             NameViewBlock = controls[0] as TextBlock;
             TimingsViewBlock = controls[1] as TextBlock;
@@ -69,7 +69,7 @@ namespace ConsoleAppEngine.Course
 
         public ETestItem(DateTime dayOfTest, TestType typeOfTest, int testIndex, float marksObtained, float totalMarks, string description)
         {
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 2), (typeof(string), 1));
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 2), (typeof(string), 1));
 
             NameViewBlock = controls[0] as TextBlock;
             TimingsViewBlock = controls[1] as TextBlock;

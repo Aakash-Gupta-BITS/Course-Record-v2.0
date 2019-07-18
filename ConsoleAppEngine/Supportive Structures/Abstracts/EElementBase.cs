@@ -17,12 +17,12 @@ namespace ConsoleAppEngine.Abstracts
         private EElementBase(LinkedList<T> List)
         {
             lists = List;
-            contentDialog = new ContentDialog()
+            /*contentDialog = new ContentDialog()
             {
                 PrimaryButtonText = "Modify",
                 SecondaryButtonText = "Delete",
                 CloseButtonText = "Ok"
-            };
+            };*/
         }
 
         public EElementBase() : this(new LinkedList<T>())
@@ -80,8 +80,8 @@ namespace ConsoleAppEngine.Abstracts
             ViewCommand = viewCommand;
             AddCommand = addCommand;
 
-            FillViewGrid();
             InitializeAddGrid(AddViewGridControls);
+            FillViewGrid();
             SetEvents();
 
             ViewGrid.Visibility = Visibility.Visible;

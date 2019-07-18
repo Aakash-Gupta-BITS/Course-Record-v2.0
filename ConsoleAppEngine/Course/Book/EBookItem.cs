@@ -23,10 +23,10 @@ namespace ConsoleAppEngine.Course
 
         #region DisplayItems
 
-        internal readonly TextBlock NameViewBlock;
-        internal readonly TextBlock AuthorViewBlock;
-        internal readonly TextBlock BookTypeViewBlock;
-        internal readonly CheckBox IsBestViewBox;
+        internal TextBlock NameViewBlock;
+        internal TextBlock AuthorViewBlock;
+        internal TextBlock BookTypeViewBlock;
+        internal CheckBox IsBestViewBox;
 
         #endregion
 
@@ -40,19 +40,6 @@ namespace ConsoleAppEngine.Course
             Edition = (int)info.GetValue(nameof(Edition), typeof(int));
             Press = (string)info.GetValue(nameof(Press), typeof(string));
             IsBest = (bool)info.GetValue(nameof(IsBest), typeof(bool));
-
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 2), (typeof(string), 1), (typeof(bool), 1));
-
-            NameViewBlock = controls[0] as TextBlock;
-            AuthorViewBlock = controls[1] as TextBlock;
-            BookTypeViewBlock = controls[2] as TextBlock;
-            IsBestViewBox = controls[3] as CheckBox;
-
-            NameViewBlock.Text = Name;
-            AuthorViewBlock.Text = Author;
-            BookTypeViewBlock.Text = BookType.ToString();
-
-            IsBestViewBox.IsChecked = IsBest; IsBestViewBox.Click += (object sender, RoutedEventArgs e) => IsBest = IsBestViewBox.IsChecked == true ? true : false;
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -69,19 +56,10 @@ namespace ConsoleAppEngine.Course
 
         public EBookItem(TextBookType bookType, string author, string name, int edition, string press, bool isBest)
         {
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 2), (typeof(string), 1), (typeof(bool), 1));
-
-            NameViewBlock = controls[0] as TextBlock;
-            AuthorViewBlock = controls[1] as TextBlock;
-            BookTypeViewBlock = controls[2] as TextBlock;
-            IsBestViewBox = controls[3] as CheckBox;
-
-            Update(bookType, author, name, edition, press, isBest);
-
-            IsBestViewBox.Click += (object sender, RoutedEventArgs e) => IsBest = IsBestViewBox.IsChecked == true ? true : false;
+            UpdateData(bookType, author, name, edition, press, isBest);
         }
 
-        internal void Update(TextBookType bookType, string author, string name, int edition, string press, bool isBest)
+        internal void UpdateData(TextBookType bookType, string author, string name, int edition, string press, bool isBest)
         {
             BookType = bookType;
             Author = author;
@@ -89,11 +67,42 @@ namespace ConsoleAppEngine.Course
             Edition = edition;
             Press = press;
             IsBest = isBest;
+        }
 
+        internal void UpdateDataWithViews(TextBookType bookType, string author, string name, int edition, string press, bool isBest)
+        {
+            UpdateData(bookType, author, name, edition, press, isBest);
+            UpdateViews();
+        }
+
+        internal void InitializeViews()
+        {
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 2), (typeof(string), 2), (typeof(string), 1), (typeof(bool), 1));
+
+            NameViewBlock = controls[0] as TextBlock;
+            AuthorViewBlock = controls[1] as TextBlock;
+            BookTypeViewBlock = controls[2] as TextBlock;
+            IsBestViewBox = controls[3] as CheckBox;
+
+            UpdateViews();
+
+            IsBestViewBox.Click += (object sender, RoutedEventArgs e) => IsBest = IsBestViewBox.IsChecked == true ? true : false;
+        }
+
+        internal void UpdateViews()
+        {
             NameViewBlock.Text = Name;
             AuthorViewBlock.Text = Author;
             BookTypeViewBlock.Text = BookType.ToString();
             IsBestViewBox.IsChecked = IsBest;
+        }
+
+        internal void DestructViews()
+        {
+            NameViewBlock = null;
+            AuthorViewBlock = null;
+            BookTypeViewBlock = null;
+            IsBestViewBox = null;
         }
 
         internal override object PointerOverObject => IsBestViewBox;

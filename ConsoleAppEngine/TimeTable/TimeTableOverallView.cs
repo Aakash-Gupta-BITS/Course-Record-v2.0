@@ -95,7 +95,7 @@ namespace ConsoleAppEngine.TimeTable
                 }
                 currentday = x.WeekDay;
                 ListViewItem item = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
-                FrameworkElement[] controls = EElementItemBase.GenerateViews(item, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+                FrameworkElement[] controls = EElementItemBase.GenerateViews(ref item, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
                 (controls[0] as TextBlock).Text = x.Title;
                 (controls[1] as TextBlock).Text = x.Type.ToString();
                 (controls[2] as TextBlock).Text = string.Join(", ", (from a in x.Teachers where a != null select a.Name).ToArray());

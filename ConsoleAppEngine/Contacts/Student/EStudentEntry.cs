@@ -45,7 +45,7 @@ namespace ConsoleAppEngine.Course
 
 
             #region DND
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
             NameViewBlock = controls[0] as TextBlock;
             PhoneViewBlock = controls[1] as TextBlock;
             EmailViewBlock = controls[2] as TextBlock;
@@ -82,7 +82,7 @@ namespace ConsoleAppEngine.Course
 
         public EStudentEntry(string name, (int year, ExpandedBranch[] branch, int digits) id, string[] phone, string personalMail, string hostel, int room, string other)
         {
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
             NameViewBlock = controls[0] as TextBlock;
             PhoneViewBlock = controls[1] as TextBlock;
             EmailViewBlock = controls[2] as TextBlock;

@@ -1,6 +1,7 @@
 ﻿using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Globals;
 using ConsoleAppEngine.Log;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -21,7 +22,8 @@ namespace Course_Record_v2._0
             CourseMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE7BE) };
 
             //      HDDSync.GetAllFromHDD();
-
+            foreach (var x in AllCourses.Instance.lists)
+                x.InitializeViews();
             #region ContactsAdd
             AllContacts.Instance.TeacherEntry.AddTeacher(new ETeacherEntry(
                 "Dr. Manoj Kannan",
@@ -79,7 +81,7 @@ namespace Course_Record_v2._0
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // HDDSync.AddAllToHDD();
+            HDDSync.AddAllToHDD();
             LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
             NavView.SelectedItem = HomeMenu;
             this.Frame.BackStack.Clear();

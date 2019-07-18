@@ -36,7 +36,7 @@ namespace ConsoleAppEngine.Course
             Description = (string)info.GetValue(nameof(Description), typeof(string));
 
 
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 1), (typeof(string), 1));
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 2), (typeof(string), 1), (typeof(string), 1));
             TitleViewBlock = controls[0] as TextBlock;
             TimingViewBlock = controls[1] as TextBlock;
             LocationViewBlock = controls[2] as TextBlock;
@@ -59,7 +59,7 @@ namespace ConsoleAppEngine.Course
 
         public EEventItem(string title, DateTime timing, string location, string description)
         {
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 1), (typeof(string), 1));
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 2), (typeof(string), 1), (typeof(string), 1));
             TitleViewBlock = controls[0] as TextBlock;
             TimingViewBlock = controls[1] as TextBlock;
             LocationViewBlock = controls[2] as TextBlock;

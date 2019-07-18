@@ -77,6 +77,9 @@ namespace ConsoleAppEngine.Course
             AddressBox =
             WebsiteBox =
             OtherBox = null;
+
+            foreach (var x in lists)
+                x.DestructViews();
         }
 
         protected override void AddNewItem()
@@ -133,11 +136,14 @@ namespace ConsoleAppEngine.Course
             WebsiteBox = AddViewGridControls[6] as TextBox;
             OtherBox = AddViewGridControls[7] as TextBox;
             AddButton = AddViewGridControls[8] as Button;
+
+            foreach (var x in lists)
+                x.InitializeViews();
         }
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update(
+            ItemToChange.UpdateDataWithViews(
                 NameBox.Text,
                 new string[] { Phone1Box.Text, Phone2Box.Text },
                 new string[] { Email1Box.Text, Email2Box.Text },

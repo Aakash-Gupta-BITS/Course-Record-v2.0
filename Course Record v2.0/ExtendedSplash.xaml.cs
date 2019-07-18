@@ -57,7 +57,7 @@ namespace Course_Record_v2._0
         void DismissedEventHandler(SplashScreen sender, object e)
         {
             dismissed = true;
-            // ConsoleAppEngine.Globals.HDDSync.GetAllFromHDD();
+            ConsoleAppEngine.Globals.HDDSync.GetAllFromHDD();
             DismissExtendedSplash();
         }
 

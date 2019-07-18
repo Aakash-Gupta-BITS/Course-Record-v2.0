@@ -21,10 +21,10 @@ namespace ConsoleAppEngine.Course
 
         #region DisplayItems
 
-        public readonly NavigationViewItem navigationViewItem;
-        public readonly TextBlock IdViewBlock;
-        public readonly TextBlock TitleViewBlock;
-        public readonly TextBlock ICViewBlock;
+        public NavigationViewItem navigationViewItem;
+        public TextBlock IdViewBlock;
+        public TextBlock TitleViewBlock;
+        public TextBlock ICViewBlock;
 
         #endregion
 
@@ -45,23 +45,23 @@ namespace ConsoleAppEngine.Course
             Title = info.GetString(nameof(Title));
             LectureUnits = info.GetByte(nameof(LectureUnits));
             PracticalUnits = info.GetByte(nameof(PracticalUnits));
+            IC = new ETeacherEntry("", default, default, default, default, default);
+
 
             BookEntry = info.GetValue(nameof(BookEntry), typeof(EBooks)) as EBooks;
-            CTLog = new EStudents();
-            EventEntry = info.GetValue(nameof(EventEntry), typeof(EEvents)) as EEvents;
-            HandoutEntry = info.GetValue(nameof(HandoutEntry), typeof(EHandouts)) as EHandouts;
-            TestEntry = info.GetValue(nameof(TestEntry), typeof(ETests)) as ETests;
-            TeacherEntry = info.GetValue(nameof(TeacherEntry), typeof(ETeachers)) as ETeachers;
-            TimeEntry = info.GetValue(nameof(TimeEntry), typeof(ETimeTable)) as ETimeTable;
-            IC = info.GetValue(nameof(IC), typeof(ETeacherEntry)) as ETeacherEntry;
+        }
 
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+        public void InitializeViews()
+        {
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
             IdViewBlock = controls[0] as TextBlock;
             TitleViewBlock = controls[1] as TextBlock;
             ICViewBlock = controls[2] as TextBlock;
 
-            navigationViewItem = new NavigationViewItem();
-            navigationViewItem.Content = Title;
+            navigationViewItem = new NavigationViewItem
+            {
+                Content = Title
+            };
 
             IdViewBlock.Text = ID.branchtype.ToString() + " " + ID.branchstring;
             TitleViewBlock.Text = Title;
@@ -75,20 +75,14 @@ namespace ConsoleAppEngine.Course
             info.AddValue(nameof(Title), Title);
             info.AddValue(nameof(LectureUnits), LectureUnits);
             info.AddValue(nameof(PracticalUnits), PracticalUnits);
-            info.AddValue(nameof(IC), IC, typeof(ETeacherEntry));
 
             info.AddValue(nameof(BookEntry), BookEntry, typeof(EBooks));
-            info.AddValue(nameof(EventEntry), EventEntry, typeof(EEvents));
-            info.AddValue(nameof(HandoutEntry), HandoutEntry, typeof(EHandouts));
-            info.AddValue(nameof(TestEntry), TestEntry, typeof(ETests));
-            info.AddValue(nameof(TeacherEntry), TeacherEntry, typeof(ETeachers));
-            info.AddValue(nameof(TimeEntry), TimeEntry, typeof(ETimeTable));
         }
         #endregion
 
         public CourseEntry((CourseType branchtype, string branchstring) id, string title, byte lectureUnits, byte practicalUnits, ETeacherEntry iC)
         {
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
             IdViewBlock = controls[0] as TextBlock;
             TitleViewBlock = controls[1] as TextBlock;
             ICViewBlock = controls[2] as TextBlock;

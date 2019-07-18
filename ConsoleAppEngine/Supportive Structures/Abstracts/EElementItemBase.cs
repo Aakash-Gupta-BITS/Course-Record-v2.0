@@ -18,13 +18,11 @@ namespace ConsoleAppEngine.Abstracts
 
         public EElementItemBase()
         {
-            GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
-            IsDeleted = false;
         }
 
         #region Serialization
 
-        protected EElementItemBase(SerializationInfo info, StreamingContext context) : this()
+        protected EElementItemBase(SerializationInfo info, StreamingContext context) //: this()
         {
 
         }
@@ -36,8 +34,9 @@ namespace ConsoleAppEngine.Abstracts
 
         #endregion
 
-        internal static FrameworkElement[] GenerateViews(ListViewItem GetView, params (Type t, double Width)[] Input)
+        internal static FrameworkElement[] GenerateViews(ref ListViewItem GetView, params (Type t, double Width)[] Input)
         {
+            GetView = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
             Grid grid = new Grid();
             FrameworkElement[] controls = new FrameworkElement[Input.Length];
 

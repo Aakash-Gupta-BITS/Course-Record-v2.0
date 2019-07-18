@@ -43,7 +43,7 @@ namespace ConsoleAppEngine.Course
             WeekDays = (info.GetValue(nameof(WeekDays), typeof(LinkedList<DayOfWeek>))) as LinkedList<DayOfWeek>;
             Hours = (info.GetValue(nameof(Hours), typeof(List<uint>)) as List<uint>).ToArray();
 
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
             TypeViewBlock = controls[0] as TextBlock;
             TeacherViewBlock = controls[1] as TextBlock;
             DaysViewBlock = controls[2] as TextBlock;
@@ -66,7 +66,7 @@ namespace ConsoleAppEngine.Course
 
         public ETimeTableItem(TimeTableEntryType entryType, uint section, LinkedList<ETeacherEntry> teacher, string room, LinkedList<DayOfWeek> weekDays, uint[] hours)
         {
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
             TypeViewBlock = controls[0] as TextBlock;
             TeacherViewBlock = controls[1] as TextBlock;
             DaysViewBlock = controls[2] as TextBlock;
