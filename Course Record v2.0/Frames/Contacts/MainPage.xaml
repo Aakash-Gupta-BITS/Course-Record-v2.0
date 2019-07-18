@@ -15,22 +15,46 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Frame x:Name="ContentFrame" Grid.Row="2" Navigated="ContentFrame_Navigated"/>
-        
-        <NavigationView PaneDisplayMode="LeftMinimal" IsSettingsVisible="False" IsTapEnabled="True" IsBackButtonVisible="Collapsed" Grid.Row="0" Grid.RowSpan="4"
+        <NavigationView PaneDisplayMode="LeftCompact" IsSettingsVisible="False" IsTapEnabled="True" IsBackButtonVisible="Collapsed" Grid.Row="0" Grid.RowSpan="4"
                         x:Name="NavView"
                         SelectionChanged="NavView_SelectionChanged">
             <NavigationView.MenuItems>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Contacts"/>
-                <NavigationViewItem Content="Students" x:Name="StudentsNavigation"/>
-                <NavigationViewItem Content="Teachers" x:Name="TeachersNavigation"/>
-                <NavigationViewItem Content="Others" x:Name="OthersNavigation"/>
+                <NavigationViewItem Content="Students" x:Name="StudentsNavigation">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE902;">
+
+                        </FontIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Teachers" x:Name="TeachersNavigation">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE902;">
+
+                        </FontIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Others" x:Name="OthersNavigation">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7EE;">
+
+                        </FontIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Navigation"/>
-                <NavigationViewItem Content="Go Back" x:Name="GoBack"/>
+                <NavigationViewItem Content="Go Back" x:Name="GoBack">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;">
+
+                        </FontIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItemSeparator/>
             </NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame" Grid.Row="2" Navigated="ContentFrame_Navigated"/>
+
         </NavigationView>
 
     </Grid>

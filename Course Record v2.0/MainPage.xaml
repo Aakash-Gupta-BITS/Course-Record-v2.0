@@ -17,11 +17,49 @@
                 <NavigationViewItem Content="Home" x:Name="HomeMenu" Icon="Home"/>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Records"/>
-                <NavigationViewItem Content="Contacts" x:Name="ContactMenu"/>
-                <NavigationViewItem Content="Courses" x:Name="CourseMenu"/>
-                <NavigationViewItem Content="Time Table" x:Name="TimeMenu"/>
+                <NavigationViewItem Content="Contacts" x:Name="ContactMenu">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE779;">
+
+                        </FontIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Courses" x:Name="CourseMenu">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7BE;">
+
+                        </FontIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Time Table" x:Name="TimeMenu">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE787;">
+
+                        </FontIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItemSeparator/>
             </NavigationView.MenuItems>
+            <NavigationView.PaneFooter>
+                <NavigationViewItem Content="About" Tapped="ShowAbout">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;">
+                            
+                        </FontIcon>
+                    </NavigationViewItem.Icon>
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="About" FontSize="20"/>
+                                <TextBlock/>
+                                <TextBlock Text="Course Record 1.0.0.0"/>
+                                <TextBlock Text="© 2019 Aakash All Rights Reserved"/>
+                            </StackPanel>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                </NavigationViewItem>
+            </NavigationView.PaneFooter>
+            
             <Frame x:Name="ContentFrame"/>
         </NavigationView>
     </Grid>
