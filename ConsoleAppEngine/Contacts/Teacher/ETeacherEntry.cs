@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace ConsoleAppEngine.Course
+namespace ConsoleAppEngine.Contacts
 {
     [Serializable]
     public class ETeacherEntry : EElementItemBase, ISerializable
@@ -22,8 +22,10 @@ namespace ConsoleAppEngine.Course
         #endregion
 
         #region DisplayItems
-        internal TextBlock NameViewBlock;
-        internal TextBlock SiteViewBlock;
+
+        internal TextBlock NameViewBlock { get; private set; }
+        internal TextBlock SiteViewBlock { get; private set; }
+
         #endregion
 
         #region Serialization
@@ -71,25 +73,27 @@ namespace ConsoleAppEngine.Course
             UpdateViews();
         }
 
-        internal void InitializeViews()
+        internal override void InitializeViews()
         {
             FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 2));
 
             NameViewBlock = controls[0] as TextBlock;
             SiteViewBlock = controls[1] as TextBlock;
+            SiteViewBlock.IsTextSelectionEnabled = true;
 
             UpdateViews();
         }
 
-        internal void UpdateViews()
+        internal override void UpdateViews()
         {
             NameViewBlock.Text = Name;
             SiteViewBlock.Text = Website;
-            SiteViewBlock.IsTextSelectionEnabled = true;
         }
 
-        internal void DestructViews()
+        internal override void DestructViews()
         {
+            base.DestructViews();
+
             NameViewBlock = null;
             SiteViewBlock = null;
         }

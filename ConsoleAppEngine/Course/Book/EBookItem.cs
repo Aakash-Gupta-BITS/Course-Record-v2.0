@@ -23,10 +23,12 @@ namespace ConsoleAppEngine.Course
 
         #region DisplayItems
 
-        internal TextBlock NameViewBlock;
-        internal TextBlock AuthorViewBlock;
-        internal TextBlock BookTypeViewBlock;
-        internal CheckBox IsBestViewBox;
+        internal TextBlock NameViewBlock { get; private set; }
+        internal TextBlock AuthorViewBlock { get; private set; }
+        internal TextBlock BookTypeViewBlock { get; private set; }
+        internal CheckBox IsBestViewBox { get; private set; }
+
+        internal override object PointerOverObject => IsBestViewBox;
 
         #endregion
 
@@ -75,7 +77,7 @@ namespace ConsoleAppEngine.Course
             UpdateViews();
         }
 
-        internal void InitializeViews()
+        internal override void InitializeViews()
         {
             FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 2), (typeof(string), 2), (typeof(string), 1), (typeof(bool), 1));
 
@@ -84,12 +86,12 @@ namespace ConsoleAppEngine.Course
             BookTypeViewBlock = controls[2] as TextBlock;
             IsBestViewBox = controls[3] as CheckBox;
 
-            UpdateViews();
-
             IsBestViewBox.Click += (object sender, RoutedEventArgs e) => IsBest = IsBestViewBox.IsChecked == true ? true : false;
+
+            UpdateViews();
         }
 
-        internal void UpdateViews()
+        internal override void UpdateViews()
         {
             NameViewBlock.Text = Name;
             AuthorViewBlock.Text = Author;
@@ -97,14 +99,14 @@ namespace ConsoleAppEngine.Course
             IsBestViewBox.IsChecked = IsBest;
         }
 
-        internal void DestructViews()
+        internal override void DestructViews()
         {
             NameViewBlock = null;
             AuthorViewBlock = null;
             BookTypeViewBlock = null;
             IsBestViewBox = null;
-        }
 
-        internal override object PointerOverObject => IsBestViewBox;
+            base.DestructViews();
+        }
     }
 }

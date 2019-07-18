@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,10 @@ namespace ConsoleAppEngine.Course
 
         #region DisplayItems
 
-        internal readonly TextBlock TypeViewBlock;
-        internal readonly TextBlock TeacherViewBlock;
-        internal readonly TextBlock DaysViewBlock;
-        internal readonly TextBlock HourViewBlock;
+        internal TextBlock TypeViewBlock { get; private set; }
+        internal TextBlock TeacherViewBlock { get; private set; }
+        internal TextBlock DaysViewBlock { get; private set; }
+        internal TextBlock HourViewBlock { get; private set; }
 
         #endregion
 
@@ -42,14 +43,6 @@ namespace ConsoleAppEngine.Course
             Room = info.GetValue(nameof(Room), typeof(string)) as string;
             WeekDays = (info.GetValue(nameof(WeekDays), typeof(LinkedList<DayOfWeek>))) as LinkedList<DayOfWeek>;
             Hours = (info.GetValue(nameof(Hours), typeof(List<uint>)) as List<uint>).ToArray();
-
-            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
-            TypeViewBlock = controls[0] as TextBlock;
-            TeacherViewBlock = controls[1] as TextBlock;
-            DaysViewBlock = controls[2] as TextBlock;
-            HourViewBlock = controls[3] as TextBlock;
-
-            UpdateViews();
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -66,16 +59,10 @@ namespace ConsoleAppEngine.Course
 
         public ETimeTableItem(TimeTableEntryType entryType, uint section, LinkedList<ETeacherEntry> teacher, string room, LinkedList<DayOfWeek> weekDays, uint[] hours)
         {
-            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
-            TypeViewBlock = controls[0] as TextBlock;
-            TeacherViewBlock = controls[1] as TextBlock;
-            DaysViewBlock = controls[2] as TextBlock;
-            HourViewBlock = controls[3] as TextBlock;
-
-            Update(entryType, section, teacher, room, weekDays, hours);
+            UpdateData(entryType, section, teacher, room, weekDays, hours);
         }
 
-        internal void Update(TimeTableEntryType entryType, uint section, LinkedList<ETeacherEntry> teacher, string room, LinkedList<DayOfWeek> weekDays, uint[] hours)
+        internal void UpdateData(TimeTableEntryType entryType, uint section, LinkedList<ETeacherEntry> teacher, string room, LinkedList<DayOfWeek> weekDays, uint[] hours)
         {
             EntryType = entryType;
             Section = section;
@@ -85,18 +72,43 @@ namespace ConsoleAppEngine.Course
 
             Array.Sort(hours);
             Hours = hours;
+        }
+
+        internal void UpdateDataWithViews(TimeTableEntryType entryType, uint section, LinkedList<ETeacherEntry> teacher, string room, LinkedList<DayOfWeek> weekDays, uint[] hours)
+        {
+            UpdateData(entryType, section, teacher, room, weekDays, hours);
+            UpdateViews();
+        }
+
+        internal override void InitializeViews()
+        {
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
+
+            TypeViewBlock = controls[0] as TextBlock;
+            TeacherViewBlock = controls[1] as TextBlock;
+            DaysViewBlock = controls[2] as TextBlock;
+            HourViewBlock = controls[3] as TextBlock;
 
             UpdateViews();
         }
 
-        public void UpdateViews()
+        internal override void UpdateViews()
         {
             TypeViewBlock.Text = EntryType.ToString();
             TeacherViewBlock.Text = string.Join(", ", (from a in Teachers where a != null select a.Name).ToArray());
             DaysViewBlock.Text = GetDayListString(WeekDays);
-            HourViewBlock.Text = string.Join(" ", Array.ConvertAll(Hours, (x) => x.ToString()));
+            HourViewBlock.Text = string.Join(" ", Array.ConvertAll(Hours, x => x.ToString()));
         }
 
+        internal override void DestructViews()
+        {
+            base.DestructViews();
+
+            TypeViewBlock = null;
+            TeacherViewBlock = null;
+            DaysViewBlock = null;
+            HourViewBlock = null;
+        }
 
         #region Helpers
 
@@ -132,41 +144,35 @@ namespace ConsoleAppEngine.Course
 
         internal static string GetDayListString(LinkedList<DayOfWeek> input)
         {
-            if (input.Count == 0)
-            {
-                return "";
-            }
+            LinkedList<string> list = new LinkedList<string>();
 
-            string output = "";
             foreach (DayOfWeek w in input)
             {
                 switch (w)
                 {
                     case DayOfWeek.Monday:
-                        output += "M ";
+                        list.AddLast("M");
                         break;
                     case DayOfWeek.Tuesday:
-                        output += "T ";
+                        list.AddLast("T");
                         break;
                     case DayOfWeek.Wednesday:
-                        output += "W ";
+                        list.AddLast("W");
                         break;
                     case DayOfWeek.Thursday:
-                        output += "Th ";
+                        list.AddLast("Th");
                         break;
                     case DayOfWeek.Friday:
-                        output += "F ";
+                        list.AddLast("F");
                         break;
                     case DayOfWeek.Saturday:
-                        output += "S ";
+                        list.AddLast("S");
                         break;
                 }
             }
 
-            output = output.Substring(0, output.Length - 1);
-            return output;
+            return string.Join(" ", list.Distinct().ToArray());
         }
-
         #endregion
     }
 }

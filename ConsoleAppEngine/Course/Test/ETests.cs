@@ -169,7 +169,7 @@ namespace ConsoleAppEngine.Course
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update(DateBox.SelectedDate.Value.DateTime,
+            ItemToChange.UpdateData(DateBox.SelectedDate.Value.DateTime,
                 (TestType)Enum.Parse(typeof(TestType), TestTypeBox.SelectedItem as string),
                 int.Parse(TestIndexBox.Text),
                 float.Parse(MarksObtainedBox.Text),

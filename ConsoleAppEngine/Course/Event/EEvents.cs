@@ -115,7 +115,7 @@ namespace ConsoleAppEngine.Course
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update(
+            ItemToChange.UpdateDataWithViews(
                 TitleBox.Text,
                 new DateTime(
                     DateBox.SelectedDate.Value.Year,

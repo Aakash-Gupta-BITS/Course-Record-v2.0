@@ -173,7 +173,7 @@ namespace ConsoleAppEngine.Course
             }
             foreach (var item in CoursesList)
             {
-                NavView.MenuItems.Add(item.navigationViewItem);
+                NavView.MenuItems.Add(item.CourseNavigationItem);
             }
 
             for (int i = list.Length - 4; i < list.Length; ++i)
@@ -291,7 +291,7 @@ namespace ConsoleAppEngine.Course
                 }
             }
 
-            ItemToChange.Update(
+            ItemToChange.UpdateData(
                 ((CourseType)Enum.Parse(typeof(CourseType), TypeBox.SelectedItem as string), IdBox.Text),
                 TitleBox.Text,
                 byte.Parse(LectureBox.Text),

@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -245,7 +246,7 @@ namespace ConsoleAppEngine.Course
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update((TimeTableEntryType)Enum.Parse(typeof(TimeTableEntryType), EntryTypeBox.SelectedItem.ToString().Replace(" ", "")),
+            ItemToChange.UpdateData((TimeTableEntryType)Enum.Parse(typeof(TimeTableEntryType), EntryTypeBox.SelectedItem.ToString().Replace(" ", "")),
                 uint.Parse(SectionBox.Text),
                 GenerateTeacherFromAddGrid(),
                 RoomBox.Text,

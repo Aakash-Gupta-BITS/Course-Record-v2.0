@@ -20,9 +20,11 @@ namespace ConsoleAppEngine.Course
 
         #region DisplayItems
 
-        internal readonly TextBlock LectureViewBlock;
-        internal readonly TextBlock TopicViewBlock;
-        internal readonly CheckBox DoneViewBox;
+        internal TextBlock LectureViewBlock { get; private set; }
+        internal TextBlock TopicViewBlock { get; private set; }
+        internal CheckBox DoneViewBox { get; private set; }
+
+        internal override object PointerOverObject => DoneViewBox;
 
         #endregion
 
@@ -34,18 +36,6 @@ namespace ConsoleAppEngine.Course
             Topic = (string)info.GetValue(nameof(Topic), typeof(string));
             DoneByMe = (bool)info.GetValue(nameof(DoneByMe), typeof(bool));
             Description = (string)info.GetValue(nameof(Description), typeof(string));
-
-            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 3), (typeof(bool), 0.5));
-
-            LectureViewBlock = controls[0] as TextBlock;
-            TopicViewBlock = controls[1] as TextBlock;
-            DoneViewBox = controls[2] as CheckBox;
-
-            LectureViewBlock.Text = LectureNo.ToString();
-            TopicViewBlock.Text = Topic;
-            DoneViewBox.IsChecked = DoneByMe;
-
-            DoneViewBox.Click += (object sender, RoutedEventArgs e) => DoneByMe = DoneViewBox.IsChecked == true ? true : false;
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -58,8 +48,26 @@ namespace ConsoleAppEngine.Course
 
         #endregion
 
-
         public EHandoutItem(int lectureNo, string topic, bool doneByMe, string description)
+        {
+            UpdateData(lectureNo, topic, doneByMe, description);
+        }
+
+        internal void UpdateData(int lectureNo, string topic, bool doneByMe, string description)
+        {
+            LectureNo = lectureNo;
+            Topic = topic;
+            DoneByMe = doneByMe;
+            Description = description;
+        }
+
+        internal void UpdateDataWithViews(int lectureNo, string topic, bool doneByMe, string description)
+        {
+            UpdateData(lectureNo, topic, doneByMe, description);
+            UpdateViews();
+        }
+
+        internal override void InitializeViews()
         {
             FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 3), (typeof(bool), 0.5));
 
@@ -67,23 +75,25 @@ namespace ConsoleAppEngine.Course
             TopicViewBlock = controls[1] as TextBlock;
             DoneViewBox = controls[2] as CheckBox;
 
-            Update(lectureNo, topic, doneByMe, description);
-
             DoneViewBox.Click += (object sender, RoutedEventArgs e) => DoneByMe = DoneViewBox.IsChecked == true ? true : false;
+
+            UpdateViews();
         }
 
-        internal void Update(int lectureNo, string topic, bool doneByMe, string description)
+        internal override void UpdateViews()
         {
-            LectureNo = lectureNo;
-            Topic = topic;
-            DoneByMe = doneByMe;
-            Description = description;
-
             LectureViewBlock.Text = LectureNo.ToString();
             TopicViewBlock.Text = Topic;
             DoneViewBox.IsChecked = DoneByMe;
         }
 
-        internal override object PointerOverObject => DoneViewBox;
+        internal override void DestructViews()
+        {
+            base.DestructViews();
+
+            LectureViewBlock = null;
+            TopicViewBlock = null;
+            DoneViewBox = null;
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace Course_Record_v2._0.Frames.Course
             CourseEntry SelectedCourse = null;
             foreach (var x in AllCourses.Instance.CoursesList)
             {
-                if (NavView.SelectedItem == x.navigationViewItem)
+                if (NavView.SelectedItem == x.CourseNavigationItem)
                 {
                     SelectedCourse = x;
                     break;
@@ -97,7 +97,7 @@ namespace Course_Record_v2._0.Frames.Course
 
             foreach (var x in AllCourses.Instance.CoursesList)
             {
-                NavView.MenuItems.Add(x.navigationViewItem);
+                NavView.MenuItems.Add(x.CourseNavigationItem);
             }
 
             NavView.MenuItems.Add(new NavigationViewItemSeparator());
@@ -111,7 +111,7 @@ namespace Course_Record_v2._0.Frames.Course
             }
             else
             {
-                NavView.SelectedItem = AllCourses.Instance.CoursesList.First.Value.navigationViewItem;
+                NavView.SelectedItem = AllCourses.Instance.CoursesList.First.Value.CourseNavigationItem;
             }
             LoggingServices.Instance.WriteLine<MainPage>("Course Main Page loaded.");
         }

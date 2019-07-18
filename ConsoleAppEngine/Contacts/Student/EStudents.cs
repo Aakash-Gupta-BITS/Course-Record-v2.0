@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -179,7 +180,7 @@ namespace ConsoleAppEngine.Course
         protected override void ItemToChangeUpdate()
         {
             SetValidId(out var x);
-            ItemToChange.Update(
+            ItemToChange.UpdateData(
                 NameBox.Text,
                 x,
                 new string[] { Phone1Box.Text, Phone2Box.Text },
