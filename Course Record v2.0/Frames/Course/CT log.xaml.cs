@@ -21,6 +21,8 @@ namespace Course_Record_v2._0.Frames.Course
             this.InitializeComponent();
             this.Unloaded += (object sender, RoutedEventArgs e) =>
             {
+                foreach (var x in AllStudents.lists)
+                    x.DestroyStudentViews();
                 ViewList.Items.Clear();
             };
         }
@@ -75,7 +77,6 @@ namespace Course_Record_v2._0.Frames.Course
                         }
                     }
 
-
                     // Sort ctLog
                     List<EStudentEntry> v = ctLog.lists.OrderBy(a => a.Name).ToList();
                     ctLog.lists.Clear();
@@ -86,9 +87,11 @@ namespace Course_Record_v2._0.Frames.Course
 
                     // Fill ViewList with new sorted order
                     ViewList.Items.Clear();
-                    foreach (var a in from a in ctLog.lists select a.GetView)
+                    foreach (var a in ctLog.lists)
                     {
-                        ViewList.Items.Add(a);
+                        if (a.GetView == null)
+                            a.InitializeStudent();
+                        ViewList.Items.Add(a.GetView);
                     }
 
                     break;
@@ -147,10 +150,9 @@ namespace Course_Record_v2._0.Frames.Course
             {
                 // Delete
                 case ContentDialogResult.Primary:
-
-                    // Important : Item not to be removed from AllContacts
                     ViewList.Items.Remove(ItemSelected.GetView);
                     ctLog.lists.Remove(ItemSelected);
+                    ItemSelected.DestroyStudentViews();
                     break;
             }
         }
@@ -159,9 +161,11 @@ namespace Course_Record_v2._0.Frames.Course
         {
             ctLog = e.Parameter as EStudents;
 
-            foreach (var x in (from x in ctLog.lists where AllStudents.lists.Contains(x) select x.GetView))
+            foreach (var x in ctLog.lists)
             {
-                ViewList.Items.Add(x);
+                if (x.GetView == null)
+                    x.InitializeStudent();
+                ViewList.Items.Add(x.GetView);
             }
         }
     }

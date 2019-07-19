@@ -114,5 +114,15 @@ namespace ConsoleAppEngine.Contacts
             PhoneViewBlock = null;
             EmailViewBlock = null;
         }
+
+        public void InitializeStudent()
+        {
+            InitializeViews();
+        }
+
+        public void DestroyStudentViews()
+        {
+            DestructViews();
+        }
     }
 }
