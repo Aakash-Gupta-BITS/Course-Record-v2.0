@@ -25,12 +25,6 @@ namespace ConsoleAppEngine.Course
 
         #endregion
 
-        public void AddTest(ETestItem testItem)
-        {
-            lists.AddLast(testItem);
-            UpdateList();
-        }
-
         #region Serialization
 
         public ETests() : base()
@@ -50,16 +44,7 @@ namespace ConsoleAppEngine.Course
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            base.DestructViews();
 
             DateBox = null;
             TestTypeBox = null;
@@ -69,19 +54,24 @@ namespace ConsoleAppEngine.Course
             DescriptionBox = null;
         }
 
-        protected override void AddNewItem()
+        protected override ETestItem AddNewItem()
         {
-            AddTest(new ETestItem(
+            return new ETestItem(
                 DateBox.SelectedDate.Value.DateTime,
                 (TestType)Enum.Parse(typeof(TestType), (TestTypeBox.SelectedItem as string).Replace(' ', '_')),
                 int.Parse(TestIndexBox.Text),
                 float.Parse(MarksObtainedBox.Text),
                 float.Parse(TotalMarksBox.Text),
-                DescriptionBox.Text));
+                DescriptionBox.Text);
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
+            Controls.AddLast(MarksObtainedBox);
+            Controls.AddLast(TotalMarksBox);
+            Controls.AddLast(TestIndexBox);
+            Controls.AddLast(TestTypeBox);
+
             bool TypeExists(int _index)
             {
                 foreach (var x in (from a in lists where a != ItemToChange select a))
@@ -139,9 +129,12 @@ namespace ConsoleAppEngine.Course
 
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
-            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
+            base.ClearAddGrid();
+
+            MarksObtainedBox.BorderBrush =
+            TotalMarksBox.BorderBrush =
+            TestIndexBox.BorderBrush =
+            TestTypeBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 
             TestIndexBox.Text =
             MarksObtainedBox.Text =
@@ -156,7 +149,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Test Name", 1), ("Date", 1), ("Description", 2), ("Marks", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             DateBox = AddViewGridControls[0] as DatePicker;
             TestTypeBox = AddViewGridControls[1] as ComboBox;
@@ -169,7 +162,7 @@ namespace ConsoleAppEngine.Course
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update(DateBox.SelectedDate.Value.DateTime,
+            ItemToChange.UpdateDataWithViews(DateBox.SelectedDate.Value.DateTime,
                 (TestType)Enum.Parse(typeof(TestType), TestTypeBox.SelectedItem as string),
                 int.Parse(TestIndexBox.Text),
                 float.Parse(MarksObtainedBox.Text),

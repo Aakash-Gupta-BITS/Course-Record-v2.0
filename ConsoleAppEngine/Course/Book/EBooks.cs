@@ -25,12 +25,6 @@ namespace ConsoleAppEngine.Course
 
         #endregion
 
-        public void AddBook(EBookItem eBookItem)
-        {
-            lists.AddLast(eBookItem);
-            UpdateList();
-        }
-
         #region Serialization
 
         public EBooks() : base()
@@ -50,16 +44,7 @@ namespace ConsoleAppEngine.Course
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            base.DestructViews();
 
             NameBox = null;
             AuthorBox = null;
@@ -69,15 +54,15 @@ namespace ConsoleAppEngine.Course
             BestBookBox = null;
         }
 
-        protected override void AddNewItem()
+        protected override EBookItem AddNewItem()
         {
-            AddBook(new EBookItem(
+            return new EBookItem(
                 (TextBookType)Enum.Parse(typeof(TextBookType), BookTypeBox.SelectedItem as string),
                 AuthorBox.Text,
                 NameBox.Text,
                 int.Parse(EditionBox.Text),
                 PressBox.Text,
-                BestBookBox.IsChecked == true));
+                BestBookBox.IsChecked == true);
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -99,11 +84,10 @@ namespace ConsoleAppEngine.Course
 
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
-            AddButton.BorderBrush =
+            base.ClearAddGrid();
+
             EditionBox.BorderBrush =
             BookTypeBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
 
             NameBox.Text =
             AuthorBox.Text =
@@ -111,7 +95,6 @@ namespace ConsoleAppEngine.Course
             PressBox.Text = "";
             BookTypeBox.SelectedItem = null;
             BestBookBox.IsChecked = false;
-
         }
 
         protected override Grid Header()
@@ -119,7 +102,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Name", 2), ("Author", 2), ("Book Type", 1), ("Best Book", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             NameBox = AddViewGridControls[0] as TextBox;
             AuthorBox = AddViewGridControls[1] as TextBox;
@@ -132,7 +115,7 @@ namespace ConsoleAppEngine.Course
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update(
+            ItemToChange.UpdateDataWithViews(
                 (TextBookType)Enum.Parse(typeof(TextBookType), BookTypeBox.SelectedItem as string),
                 AuthorBox.Text,
                 NameBox.Text,

@@ -23,10 +23,10 @@ namespace ConsoleAppEngine.Course
 
         #region DisplayItems
 
-        private readonly TextBlock NameViewBlock;
-        private readonly TextBlock TimingsViewBlock;
-        private readonly TextBlock DescriptionViewBlock;
-        private readonly TextBlock MarksViewBlock;
+        internal TextBlock NameViewBlock { get; private set; }
+        internal TextBlock TimingsViewBlock { get; private set; }
+        internal TextBlock DescriptionViewBlock { get; private set; }
+        internal TextBlock MarksViewBlock { get; private set; }
 
         #endregion
 
@@ -40,18 +40,6 @@ namespace ConsoleAppEngine.Course
             MarksObtained = (float)info.GetValue(nameof(MarksObtained), typeof(float));
             TotalMarks = (float)info.GetValue(nameof(TotalMarks), typeof(float));
             Description = (string)info.GetValue(nameof(Description), typeof(string));
-
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 2), (typeof(string), 1));
-
-            NameViewBlock = controls[0] as TextBlock;
-            TimingsViewBlock = controls[1] as TextBlock;
-            DescriptionViewBlock = controls[2] as TextBlock;
-            MarksViewBlock = controls[3] as TextBlock;
-
-            NameViewBlock.Text = TypeOfTest.ToString() + " " + TestIndex;
-            TimingsViewBlock.Text = DayOfTest.ToString("dd/MM/yyyy");
-            DescriptionViewBlock.Text = Description;
-            MarksViewBlock.Text = MarksObtained + "/" + TotalMarks;
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -66,20 +54,12 @@ namespace ConsoleAppEngine.Course
 
         #endregion
 
-
         public ETestItem(DateTime dayOfTest, TestType typeOfTest, int testIndex, float marksObtained, float totalMarks, string description)
         {
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 2), (typeof(string), 1));
-
-            NameViewBlock = controls[0] as TextBlock;
-            TimingsViewBlock = controls[1] as TextBlock;
-            DescriptionViewBlock = controls[2] as TextBlock;
-            MarksViewBlock = controls[3] as TextBlock;
-
-            Update(dayOfTest, typeOfTest, testIndex, marksObtained, totalMarks, description);
+            UpdateData(dayOfTest, typeOfTest, testIndex, marksObtained, totalMarks, description);
         }
 
-        internal void Update(DateTime dayOfTest, TestType typeOfTest, int testIndex, float marksObtained, float totalMarks, string description)
+        internal void UpdateData(DateTime dayOfTest, TestType typeOfTest, int testIndex, float marksObtained, float totalMarks, string description)
         {
             DayOfTest = dayOfTest;
             TypeOfTest = typeOfTest;
@@ -87,13 +67,42 @@ namespace ConsoleAppEngine.Course
             MarksObtained = marksObtained;
             TotalMarks = totalMarks;
             Description = description;
+        }
 
+        internal void UpdateDataWithViews(DateTime dayOfTest, TestType typeOfTest, int testIndex, float marksObtained, float totalMarks, string description)
+        {
+            UpdateData(dayOfTest, typeOfTest, testIndex, marksObtained, totalMarks, description);
+            UpdateViews();
+        }
+
+        internal override void InitializeViews()
+        {
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 1), (typeof(string), 2), (typeof(string), 1));
+
+            NameViewBlock = controls[0] as TextBlock;
+            TimingsViewBlock = controls[1] as TextBlock;
+            DescriptionViewBlock = controls[2] as TextBlock;
+            MarksViewBlock = controls[3] as TextBlock;
+
+            UpdateViews();
+        }
+
+        internal override void UpdateViews()
+        {
             NameViewBlock.Text = TypeOfTest.ToString() + " " + TestIndex;
             TimingsViewBlock.Text = DayOfTest.ToString("dd/MM/yyyy");
             DescriptionViewBlock.Text = Description;
             MarksViewBlock.Text = MarksObtained + "/" + TotalMarks;
         }
 
+        internal override void DestructViews()
+        {
+            base.DestructViews();
 
+            NameViewBlock = null;
+            TimingsViewBlock = null;
+            DescriptionViewBlock = null;
+            MarksViewBlock = null;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace ConsoleAppEngine.Course
     public partial class EStudents : ISerializable
     {
         #region DisplayBoxes
+
         private TextBox NameBox;
         private TextBox Phone1Box, Phone2Box;
         private TextBox IdBox;
@@ -22,6 +24,7 @@ namespace ConsoleAppEngine.Course
         private TextBox HostelBox;
         private TextBox RoomBox;
         private TextBox OtherInput;
+
         #endregion
 
         private AllCourses AllCourses => AllCourses.Instance;
@@ -32,12 +35,6 @@ namespace ConsoleAppEngine.Course
             {
                 s.CTLog.lists.Remove(ItemToChange);
             }
-        }
-
-        public void AddStudent(EStudentEntry studentEntry)
-        {
-            lists.AddLast(studentEntry);
-            UpdateList();
         }
 
         private void SetValidId(out (int year, ExpandedBranch[] branch, int digits) val)
@@ -88,16 +85,7 @@ namespace ConsoleAppEngine.Course
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            base.DestructViews();
 
             NameBox =
             Phone1Box = Phone2Box =
@@ -108,18 +96,18 @@ namespace ConsoleAppEngine.Course
             OtherInput = null;
         }
 
-        protected override void AddNewItem()
+        protected override EStudentEntry AddNewItem()
         {
             SetValidId(out var x);
             int.TryParse(RoomBox.Text, out int room);
-            AddStudent(new EStudentEntry(
+            return new EStudentEntry(
                 NameBox.Text,
                 x,
                 new string[] { Phone1Box.Text, Phone2Box.Text },
                 PersonalEmailBox.Text,
                 HostelBox.Text,
                 room,
-                OtherInput.Text));
+                OtherInput.Text);
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -144,9 +132,9 @@ namespace ConsoleAppEngine.Course
 
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
-            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
+            base.ClearAddGrid();
+            NameBox.BorderBrush =
+            OtherInput.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 
             NameBox.Text =
             Phone1Box.Text =
@@ -163,7 +151,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Name", 1), ("Phone", 1), ("Email", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             NameBox = AddViewGridControls[0] as TextBox;
             Phone1Box = AddViewGridControls[1] as TextBox;
@@ -179,7 +167,7 @@ namespace ConsoleAppEngine.Course
         protected override void ItemToChangeUpdate()
         {
             SetValidId(out var x);
-            ItemToChange.Update(
+            ItemToChange.UpdateDataWithViews(
                 NameBox.Text,
                 x,
                 new string[] { Phone1Box.Text, Phone2Box.Text },
@@ -201,7 +189,7 @@ namespace ConsoleAppEngine.Course
             Phone2Box.Text = ItemToChange.Phone[1];
             if (ItemToChange.Year != 0)
             {
-                IdBox.Text = ItemToChange.Year + " " + ((BranchId)(int)ItemToChange.Branch[0]).ToString() + ((BranchId)(int)ItemToChange.Branch[1]).ToString() + " " + ItemToChange.Digits.ToString().PadRight(4, '0');
+                IdBox.Text = ItemToChange.Year + " " + ((BranchId)(int)ItemToChange.Branch[0]).ToString() + ((BranchId)(int)ItemToChange.Branch[1]).ToString() + " " + ItemToChange.Digits.ToString().PadLeft(4, '0');
             }
             else
             {

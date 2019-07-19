@@ -17,12 +17,6 @@ namespace ConsoleAppEngine.Abstracts
         private EElementBase(LinkedList<T> List)
         {
             lists = List;
-            contentDialog = new ContentDialog()
-            {
-                PrimaryButtonText = "Modify",
-                SecondaryButtonText = "Delete",
-                CloseButtonText = "Ok"
-            };
         }
 
         public EElementBase() : this(new LinkedList<T>())
@@ -53,24 +47,52 @@ namespace ConsoleAppEngine.Abstracts
         protected Grid AddGrid;
         protected ListView ViewList;
         protected Button AddButton;
-        protected readonly ContentDialog contentDialog;
+        protected ContentDialog contentDialog;
         protected AppBarButton ViewCommand;
         protected AppBarButton AddCommand;
 
-        protected abstract void AddNewItem();
+        protected abstract T AddNewItem();
         protected abstract Grid Header();
-        protected abstract void InitializeAddGrid(params FrameworkElement[] AddViewGridControls);
+
+        protected abstract void InitializeViews(params FrameworkElement[] AddViewGridControls);
         protected abstract void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale);
-        protected abstract void ClearAddGrid();
+        protected virtual void ClearAddGrid()
+        {
+            ItemToChange = null;
+            AddButton.Content = "Add";
+            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
+        }
         protected abstract void ItemToChangeUpdate();
         protected abstract void SetContentDialog();
         protected abstract void SetAddGrid_ItemToChange();
         protected abstract IOrderedEnumerable<T> OrderList();
-        public abstract void DestructViews();
+
+        public virtual void DestructViews()
+        {
+            ViewGrid.Children.Clear();
+            AddGrid.Children.Clear();
+            ViewList.Items.Clear();
+
+            ViewGrid = null;
+            AddGrid = null;
+            ViewList = null;
+            AddButton = null;
+            ViewCommand = null;
+            AddCommand = null;
+
+            foreach (var x in lists)
+                x.DestructViews();
+
+            ItemToChange = null;
+        }
 
         public virtual void PostDeleteTasks()
         {
-            // Kept empty and virtual because some childs may not use it
+
+        }
+        public virtual void PostAddTasks()
+        {
+
         }
 
         public void InitializeViews(Grid viewGrid, Grid addGrid, AppBarButton viewCommand, AppBarButton addCommand, params FrameworkElement[] AddViewGridControls)
@@ -79,9 +101,17 @@ namespace ConsoleAppEngine.Abstracts
             AddGrid = addGrid;
             ViewCommand = viewCommand;
             AddCommand = addCommand;
+            contentDialog = new ContentDialog()
+            {
+                PrimaryButtonText = "Modify",
+                SecondaryButtonText = "Delete",
+                CloseButtonText = "Ok"
+            };
 
+            foreach (var x in lists)
+                x.InitializeViews();
+            InitializeViews(AddViewGridControls);
             FillViewGrid();
-            InitializeAddGrid(AddViewGridControls);
             SetEvents();
 
             ViewGrid.Visibility = Visibility.Visible;
@@ -121,7 +151,11 @@ namespace ConsoleAppEngine.Abstracts
                 // This code will be called only when all inputs are Valid
                 if (AddButton.Content.ToString() == "Add")
                 {
-                    AddNewItem();
+                    T val = AddNewItem();
+                    val.InitializeViews();
+                    lists.AddLast(val);
+                    UpdateList();
+                    PostAddTasks();
                 }
                 else if (AddButton.Content.ToString() == "Modify")
                 {

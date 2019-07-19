@@ -29,8 +29,6 @@ namespace Course_Record_v2._0.Frames.Course
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Courses.NavView = e.Parameter as NavigationView;
-
             foreach (var y in Contacts.TeacherEntry.lists)
             {
                 ICSelect.Items.Add(y.Name);

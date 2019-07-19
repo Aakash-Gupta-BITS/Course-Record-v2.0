@@ -23,12 +23,6 @@ namespace ConsoleAppEngine.Course
 
         #endregion
 
-        public void AddEvent(EEventItem eventItem)
-        {
-            lists.AddLast(eventItem);
-            UpdateList();
-        }
-
         #region Serialization
 
         public EEvents() : base()
@@ -48,27 +42,18 @@ namespace ConsoleAppEngine.Course
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
+            base.DestructViews();
 
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
-
-            TitleBox =
-            LocationBox =
+            TitleBox = null;
+            LocationBox = null;
             DescriptionBox = null;
             DateBox = null;
             TimeBox = null;
         }
 
-        protected override void AddNewItem()
+        protected override EEventItem AddNewItem()
         {
-            AddEvent(new EEventItem(
+            return new EEventItem(
                 TitleBox.Text,
                 new DateTime(
                     DateBox.SelectedDate.Value.Year,
@@ -78,9 +63,10 @@ namespace ConsoleAppEngine.Course
                     TimeBox.SelectedTime.Value.Minutes,
                     TimeBox.SelectedTime.Value.Seconds),
                 LocationBox.Text,
-                DescriptionBox.Text));
+                DescriptionBox.Text);
         }
-
+        
+        [Obsolete]
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
             Controls.AddLast(TitleBox);
@@ -97,11 +83,11 @@ namespace ConsoleAppEngine.Course
             }
         }
 
+        [Obsolete]
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
-            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
+            base.ClearAddGrid();
+
 
             TitleBox.Text = "";
             DateBox.SelectedDate = DateTime.Now;
@@ -115,7 +101,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Title", 2), ("Timing", 1), ("Location", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             TitleBox = AddViewGridControls[0] as TextBox;
             DateBox = AddViewGridControls[1] as DatePicker;
@@ -127,7 +113,7 @@ namespace ConsoleAppEngine.Course
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update(
+            ItemToChange.UpdateDataWithViews(
                 TitleBox.Text,
                 new DateTime(
                     DateBox.SelectedDate.Value.Year,

@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,12 +58,6 @@ namespace ConsoleAppEngine.Course
             return eTeachers;
         }
 
-        public void AddTimeEntry(ETimeTableItem eTimeTableItem)
-        {
-            lists.AddLast(eTimeTableItem);
-            UpdateList();
-        }
-
         #region Serialization
 
         public ETimeTable() : base()
@@ -82,16 +77,7 @@ namespace ConsoleAppEngine.Course
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            base.DestructViews();
 
             EntryTypeBox = null;
             SectionBox = null;
@@ -103,15 +89,15 @@ namespace ConsoleAppEngine.Course
             HoursBox = null;
         }
 
-        protected override void AddNewItem()
+        protected override ETimeTableItem AddNewItem()
         {
-            AddTimeEntry(new ETimeTableItem(
+            return new ETimeTableItem(
                 (TimeTableEntryType)Enum.Parse(typeof(TimeTableEntryType), EntryTypeBox.SelectedItem.ToString().Replace(" ", "")),
                 uint.Parse(SectionBox.Text),
                 GenerateTeacherFromAddGrid(),
                 RoomBox.Text,
-                ETimeTableItem.GetDaysList(DaysBox.Text),
-                Array.ConvertAll(HoursBox.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries), uint.Parse).Distinct().ToArray()));
+                new LinkedList<DayOfWeek>(ETimeTableItem.GetDaysList(DaysBox.Text).OrderBy(a => a)),
+                Array.ConvertAll(HoursBox.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries), uint.Parse).Distinct().OrderBy(a => a).ToArray());
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -124,7 +110,6 @@ namespace ConsoleAppEngine.Course
             Controls.AddLast(HoursBox);
 
 
-            // Input Format Check
             if (EntryTypeBox.SelectedItem == null)
             {
                 ErrorWaale.AddLast(EntryTypeBox);
@@ -175,7 +160,6 @@ namespace ConsoleAppEngine.Course
             }
 
 
-            // Cross Check
             var typeEntered = (TimeTableEntryType)Enum.Parse(typeof(TimeTableEntryType), EntryTypeBox.SelectedItem.ToString().Replace(" ", ""));
             var timingArray = from days in arr1
                               from hours in arr2
@@ -211,9 +195,14 @@ namespace ConsoleAppEngine.Course
 
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
+            base.ClearAddGrid();
+
+            EntryTypeBox.BorderBrush =
+            SectionBox.BorderBrush =
+            TeachersBox[0].BorderBrush =
+            DaysBox.BorderBrush =
+            HoursBox.BorderBrush =
             AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
 
             EntryTypeBox.SelectedItem = null;
             TeachersBox[0].SelectedIndex = 0;
@@ -230,7 +219,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Type", 1), ("Teacher Name", 1), ("Days", 1), ("Hour", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             EntryTypeBox = AddViewGridControls[0] as ComboBox;
             SectionBox = AddViewGridControls[1] as TextBox;
@@ -245,12 +234,12 @@ namespace ConsoleAppEngine.Course
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update((TimeTableEntryType)Enum.Parse(typeof(TimeTableEntryType), EntryTypeBox.SelectedItem.ToString().Replace(" ", "")),
+            ItemToChange.UpdateDataWithViews((TimeTableEntryType)Enum.Parse(typeof(TimeTableEntryType), EntryTypeBox.SelectedItem.ToString().Replace(" ", "")),
                 uint.Parse(SectionBox.Text),
                 GenerateTeacherFromAddGrid(),
                 RoomBox.Text,
-                ETimeTableItem.GetDaysList(DaysBox.Text),
-                Array.ConvertAll(HoursBox.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries), uint.Parse).Distinct().ToArray());
+                new LinkedList<DayOfWeek>(ETimeTableItem.GetDaysList(DaysBox.Text).OrderBy(a => a)),
+                Array.ConvertAll(HoursBox.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries), uint.Parse).Distinct().OrderBy(a => a).ToArray());
         }
 
         protected override IOrderedEnumerable<ETimeTableItem> OrderList()

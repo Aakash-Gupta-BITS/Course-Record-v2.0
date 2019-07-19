@@ -22,6 +22,8 @@ namespace Course_Record_v2._0.Frames.Course
             this.InitializeComponent();
             this.Unloaded += (object sender, RoutedEventArgs e) =>
             {
+                foreach (var x in CourseTeachers.lists)
+                    x.DestroyTeacherViews();
                 ViewList.Items.Clear();
             };
         }
@@ -76,7 +78,6 @@ namespace Course_Record_v2._0.Frames.Course
                         }
                     }
 
-
                     // Sort Teachers
                     List<ETeacherEntry> v = CourseTeachers.lists.OrderBy(a => a.Name).ToList();
                     CourseTeachers.lists.Clear();
@@ -87,9 +88,11 @@ namespace Course_Record_v2._0.Frames.Course
 
                     // Fill ViewList with new sorted order
                     ViewList.Items.Clear();
-                    foreach (var a in from a in CourseTeachers.lists select a.GetView)
+                    foreach (var a in CourseTeachers.lists)
                     {
-                        ViewList.Items.Add(a);
+                        if (a.GetView == null)
+                            a.InitializeTeacher();
+                        ViewList.Items.Add(a.GetView);
                     }
 
                     break;
@@ -147,9 +150,9 @@ namespace Course_Record_v2._0.Frames.Course
             {
                 // Delete
                 case ContentDialogResult.Primary:
-                    // Important : Item not to be removed from AllContacts
                     ViewList.Items.Remove(SelectedTeacher.GetView);
                     CourseTeachers.lists.Remove(SelectedTeacher);
+                    SelectedTeacher.DestroyTeacherViews();
                     SelectedCourse.SyncTimeTablewithTeachers();
                     break;
             }
@@ -159,9 +162,11 @@ namespace Course_Record_v2._0.Frames.Course
         {
             SelectedCourse = e.Parameter as CourseEntry;
 
-            foreach (var x in (from x in CourseTeachers.lists where x.IsDeleted != true select x.GetView))
+            foreach (var x in  CourseTeachers.lists)
             {
-                ViewList.Items.Add(x);
+                if (x.GetView == null)
+                    x.InitializeTeacher();
+                ViewList.Items.Add(x.GetView);
             }
         }
     }

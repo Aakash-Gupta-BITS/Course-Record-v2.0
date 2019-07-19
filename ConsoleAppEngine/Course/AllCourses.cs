@@ -23,7 +23,10 @@ namespace ConsoleAppEngine.Course
 
         public AllContacts Contacts => AllContacts.Instance;
 
+        public LinkedList<CourseEntry> CoursesList => lists;
+
         #region DisplayBoxes
+
         public NavigationView NavView;
 
         private ComboBox TypeBox;
@@ -34,15 +37,7 @@ namespace ConsoleAppEngine.Course
         private ComboBox ICBox;
 
         #endregion
-
-        public LinkedList<CourseEntry> CoursesList => lists; //  new LinkedList<CourseEntry>();
-
-        public void AddCourse(CourseEntry e)
-        {
-            CoursesList.AddLast(e);
-            UpdateList();
-        }
-
+        
         #region Serialization
 
         private AllCourses() : base()
@@ -57,82 +52,32 @@ namespace ConsoleAppEngine.Course
 
         #endregion
 
-        #region ToMoveToHDDSync
-        public static void AddToHdd()
+        public override void PostAddTasks()
         {
-            string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
+            var list = NavView.MenuItems.ToArray();
+            NavView.MenuItems.Clear();
 
-            if (!Directory.Exists(DirectoryLocation))
+            for (int i = 0; i < 5; ++i)
             {
-                Directory.CreateDirectory(DirectoryLocation);
+                NavView.MenuItems.Add(list[i]);
+            }
+            foreach (var item in CoursesList)
+            {
+                NavView.MenuItems.Add(item.CourseNavigationItem);
             }
 
-            foreach (CourseEntry e in Instance.CoursesList)
+            for (int i = list.Length - 4; i < list.Length; ++i)
             {
-                using (Stream m = new FileStream(Path.Combine(DirectoryLocation, e.Title + ".bin"), FileMode.Create, FileAccess.Write))
-                {
-                    new BinaryFormatter().Serialize(m, e);
-                }
+                NavView.MenuItems.Add(list[i]);
             }
         }
-
-        public static void AddToHdd_NewThread()
-        {
-            Thread thread = new Thread(new ThreadStart(AddToHdd))
-            {
-                Name = "Add Courses to Hdd",
-                IsBackground = false
-            };
-            thread.Start();
-        }
-
-        public static void GetFromHdd()
-        {
-            string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
-
-            if (!Directory.Exists(DirectoryLocation))
-            {
-                return;
-            }
-
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            foreach (string file in Directory.GetFiles(DirectoryLocation))
-            {
-                using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
-                {
-                    Instance.CoursesList.AddLast(formatter.Deserialize(s) as CourseEntry);
-                }
-            }
-        }
-
-        public static void GetFromHdd_NewThread()
-        {
-            Thread thread = new Thread(new ThreadStart(GetFromHdd))
-            {
-                Name = "Add Courses to Hdd",
-                IsBackground = false
-            };
-            thread.Start();
-        }
-
-        #endregion
     }
 
     public partial class AllCourses : EElementBase<CourseEntry>
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            base.DestructViews();
 
             TypeBox = null;
             IdBox = null;
@@ -144,7 +89,7 @@ namespace ConsoleAppEngine.Course
             NavView = null;
         }
 
-        protected override void AddNewItem()
+        protected override CourseEntry AddNewItem()
         {
             ETeacherEntry eTeacher = null;
             foreach (var y in Contacts.TeacherEntry.lists)
@@ -156,30 +101,12 @@ namespace ConsoleAppEngine.Course
                 }
             }
 
-            CourseEntry entry = new CourseEntry(
+            return new CourseEntry(
                 ((CourseType)Enum.Parse(typeof(CourseType), TypeBox.SelectedItem as string), IdBox.Text),
                 TitleBox.Text,
                 byte.Parse(LectureBox.Text),
                 byte.Parse(PracticalBox.Text),
                 eTeacher);
-            AddCourse(entry);
-
-            var list = NavView.MenuItems.ToArray();
-            NavView.MenuItems.Clear();
-
-            for (int i = 0; i < 5; ++i)
-            {
-                NavView.MenuItems.Add(list[i]);
-            }
-            foreach (var item in CoursesList)
-            {
-                NavView.MenuItems.Add(item.navigationViewItem);
-            }
-
-            for (int i = list.Length - 4; i < list.Length; ++i)
-            {
-                NavView.MenuItems.Add(list[i]);
-            }
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -245,15 +172,14 @@ namespace ConsoleAppEngine.Course
 
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
-            AddButton.BorderBrush =
+            base.ClearAddGrid();
+
             TypeBox.BorderBrush =
             IdBox.BorderBrush =
             TitleBox.BorderBrush =
             LectureBox.BorderBrush =
             PracticalBox.BorderBrush =
             ICBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
 
             TypeBox.SelectedItem = null;
             IdBox.Text =
@@ -268,7 +194,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Id", 1), ("Title", 1), ("IC", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             TypeBox = AddViewGridControls[0] as ComboBox;
             IdBox = AddViewGridControls[1] as TextBox;
@@ -291,7 +217,7 @@ namespace ConsoleAppEngine.Course
                 }
             }
 
-            ItemToChange.Update(
+            ItemToChange.UpdateDataWithViews(
                 ((CourseType)Enum.Parse(typeof(CourseType), TypeBox.SelectedItem as string), IdBox.Text),
                 TitleBox.Text,
                 byte.Parse(LectureBox.Text),

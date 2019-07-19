@@ -35,6 +35,5 @@ namespace Course_Record_v2._0.Frames.Contacts
                 OtherInput,
                 AddButton);
         }
-
     }
 }

@@ -20,9 +20,9 @@ namespace ConsoleAppEngine.Course
 
         #region DisplayItems
 
-        internal readonly TextBlock TitleViewBlock;
-        internal readonly TextBlock TimingViewBlock;
-        internal readonly TextBlock LocationViewBlock;
+        internal TextBlock TitleViewBlock { get; private set; }
+        internal TextBlock TimingViewBlock { get; private set; }
+        internal TextBlock LocationViewBlock { get; private set; }
 
         #endregion
 
@@ -34,17 +34,6 @@ namespace ConsoleAppEngine.Course
             Timing = (DateTime)info.GetValue(nameof(Timing), typeof(DateTime));
             Location = (string)info.GetValue(nameof(Location), typeof(string));
             Description = (string)info.GetValue(nameof(Description), typeof(string));
-
-
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 1), (typeof(string), 1));
-            TitleViewBlock = controls[0] as TextBlock;
-            TimingViewBlock = controls[1] as TextBlock;
-            LocationViewBlock = controls[2] as TextBlock;
-
-            TitleViewBlock.Text = Title;
-            TimingViewBlock.Text = Timing.ToString("MMM. dd, yyyy HH:mm");
-            LocationViewBlock.Text = Location;
-
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -64,26 +53,48 @@ namespace ConsoleAppEngine.Course
 
         public EEventItem(string title, DateTime timing, string location, string description)
         {
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 2), (typeof(string), 1), (typeof(string), 1));
-            TitleViewBlock = controls[0] as TextBlock;
-            TimingViewBlock = controls[1] as TextBlock;
-            LocationViewBlock = controls[2] as TextBlock;
-
-            Update(title, timing, location, description);
+            UpdateData(title, timing, location, description);
         }
 
-        internal void Update(string title, DateTime timing, string location, string description)
+        internal void UpdateData(string title, DateTime timing, string location, string description)
         {
             Title = title;
             Timing = timing;
             Location = location;
             Description = description;
+        }
 
+        internal void UpdateDataWithViews(string title, DateTime timing, string location, string description)
+        {
+            UpdateData(title, timing, location, description);
+            UpdateViews();
+        }
+
+        internal override void InitializeViews() 
+        {
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 2), (typeof(string), 1), (typeof(string), 1));
+
+            TitleViewBlock = controls[0] as TextBlock;
+            TimingViewBlock = controls[1] as TextBlock;
+            LocationViewBlock = controls[2] as TextBlock;
+
+            UpdateViews();
+        }
+
+        internal override void UpdateViews()
+        {
             TitleViewBlock.Text = Title;
             TimingViewBlock.Text = Timing.ToString("MMM. dd, yyyy HH:mm");
             LocationViewBlock.Text = Location;
         }
 
+        internal override void DestructViews()
+        {
+            base.DestructViews();
 
+            TitleViewBlock = null;
+            TimingViewBlock = null;
+            Location = null;
+        }
     }
 }

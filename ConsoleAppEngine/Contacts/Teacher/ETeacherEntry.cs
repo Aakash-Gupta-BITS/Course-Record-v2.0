@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace ConsoleAppEngine.Course
+namespace ConsoleAppEngine.Contacts
 {
     [Serializable]
     public class ETeacherEntry : EElementItemBase, ISerializable
@@ -22,8 +22,10 @@ namespace ConsoleAppEngine.Course
         #endregion
 
         #region DisplayItems
-        internal readonly TextBlock NameViewBlock;
-        internal readonly TextBlock SiteViewBlock;
+
+        internal TextBlock NameViewBlock { get; private set; }
+        internal TextBlock SiteViewBlock { get; private set; }
+
         #endregion
 
         #region Serialization
@@ -36,18 +38,6 @@ namespace ConsoleAppEngine.Course
             Address = (string)info.GetValue(nameof(Address), typeof(string));
             Website = (string)info.GetValue(nameof(Website), typeof(string));
             OtherInfo = (string)info.GetValue(nameof(OtherInfo), typeof(string));
-
-
-            // YE COPY PASTE THA, isse upar ka dekh Dekh liya. to studen tmein implement kar
-            // 
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 2));
-
-            NameViewBlock = controls[0] as TextBlock;
-            SiteViewBlock = controls[1] as TextBlock;
-
-            NameViewBlock.Text = Name;
-            SiteViewBlock.Text = Website;
-            SiteViewBlock.IsTextSelectionEnabled = true;
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -62,18 +52,12 @@ namespace ConsoleAppEngine.Course
 
         #endregion
 
-
         public ETeacherEntry(string name, string[] phone, string[] email, string address, string website, string otherInfo)
         {
-            FrameworkElement[] controls = GenerateViews(GetView, (typeof(string), 1), (typeof(string), 2));
-
-            NameViewBlock = controls[0] as TextBlock;
-            SiteViewBlock = controls[1] as TextBlock;
-
-            Update(name, phone, email, address, website, otherInfo);
+            UpdateData(name, phone, email, address, website, otherInfo);
         }
 
-        internal void Update(string name, string[] phone, string[] email, string address, string website, string otherInfo)
+        internal void UpdateData(string name, string[] phone, string[] email, string address, string website, string otherInfo)
         {
             Name = name;
             Phone = phone;
@@ -81,12 +65,47 @@ namespace ConsoleAppEngine.Course
             Address = address;
             Website = website;
             OtherInfo = otherInfo;
-
-            NameViewBlock.Text = Name;
-            SiteViewBlock.Text = Website;
-            SiteViewBlock.IsTextSelectionEnabled = true;
         }
 
+        internal void UpdateDataWithViews(string name, string[] phone, string[] email, string address, string website, string otherInfo)
+        {
+            UpdateData(name, phone, email, address, website, otherInfo);
+            UpdateViews();
+        }
 
+        internal override void InitializeViews()
+        {
+            FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 1), (typeof(string), 2));
+
+            NameViewBlock = controls[0] as TextBlock;
+            SiteViewBlock = controls[1] as TextBlock;
+            SiteViewBlock.IsTextSelectionEnabled = true;
+
+            UpdateViews();
+        }
+
+        internal override void UpdateViews()
+        {
+            NameViewBlock.Text = Name;
+            SiteViewBlock.Text = Website;
+        }
+
+        internal override void DestructViews()
+        {
+            base.DestructViews();
+
+            NameViewBlock = null;
+            SiteViewBlock = null;
+        }
+
+        public void InitializeTeacher()
+        {
+            InitializeViews();
+        }
+
+        public void DestroyTeacherViews()
+        {
+            DestructViews();
+        }
     }
 }
