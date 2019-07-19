@@ -24,18 +24,10 @@ namespace ConsoleAppEngine.Course
         private TextBox OtherBox;
 
         #endregion
-
-        private AllCourses allCourses => AllCourses.Instance;
-
-        public void AddTeacher(ETeacherEntry t)
-        {
-            lists.AddLast(t);
-            UpdateList();
-        }
-
+                
         public override void PostDeleteTasks()
         {
-            foreach (CourseEntry s in allCourses.CoursesList)
+            foreach (CourseEntry s in AllCourses.Instance.CoursesList)
             {
                 s.TeacherEntry.lists.Remove(ItemToChange);
                 s.SyncTimeTablewithTeachers();
@@ -61,16 +53,7 @@ namespace ConsoleAppEngine.Course
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            base.DestructViews();
 
             NameBox =
             Phone1Box = Phone2Box =
@@ -78,29 +61,26 @@ namespace ConsoleAppEngine.Course
             AddressBox =
             WebsiteBox =
             OtherBox = null;
-
-            foreach (var x in lists)
-                x.DestructViews();
         }
 
-        protected override void AddNewItem()
+        protected override ETeacherEntry AddNewItem()
         {
-            AddTeacher(new ETeacherEntry(
+            return new ETeacherEntry(
                 NameBox.Text,
                 new string[] { Phone1Box.Text, Phone2Box.Text },
                 new string[] { Email1Box.Text, Email2Box.Text },
                 AddressBox.Text,
                 WebsiteBox.Text,
-                OtherBox.Text));
+                OtherBox.Text);
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
+            Controls.AddLast(NameBox);
             foreach (var x in (from a in lists where a != ItemToChange select a.Name))
             {
                 if (NameBox.Text == x)
                 {
-                    Controls.AddLast(NameBox);
                     ErrorWaale.AddLast(NameBox);
                     break;
                 }
@@ -109,9 +89,9 @@ namespace ConsoleAppEngine.Course
 
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
-            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
+            base.ClearAddGrid();
+
+            NameBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 
             NameBox.Text =
             Phone1Box.Text = Phone2Box.Text =
@@ -137,9 +117,6 @@ namespace ConsoleAppEngine.Course
             WebsiteBox = AddViewGridControls[6] as TextBox;
             OtherBox = AddViewGridControls[7] as TextBox;
             AddButton = AddViewGridControls[8] as Button;
-
-            foreach (var x in lists)
-                x.InitializeViews();
         }
 
         protected override void ItemToChangeUpdate()

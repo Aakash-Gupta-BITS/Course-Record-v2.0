@@ -13,16 +13,14 @@ namespace ConsoleAppEngine.Course
     [Serializable]
     public partial class EHandouts : ISerializable
     {
+        #region DisplayBoxes
+
         private TextBox LectureBox;
         private TextBox TopicBox;
         private TextBox DescriptionBox;
         private CheckBox DoneByMeBox;
 
-        public void AddHandout(EHandoutItem handoutItem)
-        {
-            lists.AddLast(handoutItem);
-            UpdateList();
-        }
+        #endregion
 
         #region Serialization
 
@@ -43,16 +41,7 @@ namespace ConsoleAppEngine.Course
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            base.DestructViews();
 
             LectureBox = null;
             TopicBox = null;
@@ -60,13 +49,13 @@ namespace ConsoleAppEngine.Course
             DoneByMeBox = null;
         }
 
-        protected override void AddNewItem()
+        protected override EHandoutItem AddNewItem()
         {
-            AddHandout(new EHandoutItem(
+            return new EHandoutItem(
                 int.Parse(LectureBox.Text),
                 TopicBox.Text,
                 DoneByMeBox.IsChecked == true,
-                DescriptionBox.Text));
+                DescriptionBox.Text);
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -89,10 +78,9 @@ namespace ConsoleAppEngine.Course
 
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
-            LectureBox.BorderBrush =
-            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
+            base.ClearAddGrid();
+
+            LectureBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 
             LectureBox.Text =
             TopicBox.Text =
@@ -116,7 +104,11 @@ namespace ConsoleAppEngine.Course
 
         protected override void ItemToChangeUpdate()
         {
-            ItemToChange.Update(int.Parse(LectureBox.Text), TopicBox.Text, DoneByMeBox.IsChecked == true, DescriptionBox.Text);
+            ItemToChange.UpdateDataWithViews(
+                int.Parse(LectureBox.Text), 
+                TopicBox.Text, 
+                DoneByMeBox.IsChecked == true, 
+                DescriptionBox.Text);
         }
 
         protected override IOrderedEnumerable<EHandoutItem> OrderList()

@@ -16,6 +16,7 @@ namespace ConsoleAppEngine.Course
     public partial class EStudents : ISerializable
     {
         #region DisplayBoxes
+
         private TextBox NameBox;
         private TextBox Phone1Box, Phone2Box;
         private TextBox IdBox;
@@ -23,6 +24,7 @@ namespace ConsoleAppEngine.Course
         private TextBox HostelBox;
         private TextBox RoomBox;
         private TextBox OtherInput;
+
         #endregion
 
         private AllCourses AllCourses => AllCourses.Instance;
@@ -33,12 +35,6 @@ namespace ConsoleAppEngine.Course
             {
                 s.CTLog.lists.Remove(ItemToChange);
             }
-        }
-
-        public void AddStudent(EStudentEntry studentEntry)
-        {
-            lists.AddLast(studentEntry);
-            UpdateList();
         }
 
         private void SetValidId(out (int year, ExpandedBranch[] branch, int digits) val)
@@ -89,16 +85,7 @@ namespace ConsoleAppEngine.Course
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            base.DestructViews();
 
             NameBox =
             Phone1Box = Phone2Box =
@@ -109,18 +96,18 @@ namespace ConsoleAppEngine.Course
             OtherInput = null;
         }
 
-        protected override void AddNewItem()
+        protected override EStudentEntry AddNewItem()
         {
             SetValidId(out var x);
             int.TryParse(RoomBox.Text, out int room);
-            AddStudent(new EStudentEntry(
+            return new EStudentEntry(
                 NameBox.Text,
                 x,
                 new string[] { Phone1Box.Text, Phone2Box.Text },
                 PersonalEmailBox.Text,
                 HostelBox.Text,
                 room,
-                OtherInput.Text));
+                OtherInput.Text);
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -145,9 +132,9 @@ namespace ConsoleAppEngine.Course
 
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
-            AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
+            base.ClearAddGrid();
+            NameBox.BorderBrush =
+            OtherInput.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 
             NameBox.Text =
             Phone1Box.Text =
@@ -180,7 +167,7 @@ namespace ConsoleAppEngine.Course
         protected override void ItemToChangeUpdate()
         {
             SetValidId(out var x);
-            ItemToChange.UpdateData(
+            ItemToChange.UpdateDataWithViews(
                 NameBox.Text,
                 x,
                 new string[] { Phone1Box.Text, Phone2Box.Text },

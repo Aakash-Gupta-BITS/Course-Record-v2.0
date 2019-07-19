@@ -23,7 +23,10 @@ namespace ConsoleAppEngine.Course
 
         public AllContacts Contacts => AllContacts.Instance;
 
+        public LinkedList<CourseEntry> CoursesList => lists;
+
         #region DisplayBoxes
+
         public NavigationView NavView;
 
         private ComboBox TypeBox;
@@ -34,15 +37,7 @@ namespace ConsoleAppEngine.Course
         private ComboBox ICBox;
 
         #endregion
-
-        public LinkedList<CourseEntry> CoursesList => lists; //  new LinkedList<CourseEntry>();
-
-        public void AddCourse(CourseEntry e)
-        {
-            CoursesList.AddLast(e);
-            UpdateList();
-        }
-
+        
         #region Serialization
 
         private AllCourses() : base()
@@ -56,83 +51,13 @@ namespace ConsoleAppEngine.Course
         }
 
         #endregion
-
-        #region ToMoveToHDDSync
-        public static void AddToHdd()
-        {
-            string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
-
-            if (!Directory.Exists(DirectoryLocation))
-            {
-                Directory.CreateDirectory(DirectoryLocation);
-            }
-
-            foreach (CourseEntry e in Instance.CoursesList)
-            {
-                using (Stream m = new FileStream(Path.Combine(DirectoryLocation, e.Title + ".bin"), FileMode.Create, FileAccess.Write))
-                {
-                    new BinaryFormatter().Serialize(m, e);
-                }
-            }
-        }
-
-        public static void AddToHdd_NewThread()
-        {
-            Thread thread = new Thread(new ThreadStart(AddToHdd))
-            {
-                Name = "Add Courses to Hdd",
-                IsBackground = false
-            };
-            thread.Start();
-        }
-
-        public static void GetFromHdd()
-        {
-            string DirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
-
-            if (!Directory.Exists(DirectoryLocation))
-            {
-                return;
-            }
-
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            foreach (string file in Directory.GetFiles(DirectoryLocation))
-            {
-                using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
-                {
-                    Instance.CoursesList.AddLast(formatter.Deserialize(s) as CourseEntry);
-                }
-            }
-        }
-
-        public static void GetFromHdd_NewThread()
-        {
-            Thread thread = new Thread(new ThreadStart(GetFromHdd))
-            {
-                Name = "Add Courses to Hdd",
-                IsBackground = false
-            };
-            thread.Start();
-        }
-
-        #endregion
     }
 
     public partial class AllCourses : EElementBase<CourseEntry>
     {
         public override void DestructViews()
         {
-            ViewGrid.Children.Clear();
-            AddGrid.Children.Clear();
-            ViewList.Items.Clear();
-
-            ViewGrid = null;
-            AddGrid = null;
-            ViewList = null;
-            AddButton = null;
-            ViewCommand = null;
-            AddCommand = null;
+            base.DestructViews();
 
             TypeBox = null;
             IdBox = null;
@@ -144,7 +69,7 @@ namespace ConsoleAppEngine.Course
             NavView = null;
         }
 
-        protected override void AddNewItem()
+        protected override CourseEntry AddNewItem()
         {
             ETeacherEntry eTeacher = null;
             foreach (var y in Contacts.TeacherEntry.lists)
@@ -162,7 +87,6 @@ namespace ConsoleAppEngine.Course
                 byte.Parse(LectureBox.Text),
                 byte.Parse(PracticalBox.Text),
                 eTeacher);
-            AddCourse(entry);
 
             var list = NavView.MenuItems.ToArray();
             NavView.MenuItems.Clear();
@@ -180,6 +104,8 @@ namespace ConsoleAppEngine.Course
             {
                 NavView.MenuItems.Add(list[i]);
             }
+
+            return entry;
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
@@ -245,15 +171,14 @@ namespace ConsoleAppEngine.Course
 
         protected override void ClearAddGrid()
         {
-            ItemToChange = null;
-            AddButton.BorderBrush =
+            base.ClearAddGrid();
+
             TypeBox.BorderBrush =
             IdBox.BorderBrush =
             TitleBox.BorderBrush =
             LectureBox.BorderBrush =
             PracticalBox.BorderBrush =
             ICBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
-            AddButton.Content = "Add";
 
             TypeBox.SelectedItem = null;
             IdBox.Text =
@@ -291,7 +216,7 @@ namespace ConsoleAppEngine.Course
                 }
             }
 
-            ItemToChange.UpdateData(
+            ItemToChange.UpdateDataWithViews(
                 ((CourseType)Enum.Parse(typeof(CourseType), TypeBox.SelectedItem as string), IdBox.Text),
                 TitleBox.Text,
                 byte.Parse(LectureBox.Text),

@@ -68,9 +68,7 @@ namespace ConsoleAppEngine.Course
             Section = section;
             Teachers = teacher;
             Room = room;
-            WeekDays = new LinkedList<DayOfWeek>(weekDays.OrderBy(a => a)) as LinkedList<DayOfWeek>;
-
-            Array.Sort(hours);
+            WeekDays = weekDays;
             Hours = hours;
         }
 

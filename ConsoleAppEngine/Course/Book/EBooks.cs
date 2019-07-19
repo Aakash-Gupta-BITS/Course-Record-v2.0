@@ -86,7 +86,6 @@ namespace ConsoleAppEngine.Course
         {
             base.ClearAddGrid();
 
-            ItemToChange = null;
             EditionBox.BorderBrush =
             BookTypeBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 

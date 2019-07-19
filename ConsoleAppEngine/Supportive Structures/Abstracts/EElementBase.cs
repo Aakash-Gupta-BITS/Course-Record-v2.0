@@ -58,6 +58,7 @@ namespace ConsoleAppEngine.Abstracts
         protected abstract void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale);
         protected virtual void ClearAddGrid()
         {
+            ItemToChange = null;
             AddButton.Content = "Add";
             AddButton.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
         }
