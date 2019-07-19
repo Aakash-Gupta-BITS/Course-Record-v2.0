@@ -84,9 +84,9 @@ namespace ConsoleAppEngine.Course
                                where a != ItemToChange
                                select a))
             {
-                if(TitleBox.Text == x.Title && LocationBox.Text == x.Location && DateBox.Date == x.Timing.Date )
+                if(LocationBox.Text == x.Location && DateBox.Date == x.Timing.Date && TimeBox.Time == x.Timing.TimeOfDay )
                 {
-                    ErrorWaale.AddLast(DateBox);
+                    ErrorWaale.AddLast(LocationBox);
                 }
             }
         }
