@@ -96,6 +96,6 @@ namespace ConsoleAppEngine.Course
             IsBestViewBox.IsChecked = IsBest;
         }
 
-        internal override object PointerOverObject => IsBestViewBox;
+        
     }
 }

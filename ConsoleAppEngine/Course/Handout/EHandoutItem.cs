@@ -84,6 +84,6 @@ namespace ConsoleAppEngine.Course
             DoneViewBox.IsChecked = DoneByMe;
         }
 
-        internal override object PointerOverObject => DoneViewBox;
+       
     }
 }

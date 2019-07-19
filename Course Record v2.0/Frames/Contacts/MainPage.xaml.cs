@@ -44,7 +44,7 @@ namespace Course_Record_v2._0.Frames.Contacts
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            LoggingServices.Instance.WriteLine<MainPage>("Constacts Main Page loading...");
+            LoggingServices.Instance.WriteLine<MainPage>("Contacts Main Page loading...");
             NavView.SelectedItem = StudentsNavigation;
             LoggingServices.Instance.WriteLine<MainPage>("Contacts Main Page loaded.");
         }
