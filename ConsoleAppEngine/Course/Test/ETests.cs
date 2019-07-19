@@ -156,7 +156,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Test Name", 1), ("Date", 1), ("Description", 2), ("Marks", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             DateBox = AddViewGridControls[0] as DatePicker;
             TestTypeBox = AddViewGridControls[1] as ComboBox;

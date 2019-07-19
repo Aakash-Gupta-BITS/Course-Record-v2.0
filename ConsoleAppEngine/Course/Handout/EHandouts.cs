@@ -105,7 +105,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Lecture No", 1), ("Topic", 3), ("Done By Me", 0.5));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             LectureBox = AddViewGridControls[0] as TextBox;
             TopicBox = AddViewGridControls[1] as TextBox;

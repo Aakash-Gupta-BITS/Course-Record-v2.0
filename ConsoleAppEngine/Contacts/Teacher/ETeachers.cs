@@ -126,7 +126,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Name", 1), ("Website", 2));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             NameBox = AddViewGridControls[0] as TextBox;
             AddressBox = AddViewGridControls[1] as TextBox;

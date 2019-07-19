@@ -231,7 +231,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Type", 1), ("Teacher Name", 1), ("Days", 1), ("Hour", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             EntryTypeBox = AddViewGridControls[0] as ComboBox;
             SectionBox = AddViewGridControls[1] as TextBox;

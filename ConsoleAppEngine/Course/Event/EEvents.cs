@@ -103,7 +103,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Title", 2), ("Timing", 1), ("Location", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             TitleBox = AddViewGridControls[0] as TextBox;
             DateBox = AddViewGridControls[1] as DatePicker;

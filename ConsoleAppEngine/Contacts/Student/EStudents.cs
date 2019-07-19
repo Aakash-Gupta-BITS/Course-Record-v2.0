@@ -164,7 +164,7 @@ namespace ConsoleAppEngine.Course
             return GenerateHeader(("Name", 1), ("Phone", 1), ("Email", 1));
         }
 
-        protected override void InitializeAddGrid(params FrameworkElement[] AddViewGridControls)
+        protected override void InitializeViews(params FrameworkElement[] AddViewGridControls)
         {
             NameBox = AddViewGridControls[0] as TextBox;
             Phone1Box = AddViewGridControls[1] as TextBox;
