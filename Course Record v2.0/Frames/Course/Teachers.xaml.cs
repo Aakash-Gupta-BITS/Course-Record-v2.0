@@ -153,7 +153,7 @@ namespace Course_Record_v2._0.Frames.Course
                     ViewList.Items.Remove(SelectedTeacher.GetView);
                     CourseTeachers.lists.Remove(SelectedTeacher);
                     SelectedTeacher.DestroyTeacherViews();
-                    SelectedCourse.SyncTimeTablewithTeachers();
+                    SelectedCourse.RemoveTeacherFromCourse(SelectedTeacher);
                     break;
             }
         }
