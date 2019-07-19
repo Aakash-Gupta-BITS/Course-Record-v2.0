@@ -39,12 +39,21 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItemSeparator/>
+                
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
-                <NavigationViewItem Content="About" Tapped="ShowAbout">
+                <StackPanel>
+                    <NavigationViewItem Content="FeedBack" x:Name="FeedBack">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE89C;">
+                            
+                            </FontIcon>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="About" Tapped="ShowAbout">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;">
-                            
+
                         </FontIcon>
                     </NavigationViewItem.Icon>
                     <FlyoutBase.AttachedFlyout>
@@ -58,8 +67,9 @@
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
                 </NavigationViewItem>
+                </StackPanel>
             </NavigationView.PaneFooter>
-            
+
             <Frame x:Name="ContentFrame"/>
         </NavigationView>
     </Grid>

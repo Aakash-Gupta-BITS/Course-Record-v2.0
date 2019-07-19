@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
+using System;
 
 namespace Course_Record_v2._0
 {
@@ -47,7 +48,7 @@ namespace Course_Record_v2._0
             #endregion
         }
 
-        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private async void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (sender.SelectedItem == null)
             {
@@ -73,6 +74,19 @@ namespace Course_Record_v2._0
             else if (SelectedItem == ContactMenu)
             {
                 this.Frame.Navigate(typeof(Frames.Contacts.MainPage));
+            }
+            else if(SelectedItem == FeedBack)
+            {
+                if (await Windows.System.Launcher.LaunchUriAsync(
+                    new Uri(
+                       "https://forms.gle/eQQsubt368QXdSev8")))
+                {
+                    LoggingServices.Instance.WriteLine<MainPage>("The FeedBack form opened successfully");
+                }
+                else
+                {
+                    LoggingServices.Instance.WriteLine<MainPage>("The FeedBack form was not opened");
+                }
             }
         }
 
