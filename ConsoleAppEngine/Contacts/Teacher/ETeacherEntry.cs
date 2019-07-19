@@ -97,5 +97,15 @@ namespace ConsoleAppEngine.Contacts
             NameViewBlock = null;
             SiteViewBlock = null;
         }
+
+        public void InitializeTeacher()
+        {
+            InitializeViews();
+        }
+
+        public void DestroyTeacherViews()
+        {
+            DestructViews();
+        }
     }
 }

@@ -80,7 +80,6 @@ namespace ConsoleAppEngine.Course
             info.AddValue(nameof(TimeEntry), TimeEntry, typeof(ETimeTable));
         }
 
-
         #endregion
 
         public CourseEntry((CourseType branchtype, string branchstring) id, string title, byte lectureUnits, byte practicalUnits, ETeacherEntry iC)
@@ -111,7 +110,7 @@ namespace ConsoleAppEngine.Course
             TitleViewBlock = controls[1] as TextBlock;
             ICViewBlock = controls[2] as TextBlock;
 
-            CourseNavigationItem = new NavigationViewItem();
+            CourseNavigationItem = CourseNavigationItem ?? new NavigationViewItem();
 
             UpdateViews();
         }
@@ -154,6 +153,12 @@ namespace ConsoleAppEngine.Course
             {
                 TimeEntry.lists.AddLast(x);
             }
+        }
+
+        public void InitializeNavViewItem()
+        {
+            CourseNavigationItem = CourseNavigationItem ?? new NavigationViewItem();
+            CourseNavigationItem.Content = Title;
         }
     }
 }

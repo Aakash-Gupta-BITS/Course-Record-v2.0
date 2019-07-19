@@ -48,13 +48,5 @@ namespace Course_Record_v2._0.Frames.Course
                 Teacher3Input.Items.Add(y.Name);
             }
         }
-
-        private void ReloadCommand_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            foreach (var x in TimeEntry.lists)
-            {
-                x.UpdateViews();
-            }
-        }
     }
 }

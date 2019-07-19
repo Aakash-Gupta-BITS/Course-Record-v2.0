@@ -24,7 +24,7 @@ namespace Course_Record_v2._0.Frames.Course
 
             if (SelectedItem == AddCoursesNavigation)
             {
-                ContentFrame.Navigate(typeof(AllCoursesView), NavView);
+                ContentFrame.Navigate(typeof(AllCoursesView));
                 SecNav.Visibility = Visibility.Collapsed;
             }
             else if (SelectedItem == GoBack)
@@ -95,8 +95,11 @@ namespace Course_Record_v2._0.Frames.Course
         {
             LoggingServices.Instance.WriteLine<MainPage>("Course Main Page loading...");
 
+            AllCourses.Instance.NavView = NavView as NavigationView;
+
             foreach (var x in AllCourses.Instance.CoursesList)
             {
+                x.InitializeNavViewItem();
                 NavView.MenuItems.Add(x.CourseNavigationItem);
             }
 

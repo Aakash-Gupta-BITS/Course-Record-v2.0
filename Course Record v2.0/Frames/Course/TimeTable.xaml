@@ -57,7 +57,7 @@
         <CommandBar x:Name="Commands" Grid.Row="1" Background="Black" OverflowButtonVisibility="Visible">
             <AppBarButton x:Name="ViewCommand" Icon="View" Label="View"/>
             <AppBarButton x:Name="AddCommand" Icon="Add" Label="Add"/>
-            <AppBarButton x:Name="ReloadCommand" Icon="Refresh" Label="Refresh" Click="ReloadCommand_Click"/>
+            <AppBarButton x:Name="ReloadCommand" Icon="Refresh" Label="Refresh"/>
         </CommandBar>
     </Grid>
 </Page>

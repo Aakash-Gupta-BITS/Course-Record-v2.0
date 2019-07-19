@@ -93,6 +93,8 @@ namespace ConsoleAppEngine.Contacts
             NameViewBlock = controls[0] as TextBlock;
             PhoneViewBlock = controls[1] as TextBlock;
             EmailViewBlock = controls[2] as TextBlock;
+
+            UpdateViews();
         }
 
         internal override void UpdateViews()

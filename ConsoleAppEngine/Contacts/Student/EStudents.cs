@@ -189,7 +189,7 @@ namespace ConsoleAppEngine.Course
             Phone2Box.Text = ItemToChange.Phone[1];
             if (ItemToChange.Year != 0)
             {
-                IdBox.Text = ItemToChange.Year + " " + ((BranchId)(int)ItemToChange.Branch[0]).ToString() + ((BranchId)(int)ItemToChange.Branch[1]).ToString() + " " + ItemToChange.Digits.ToString().PadRight(4, '0');
+                IdBox.Text = ItemToChange.Year + " " + ((BranchId)(int)ItemToChange.Branch[0]).ToString() + ((BranchId)(int)ItemToChange.Branch[1]).ToString() + " " + ItemToChange.Digits.ToString().PadLeft(4, '0');
             }
             else
             {

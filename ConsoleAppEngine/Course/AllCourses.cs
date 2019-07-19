@@ -51,6 +51,26 @@ namespace ConsoleAppEngine.Course
         }
 
         #endregion
+
+        public override void PostAddTasks()
+        {
+            var list = NavView.MenuItems.ToArray();
+            NavView.MenuItems.Clear();
+
+            for (int i = 0; i < 5; ++i)
+            {
+                NavView.MenuItems.Add(list[i]);
+            }
+            foreach (var item in CoursesList)
+            {
+                NavView.MenuItems.Add(item.CourseNavigationItem);
+            }
+
+            for (int i = list.Length - 4; i < list.Length; ++i)
+            {
+                NavView.MenuItems.Add(list[i]);
+            }
+        }
     }
 
     public partial class AllCourses : EElementBase<CourseEntry>
@@ -81,31 +101,12 @@ namespace ConsoleAppEngine.Course
                 }
             }
 
-            CourseEntry entry = new CourseEntry(
+            return new CourseEntry(
                 ((CourseType)Enum.Parse(typeof(CourseType), TypeBox.SelectedItem as string), IdBox.Text),
                 TitleBox.Text,
                 byte.Parse(LectureBox.Text),
                 byte.Parse(PracticalBox.Text),
                 eTeacher);
-
-            var list = NavView.MenuItems.ToArray();
-            NavView.MenuItems.Clear();
-
-            for (int i = 0; i < 5; ++i)
-            {
-                NavView.MenuItems.Add(list[i]);
-            }
-            foreach (var item in CoursesList)
-            {
-                NavView.MenuItems.Add(item.CourseNavigationItem);
-            }
-
-            for (int i = list.Length - 4; i < list.Length; ++i)
-            {
-                NavView.MenuItems.Add(list[i]);
-            }
-
-            return entry;
         }
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)

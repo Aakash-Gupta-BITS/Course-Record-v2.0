@@ -90,6 +90,10 @@ namespace ConsoleAppEngine.Abstracts
         {
 
         }
+        public virtual void PostAddTasks()
+        {
+
+        }
 
         public void InitializeViews(Grid viewGrid, Grid addGrid, AppBarButton viewCommand, AppBarButton addCommand, params FrameworkElement[] AddViewGridControls)
         {
@@ -151,6 +155,7 @@ namespace ConsoleAppEngine.Abstracts
                     val.InitializeViews();
                     lists.AddLast(val);
                     UpdateList();
+                    PostAddTasks();
                 }
                 else if (AddButton.Content.ToString() == "Modify")
                 {

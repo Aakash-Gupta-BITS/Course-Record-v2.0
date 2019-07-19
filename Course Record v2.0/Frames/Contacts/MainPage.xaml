@@ -25,7 +25,6 @@
                 <NavigationViewItemHeader Content="Contacts"/>
                 <NavigationViewItem Content="Students" x:Name="StudentsNavigation"/>
                 <NavigationViewItem Content="Teachers" x:Name="TeachersNavigation"/>
-                <NavigationViewItem Content="Others" x:Name="OthersNavigation"/>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Navigation"/>
                 <NavigationViewItem Content="Go Back" x:Name="GoBack"/>

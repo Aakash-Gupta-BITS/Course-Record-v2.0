@@ -22,10 +22,9 @@ namespace Course_Record_v2._0
             CourseMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE7BE) };
 
             //      HDDSync.GetAllFromHDD();
-            foreach (var x in AllCourses.Instance.lists)
-                x.InitializeViews();
+
             #region ContactsAdd
-            AllContacts.Instance.TeacherEntry.AddTeacher(new ETeacherEntry(
+            AllContacts.Instance.TeacherEntry.lists.AddLast(new ETeacherEntry(
                 "Dr. Manoj Kannan",
                 new string[] { @"+91-1596-515-855", "" },
                 new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
@@ -37,7 +36,7 @@ namespace Course_Record_v2._0
                 "Katayi Bdia Master"));
 
 
-            AllContacts.Instance.StudentEntry.AddStudent(new EStudentEntry(
+            AllContacts.Instance.StudentEntry.lists.AddLast(new EStudentEntry(
                   "Aakash Gupta",
                   (2018,
                   new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
@@ -48,6 +47,17 @@ namespace Course_Record_v2._0
                   4136,
                   "Developer of this App"));
             #endregion
+        }
+        
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            HDDSync.AddAllToHDD();
+            LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
+            NavView.SelectedItem = HomeMenu;
+            this.Frame.BackStack.Clear();
+            this.Frame.ForwardStack.Clear();
+            ContentFrame.ForwardStack.Clear();
+            ContentFrame.BackStack.Clear();
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -77,17 +87,6 @@ namespace Course_Record_v2._0
             {
                 this.Frame.Navigate(typeof(Frames.Contacts.MainPage));
             }
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            HDDSync.AddAllToHDD();
-            LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
-            NavView.SelectedItem = HomeMenu;
-            this.Frame.BackStack.Clear();
-            this.Frame.ForwardStack.Clear();
-            ContentFrame.ForwardStack.Clear();
-            ContentFrame.BackStack.Clear();
         }
     }
 }
