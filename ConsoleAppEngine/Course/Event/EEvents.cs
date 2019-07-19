@@ -88,13 +88,18 @@ namespace ConsoleAppEngine.Course
                 {
                     ErrorWaale.AddLast(LocationBox);
                 }
+                if(TitleBox.Text == x.Title)
+                {
+                    ErrorWaale.AddLast(TitleBox);
+                }
             }
         }
 
         protected override void ClearAddGrid()
         {
             base.ClearAddGrid();
-
+            TitleBox.BorderBrush =
+            LocationBox.BorderBrush = new SolidColorBrush(Color.FromArgb(102, 255, 255, 255));
 
             TitleBox.Text = "";
             DateBox.SelectedDate = DateTime.Now;
