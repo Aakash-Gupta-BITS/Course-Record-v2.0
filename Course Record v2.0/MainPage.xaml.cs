@@ -4,6 +4,9 @@ using ConsoleAppEngine.Course;
 using ConsoleAppEngine.Log;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 
 namespace Course_Record_v2._0
 {
@@ -15,10 +18,6 @@ namespace Course_Record_v2._0
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-
-            ContactMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE779) };
-            TimeMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE787) };
-            CourseMenu.Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE7BE) };
 
             //      HDDSync.GetAllFromHDD();
 
@@ -87,5 +86,7 @@ namespace Course_Record_v2._0
             ContentFrame.ForwardStack.Clear();
             ContentFrame.BackStack.Clear();
         }
+
+        private void ShowAbout(object sender, TappedRoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
 }
