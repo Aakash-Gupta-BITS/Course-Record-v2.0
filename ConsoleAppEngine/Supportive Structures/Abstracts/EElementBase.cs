@@ -160,11 +160,7 @@ namespace ConsoleAppEngine.Abstracts
                 ViewList.SelectedItem = null;
 
                 // PointerOverObject checking 
-                if (ItemToChange.PointerOverObject != null &&
-                ItemToChange.PointerOverObject is ButtonBase x && x.IsPointerOver)
-                {
-                    return;
-                }
+                
 
                 // Update ContentDialog
                 SetContentDialog();
