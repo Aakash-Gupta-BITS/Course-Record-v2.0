@@ -83,6 +83,18 @@ namespace ConsoleAppEngine.Course
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
+            Controls.AddLast(TitleBox);
+            Controls.AddLast(LocationBox);
+
+            if(TitleBox.Text == "")
+            {
+                ErrorWaale.AddLast(TitleBox);
+            }
+            
+            if(LocationBox.Text == "")
+            {
+                ErrorWaale.AddLast(LocationBox);
+            }
         }
 
         protected override void ClearAddGrid()
