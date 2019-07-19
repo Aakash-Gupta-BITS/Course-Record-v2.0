@@ -177,7 +177,6 @@
     <Compile Include="Frames\OverallTimeTableView.xaml.cs">
       <DependentUpon>OverallTimeTableView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

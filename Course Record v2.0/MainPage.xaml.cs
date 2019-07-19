@@ -19,10 +19,8 @@ namespace Course_Record_v2._0
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            //      HDDSync.GetAllFromHDD();
-
             #region ContactsAdd
-            AllContacts.Instance.TeacherEntry.lists.AddLast(new ETeacherEntry(
+           /* AllContacts.Instance.TeacherEntry.lists.AddLast(new ETeacherEntry(
                 "Dr. Manoj Kannan",
                 new string[] { @"+91-1596-515-855", "" },
                 new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
@@ -43,7 +41,7 @@ namespace Course_Record_v2._0
                   @"uchanahome1@gmail.com",
                   "RAM",
                   4136,
-                  "Developer of this App"));
+                  "Developer of this App"));*/
             #endregion
         }
 
@@ -78,7 +76,7 @@ namespace Course_Record_v2._0
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // HDDSync.AddAllToHDD();
+            ConsoleAppEngine.Globals.HDDSync.AddAllToHDD();
             LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
             NavView.SelectedItem = HomeMenu;
             this.Frame.BackStack.Clear();
