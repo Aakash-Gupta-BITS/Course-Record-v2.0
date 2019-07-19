@@ -133,8 +133,25 @@ namespace ConsoleAppEngine.Course
             CourseNavigationItem = null;
         }
 
-        public void SyncTimeTablewithTeachers()
+        public void RemoveTeacherFromCourse(ETeacherEntry entry)
         {
+            TeacherEntry.lists.Remove(entry);
+
+            foreach (var timeentry in TimeEntry.lists)
+            {
+                while (timeentry.Teachers.Contains(entry))
+                    timeentry.Teachers.Remove(entry);
+            }
+
+            LinkedList<ETimeTableItem> finalList = new LinkedList<ETimeTableItem>();
+            foreach (var timeentry in TimeEntry.lists)
+                if (timeentry.Teachers.Count != 0)
+                    finalList.AddLast(timeentry);
+
+            TimeEntry.lists.Clear();
+            foreach (var x in finalList)
+                TimeEntry.lists.AddLast(x);
+            /*
             LinkedList<ETimeTableItem> temp = new LinkedList<ETimeTableItem>();
             foreach (var x in TimeEntry.lists)
             {
@@ -152,7 +169,7 @@ namespace ConsoleAppEngine.Course
             foreach (var x in temp)
             {
                 TimeEntry.lists.AddLast(x);
-            }
+            }*/
         }
 
         public void InitializeNavViewItem()

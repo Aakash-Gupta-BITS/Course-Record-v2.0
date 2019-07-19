@@ -24,13 +24,12 @@ namespace ConsoleAppEngine.Course
         private TextBox OtherBox;
 
         #endregion
-                
+
         public override void PostDeleteTasks()
         {
             foreach (CourseEntry s in AllCourses.Instance.CoursesList)
             {
-                s.TeacherEntry.lists.Remove(ItemToChange);
-                s.SyncTimeTablewithTeachers();
+                s.RemoveTeacherFromCourse(ItemToChange);
             }
         }
 
