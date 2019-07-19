@@ -48,7 +48,7 @@ namespace Course_Record_v2._0
             #endregion
         }
 
-        private async void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (sender.SelectedItem == null)
             {
@@ -75,19 +75,7 @@ namespace Course_Record_v2._0
             {
                 this.Frame.Navigate(typeof(Frames.Contacts.MainPage));
             }
-            else if(SelectedItem == FeedBack)
-            {
-                if (await Windows.System.Launcher.LaunchUriAsync(
-                    new Uri(
-                       "https://forms.gle/eQQsubt368QXdSev8")))
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The FeedBack form opened successfully");
-                }
-                else
-                {
-                    LoggingServices.Instance.WriteLine<MainPage>("The FeedBack form was not opened");
-                }
-            }
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -102,5 +90,11 @@ namespace Course_Record_v2._0
         }
 
         private void ShowAbout(object sender, TappedRoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+
+        private void FeedBack_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            NavView.SelectedItem = FeedBack;
+            ContentFrame.Navigate(typeof(Frames.FeedBack));
+        }
     }
 }
