@@ -66,7 +66,6 @@ namespace ConsoleAppEngine.Course
                 DescriptionBox.Text);
         }
         
-        [Obsolete]
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
             Controls.AddLast(TitleBox);
@@ -83,7 +82,6 @@ namespace ConsoleAppEngine.Course
             }
         }
 
-        [Obsolete]
         protected override void ClearAddGrid()
         {
             base.ClearAddGrid();

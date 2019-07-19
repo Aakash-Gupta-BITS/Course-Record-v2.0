@@ -35,13 +35,6 @@
                         </FontIcon>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Others" x:Name="OthersNavigation">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7EE;">
-
-                        </FontIcon>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Navigation"/>
                 <NavigationViewItem Content="Go Back" x:Name="GoBack">

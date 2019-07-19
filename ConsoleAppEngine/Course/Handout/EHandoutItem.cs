@@ -24,8 +24,6 @@ namespace ConsoleAppEngine.Course
         internal TextBlock TopicViewBlock { get; private set; }
         internal CheckBox DoneViewBox { get; private set; }
 
-        internal override object PointerOverObject => DoneViewBox;
-
         #endregion
 
         #region Serialization

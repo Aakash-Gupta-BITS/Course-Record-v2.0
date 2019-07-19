@@ -28,8 +28,6 @@ namespace ConsoleAppEngine.Course
         internal TextBlock BookTypeViewBlock { get; private set; }
         internal CheckBox IsBestViewBox { get; private set; }
 
-        internal override object PointerOverObject => IsBestViewBox;
-
         #endregion
 
         #region Serialization

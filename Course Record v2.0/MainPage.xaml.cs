@@ -22,7 +22,7 @@ namespace Course_Record_v2._0
             //      HDDSync.GetAllFromHDD();
 
             #region ContactsAdd
-            AllContacts.Instance.TeacherEntry.AddTeacher(new ETeacherEntry(
+            AllContacts.Instance.TeacherEntry.lists.AddLast(new ETeacherEntry(
                 "Dr. Manoj Kannan",
                 new string[] { @"+91-1596-515-855", "" },
                 new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
@@ -34,7 +34,7 @@ namespace Course_Record_v2._0
                 "Katayi Bdia Master"));
 
 
-            AllContacts.Instance.StudentEntry.AddStudent(new EStudentEntry(
+            AllContacts.Instance.StudentEntry.lists.AddLast(new EStudentEntry(
                   "Aakash Gupta",
                   (2018,
                   new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },

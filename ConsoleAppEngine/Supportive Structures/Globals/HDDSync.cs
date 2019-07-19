@@ -33,7 +33,7 @@ namespace ConsoleAppEngine.Globals
             {
                 return;
             }
-            /*
+            
             using (var s = new FileStream(Path.Combine(ContactDirectoryLocation, "Teachers" + ".bin"), FileMode.OpenOrCreate, FileAccess.Read))
             {
                 if (s.Length == 0)
@@ -55,7 +55,7 @@ namespace ConsoleAppEngine.Globals
                 {
                     AllContacts.Instance.StudentEntry = new BinaryFormatter().Deserialize(s) as EStudents;
                 }
-            }*/
+            }
         }
 
         public static void AddAllToHDD()
@@ -74,7 +74,7 @@ namespace ConsoleAppEngine.Globals
                     new BinaryFormatter().Serialize(m, e);
                 }
             }
-            /*
+
 
             string ContactsDirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Contacts");
 
@@ -91,8 +91,8 @@ namespace ConsoleAppEngine.Globals
             using (Stream m = new FileStream(Path.Combine(ContactsDirectoryLocation, "Students" + ".bin"), FileMode.Create, FileAccess.Write))
             {
                 new BinaryFormatter().Serialize(m, AllContacts.Instance.StudentEntry);
-            */
 
+            }
         }
     }
 }
