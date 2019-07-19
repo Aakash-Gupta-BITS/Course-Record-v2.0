@@ -80,6 +80,15 @@ namespace ConsoleAppEngine.Course
             {
                 ErrorWaale.AddLast(LocationBox);
             }
+            foreach (var x in (from a in lists
+                               where a != ItemToChange
+                               select a))
+            {
+                if(TitleBox.Text == x.Title && LocationBox.Text == x.Location && DateBox.Date == x.Timing.Date )
+                {
+                    ErrorWaale.AddLast(DateBox);
+                }
+            }
         }
 
         protected override void ClearAddGrid()
