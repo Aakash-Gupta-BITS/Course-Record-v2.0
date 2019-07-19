@@ -41,8 +41,7 @@ namespace Course_Record_v2._0
         public ExtendedSplash(SplashScreen splashscreen, bool loadState)
         {
             InitializeComponent();
-            extendedSplashImage.Source = new BitmapImage { UriSource = new Uri("ms-appx:///Assets/BITS.jpg") };
-
+            
             splash = splashscreen;
             if (splash != null)
             {
