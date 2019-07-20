@@ -25,6 +25,14 @@ namespace Course_Record_v2._0.Frames
         public FeedBack()
         {
             this.InitializeComponent();
+            webView1.NavigationStarting += (sender, args) =>
+            {
+                Progress.IsActive = true;
+            };
+            webView1.NavigationCompleted += (sender, args) =>
+            {
+                Progress.IsActive = false;
+            };
         }
     }
 }
