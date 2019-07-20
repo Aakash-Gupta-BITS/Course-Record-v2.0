@@ -60,6 +60,16 @@ namespace ConsoleAppEngine.Globals
 
             foreach (CourseEntry course in AllCourses.Instance.lists)
             {
+                // Course IC
+
+                foreach (var teacher in AllContacts.Instance.TeacherEntry.lists)
+                    if (course.IC.Name == teacher.Name)
+                    {
+                        course.IC = teacher;
+                        break;
+                    }
+
+                // Course Teachers
                 var finalteachers = new LinkedList<ETeacherEntry>();
                 var mainiterator = AllContacts.Instance.TeacherEntry.lists.First;
                 var tempiterator = course.TeacherEntry.lists.First;

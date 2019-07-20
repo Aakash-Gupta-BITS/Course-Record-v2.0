@@ -18,7 +18,7 @@ namespace ConsoleAppEngine.Course
         public string Title { get; private set; }
         public byte LectureUnits { get; private set; }
         public byte PracticalUnits { get; private set; }
-        public ETeacherEntry IC { get; private set; }
+        public ETeacherEntry IC { get; internal set; }
 
         #endregion
 
