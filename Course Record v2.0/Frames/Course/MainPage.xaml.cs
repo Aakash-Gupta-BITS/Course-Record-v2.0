@@ -50,7 +50,7 @@ namespace Course_Record_v2._0.Frames.Course
             CourseEntry SelectedCourse = null;
             foreach (var x in AllCourses.Instance.CoursesList)
             {
-                if (NavView.SelectedItem == x.CourseNavigationItem)
+                if ((NavView.SelectedItem as NavigationViewItem).Content.ToString() == x.Title)
                 {
                     SelectedCourse = x;
                     break;
