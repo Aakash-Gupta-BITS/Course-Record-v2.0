@@ -9,10 +9,12 @@ namespace ConsoleAppEngine.Globals
 {
     public static class HDDSync
     {
+        public static CourseEntry SelectedCourse = null;
+        internal static readonly string ContactDirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Contacts");
+        internal static readonly string CourseDirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
+
         public static void GetAllFromHDD()
         {
-            string CourseDirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
-
             if (!Directory.Exists(CourseDirectoryLocation))
             {
                 return;
@@ -27,8 +29,6 @@ namespace ConsoleAppEngine.Globals
                     AllCourses.Instance.CoursesList.AddLast(formatter.Deserialize(s) as CourseEntry);
                 }
             }
-
-            string ContactDirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Contacts");
 
             if (!Directory.Exists(ContactDirectoryLocation))
             {
@@ -98,37 +98,57 @@ namespace ConsoleAppEngine.Globals
 
         public static void AddAllToHDD()
         {
-            string CourseDirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Courses");
+            foreach (CourseEntry e in AllCourses.Instance.CoursesList)
+            {
+                SaveCourseToHdd(e);
+            }
 
+            SaveTeachersToHdd();
+            SaveStudentsToHdd();
+        }
+
+        public static void SaveSelectedCourse()
+        {
+            if (SelectedCourse != null) 
+                SaveCourseToHdd(SelectedCourse);
+        }
+
+        public static void SaveCourseToHdd(CourseEntry e)
+        {
             if (!Directory.Exists(CourseDirectoryLocation))
             {
                 Directory.CreateDirectory(CourseDirectoryLocation);
             }
 
-            foreach (CourseEntry e in AllCourses.Instance.CoursesList)
+            using (Stream m = new FileStream(Path.Combine(CourseDirectoryLocation, e.Title + ".bin"), FileMode.Create, FileAccess.Write))
             {
-                using (Stream m = new FileStream(Path.Combine(CourseDirectoryLocation, e.Title + ".bin"), FileMode.Create, FileAccess.Write))
-                {
-                    new BinaryFormatter().Serialize(m, e);
-                }
+                new BinaryFormatter().Serialize(m, e);
+            }
+        }
+
+        public static void SaveTeachersToHdd()
+        {
+            if (!Directory.Exists(ContactDirectoryLocation))
+            {
+                Directory.CreateDirectory(ContactDirectoryLocation);
             }
 
-            string ContactsDirectoryLocation = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database", "Contacts");
-
-            if (!Directory.Exists(ContactsDirectoryLocation))
-            {
-                Directory.CreateDirectory(ContactsDirectoryLocation);
-            }
-
-            using (Stream m = new FileStream(Path.Combine(ContactsDirectoryLocation, "Teachers" + ".bin"), FileMode.Create, FileAccess.Write))
+            using (Stream m = new FileStream(Path.Combine(ContactDirectoryLocation, "Teachers" + ".bin"), FileMode.Create, FileAccess.Write))
             {
                 new BinaryFormatter().Serialize(m, AllContacts.Instance.TeacherEntry);
             }
+        }
 
-            using (Stream m = new FileStream(Path.Combine(ContactsDirectoryLocation, "Students" + ".bin"), FileMode.Create, FileAccess.Write))
+        public static void SaveStudentsToHdd()
+        {
+            if (!Directory.Exists(ContactDirectoryLocation))
+            {
+                Directory.CreateDirectory(ContactDirectoryLocation);
+            }
+
+            using (Stream m = new FileStream(Path.Combine(ContactDirectoryLocation, "Students" + ".bin"), FileMode.Create, FileAccess.Write))
             {
                 new BinaryFormatter().Serialize(m, AllContacts.Instance.StudentEntry);
-
             }
         }
     }

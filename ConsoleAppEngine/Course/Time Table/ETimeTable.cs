@@ -71,6 +71,25 @@ namespace ConsoleAppEngine.Course
         }
 
         #endregion
+
+        #region ChangeTasks
+
+        public override void PostAddTasks(ETimeTableItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostModifyTasks(ETimeTableItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostDeleteTasks(ETimeTableItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        #endregion
     }
 
     public partial class ETimeTable : EElementBase<ETimeTableItem>

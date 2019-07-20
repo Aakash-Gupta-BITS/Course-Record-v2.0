@@ -39,9 +39,9 @@ namespace ConsoleAppEngine.Course
         {
             EntryType = (TimeTableEntryType)info.GetValue(nameof(EntryType), typeof(TimeTableEntryType));
             Section = (uint)info.GetValue(nameof(Section), typeof(uint));
-            Teachers = info.GetValue(nameof(Teachers), typeof(LinkedList<ETeacherEntry>)) as LinkedList<ETeacherEntry>;
-            Room = info.GetValue(nameof(Room), typeof(string)) as string;
-            WeekDays = (info.GetValue(nameof(WeekDays), typeof(LinkedList<DayOfWeek>))) as LinkedList<DayOfWeek>;
+            Teachers = (LinkedList<ETeacherEntry>)info.GetValue(nameof(Teachers), typeof(LinkedList<ETeacherEntry>));
+            Room = (string)info.GetValue(nameof(Room), typeof(string));
+            WeekDays = (LinkedList<DayOfWeek>)info.GetValue(nameof(WeekDays), typeof(LinkedList<DayOfWeek>));
             Hours = (info.GetValue(nameof(Hours), typeof(List<uint>)) as List<uint>).ToArray();
         }
 

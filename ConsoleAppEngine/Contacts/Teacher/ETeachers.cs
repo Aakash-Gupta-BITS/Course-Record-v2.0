@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.Globals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,22 @@ namespace ConsoleAppEngine.Course
 
         #region ChangeTasks
 
+        public override void PostModifyTasks(ETeacherEntry entry)
+        {
+            foreach (CourseEntry course in AllCourses.Instance.lists)
+            {
+                if (course.TeacherEntry.lists.Contains(entry) || course.IC == entry)
+                    HDDSync.SaveCourseToHdd(course);
+            }
+
+            HDDSync.SaveTeachersToHdd();
+        }
+
+        public override void PostAddTasks(ETeacherEntry element)
+        {
+            HDDSync.SaveTeachersToHdd();
+        }
+
         public override void PreDeleteTasks(ETeacherEntry element, out bool ToDelete)
         {
             ToDelete = true;
@@ -58,6 +75,7 @@ namespace ConsoleAppEngine.Course
             {
                 s.RemoveTeacherFromCourse(element);
             }
+            HDDSync.SaveTeachersToHdd();
         }
 
         #endregion

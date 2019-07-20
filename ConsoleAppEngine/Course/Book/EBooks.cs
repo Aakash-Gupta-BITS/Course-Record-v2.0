@@ -38,6 +38,25 @@ namespace ConsoleAppEngine.Course
         }
 
         #endregion
+
+        #region ChangeTasks
+
+        public override void PostAddTasks(EBookItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostModifyTasks(EBookItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostDeleteTasks(EBookItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        #endregion
     }
 
     public partial class EBooks : EElementBase<EBookItem>

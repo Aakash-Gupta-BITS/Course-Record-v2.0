@@ -54,6 +54,11 @@ namespace ConsoleAppEngine.Abstracts
         {
 
         }
+
+        public virtual void PostModifyTasks(T element)
+        {
+
+        }
     }
 
     public abstract partial class EElementBase<T> where T : EElementItemBase
@@ -172,6 +177,7 @@ namespace ConsoleAppEngine.Abstracts
                 else if (AddButton.Content.ToString() == "Modify")
                 {
                     ItemToChangeUpdate();
+                    PostModifyTasks(ItemToChange);
                     UpdateList();
                 }
 

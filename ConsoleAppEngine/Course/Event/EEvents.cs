@@ -36,6 +36,25 @@ namespace ConsoleAppEngine.Course
         }
 
         #endregion
+
+        #region ChangeTasks
+
+        public override void PostAddTasks(EEventItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostModifyTasks(EEventItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostDeleteTasks(EEventItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        #endregion
     }
 
     public partial class EEvents : EElementBase<EEventItem>

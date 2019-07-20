@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Globals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,6 +102,8 @@ namespace Course_Record_v2._0.Frames.Course
                         ViewList.Items.Add(a.GetView);
                     }
 
+                    HDDSync.SaveSelectedCourse();
+
                     break;
             }
         }
@@ -160,6 +163,7 @@ namespace Course_Record_v2._0.Frames.Course
                     CourseTeachers.lists.Remove(SelectedTeacher);
                     SelectedTeacher.DestroyTeacherViews();
                     SelectedCourse.RemoveTeacherFromCourse(SelectedTeacher);
+                    HDDSync.SaveSelectedCourse();
                     break;
             }
         }

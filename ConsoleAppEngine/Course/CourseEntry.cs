@@ -159,25 +159,8 @@ namespace ConsoleAppEngine.Course
             {
                 TimeEntry.lists.AddLast(x);
             }
-            /*
-LinkedList<ETimeTableItem> temp = new LinkedList<ETimeTableItem>();
-foreach (var x in TimeEntry.lists)
-{
-   temp.AddLast(x);
-   foreach (var y in x.Teachers)
-   {
-       if (!TeacherEntry.lists.Contains(y))            // If teacher is not found
-       {
-           temp.Remove(x);
-           break;
-       }
-   }
-}
-TimeEntry.lists.Clear();
-foreach (var x in temp)
-{
-   TimeEntry.lists.AddLast(x);
-}*/
+
+            Globals.HDDSync.SaveCourseToHdd(this);
         }
 
         public void InitializeNavViewItem()

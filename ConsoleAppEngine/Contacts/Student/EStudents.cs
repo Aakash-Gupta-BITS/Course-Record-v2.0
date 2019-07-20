@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
+using ConsoleAppEngine.Globals;
 using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,6 @@ namespace ConsoleAppEngine.Course
         private TextBox OtherInput;
 
         #endregion
-
-        private AllCourses AllCourses => AllCourses.Instance;
 
         private void SetValidId(out (int year, ExpandedBranch[] branch, int digits) val)
         {
@@ -74,12 +73,27 @@ namespace ConsoleAppEngine.Course
 
         #region ChangeTasks
 
+        public override void PostAddTasks(EStudentEntry element)
+        {
+            HDDSync.SaveStudentsToHdd();
+        }
+
+        public override void PostModifyTasks(EStudentEntry element)
+        {
+            foreach (CourseEntry course in AllCourses.Instance.lists)
+                if (course.CTLog.lists.Contains(element))
+                    HDDSync.SaveCourseToHdd(course);
+            HDDSync.SaveStudentsToHdd();
+        }
+
         public override void PostDeleteTasks(EStudentEntry element)
         {
-            foreach (CourseEntry s in AllCourses.CoursesList)
+            foreach (CourseEntry s in AllCourses.Instance.CoursesList)
             {
                 s.CTLog.lists.Remove(element);
+                HDDSync.SaveCourseToHdd(s);
             }
+            HDDSync.SaveSelectedCourse();
         }
 
         #endregion

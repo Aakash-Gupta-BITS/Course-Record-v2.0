@@ -69,12 +69,10 @@ namespace Course_Record_v2._0
             {
                 this.Frame.Navigate(typeof(Frames.Contacts.MainPage));
             }
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ConsoleAppEngine.Globals.HDDSync.AddAllToHDD();
             LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
             NavView.SelectedItem = HomeMenu;
             this.Frame.BackStack.Clear();
