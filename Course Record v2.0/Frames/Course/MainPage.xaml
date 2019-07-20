@@ -41,7 +41,7 @@
             <NavigationView.MenuItems>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Modify"/>
-                <NavigationViewItem Content="Add Courses" x:Name="AddCoursesNavigation" Icon="Add"/>
+                <NavigationViewItem Content="All Courses" x:Name="AddCoursesNavigation" Icon="View"/>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Course List"/>
             </NavigationView.MenuItems>

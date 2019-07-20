@@ -32,19 +32,25 @@ namespace ConsoleAppEngine.Contacts
 
         protected ETeacherEntry(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            Name = (string)info.GetValue(nameof(Name), typeof(string));
-            Phone = (info.GetValue(nameof(Phone), typeof(List<string>)) as List<string>).ToArray();
-            Email = (info.GetValue(nameof(Email), typeof(List<string>)) as List<string>).ToArray();
-            Address = (string)info.GetValue(nameof(Address), typeof(string));
-            Website = (string)info.GetValue(nameof(Website), typeof(string));
-            OtherInfo = (string)info.GetValue(nameof(OtherInfo), typeof(string));
+            Name = (string)
+                info.GetValue(nameof(Name), typeof(string));
+            Phone = (string[])
+                info.GetValue(nameof(Phone), typeof(string[]));
+            Email = (string[])
+                info.GetValue(nameof(Email), typeof(string[]));
+            Address = (string)
+                info.GetValue(nameof(Address), typeof(string));
+            Website = (string)
+                info.GetValue(nameof(Website), typeof(string));
+            OtherInfo = (string)
+                info.GetValue(nameof(OtherInfo), typeof(string));
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue(nameof(Name), Name, typeof(string));
-            info.AddValue(nameof(Phone), new List<string>(Phone), typeof(List<string>));
-            info.AddValue(nameof(Email), new List<string>(Email), typeof(List<string>));
+            info.AddValue(nameof(Phone), Phone, typeof(string[]));
+            info.AddValue(nameof(Email), Email, typeof(string[]));
             info.AddValue(nameof(Address), Address, typeof(string));
             info.AddValue(nameof(Website), Website, typeof(string));
             info.AddValue(nameof(OtherInfo), OtherInfo, typeof(string));

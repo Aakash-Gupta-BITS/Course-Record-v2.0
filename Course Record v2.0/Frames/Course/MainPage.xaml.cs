@@ -1,4 +1,5 @@
 ﻿using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Globals;
 using ConsoleAppEngine.Log;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -21,6 +22,8 @@ namespace Course_Record_v2._0.Frames.Course
             NavView.Header = SelectedItem.Content;
 
             LoggingServices.Instance.WriteLine<MainPage>("\"" + SelectedItem.Content as string + "\" is selected at Course Main Page.");
+
+            HDDSync.SelectedCourse = null;
 
             if (SelectedItem == AddCoursesNavigation)
             {
@@ -56,6 +59,8 @@ namespace Course_Record_v2._0.Frames.Course
                     break;
                 }
             }
+
+            HDDSync.SelectedCourse = SelectedCourse;
 
             LoggingServices.Instance.WriteLine<MainPage>(SelectedItem.Content as string + " Tab of " + NavView.Header as string + " is selected.");
 
@@ -121,6 +126,8 @@ namespace Course_Record_v2._0.Frames.Course
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            HDDSync.SelectedCourse = null;
+
             NavView.MenuItems.Clear();
             LoggingServices.Instance.WriteLine<MainPage>("Course Main Page unloaded.");
         }

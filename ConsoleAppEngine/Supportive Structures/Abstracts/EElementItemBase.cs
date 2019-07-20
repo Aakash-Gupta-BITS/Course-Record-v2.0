@@ -12,7 +12,7 @@ namespace ConsoleAppEngine.Abstracts
 
         public bool IsDeleted;
         public ListViewItem GetView;
-        
+
 
         #endregion
 

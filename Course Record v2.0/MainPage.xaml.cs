@@ -1,13 +1,9 @@
-﻿using ConsoleAppEngine.AllEnums;
-using ConsoleAppEngine.Contacts;
-using ConsoleAppEngine.Course;
-using ConsoleAppEngine.Log;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Controls.Primitives;
+﻿using ConsoleAppEngine.Log;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using System;
+using Windows.UI.Xaml.Navigation;
 
 namespace Course_Record_v2._0
 {
@@ -21,28 +17,28 @@ namespace Course_Record_v2._0
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
             #region ContactsAdd
-           /* AllContacts.Instance.TeacherEntry.lists.AddLast(new ETeacherEntry(
-                "Dr. Manoj Kannan",
-                new string[] { @"+91-1596-515-855", "" },
-                new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
-                @"#3270, New Science Block
-    Faculty Division III
-    BITS Pilani, Pilani Campus
-    Vidya Vihar, Pilani 333031 (Rajasthan)",
-                @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
-                "Katayi Bdia Master"));
+            /* AllContacts.Instance.TeacherEntry.lists.AddLast(new ETeacherEntry(
+                 "Dr. Manoj Kannan",
+                 new string[] { @"+91-1596-515-855", "" },
+                 new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
+                 @"#3270, New Science Block
+     Faculty Division III
+     BITS Pilani, Pilani Campus
+     Vidya Vihar, Pilani 333031 (Rajasthan)",
+                 @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
+                 "Katayi Bdia Master"));
 
 
-            AllContacts.Instance.StudentEntry.lists.AddLast(new EStudentEntry(
-                  "Aakash Gupta",
-                  (2018,
-                  new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
-                  887),
-                  new string[] { "7496811413", "" },
-                  @"uchanahome1@gmail.com",
-                  "RAM",
-                  4136,
-                  "Developer of this App"));*/
+             AllContacts.Instance.StudentEntry.lists.AddLast(new EStudentEntry(
+                   "Aakash Gupta",
+                   (2018,
+                   new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
+                   887),
+                   new string[] { "7496811413", "" },
+                   @"uchanahome1@gmail.com",
+                   "RAM",
+                   4136,
+                   "Developer of this App"));*/
             #endregion
         }
 
@@ -73,12 +69,10 @@ namespace Course_Record_v2._0
             {
                 this.Frame.Navigate(typeof(Frames.Contacts.MainPage));
             }
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ConsoleAppEngine.Globals.HDDSync.AddAllToHDD();
             LoggingServices.Instance.WriteLine<MainPage>("Initial Main Page loaded.");
             NavView.SelectedItem = HomeMenu;
             this.Frame.BackStack.Clear();
@@ -87,7 +81,10 @@ namespace Course_Record_v2._0
             ContentFrame.BackStack.Clear();
         }
 
-        private void ShowAbout(object sender, TappedRoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        private void ShowAbout(object sender, TappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
 
         private void FeedBack_Tapped(object sender, TappedRoutedEventArgs e)
         {

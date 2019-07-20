@@ -18,8 +18,8 @@ namespace ConsoleAppEngine.Course
         public string Title { get; private set; }
         public byte LectureUnits { get; private set; }
         public byte PracticalUnits { get; private set; }
-        public ETeacherEntry IC { get; private set; }
-        
+        public ETeacherEntry IC { get; internal set; }
+
         #endregion
 
         #region DisplayItems
@@ -47,7 +47,7 @@ namespace ConsoleAppEngine.Course
 
         protected CourseEntry(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            ID = ((CourseType)info.GetValue(nameof(ID.branchtype), typeof(CourseType)), 
+            ID = ((CourseType)info.GetValue(nameof(ID.branchtype), typeof(CourseType)),
                   (string)info.GetValue(nameof(ID.branchstring), typeof(string)));
             Title = info.GetString(nameof(Title));
             LectureUnits = info.GetByte(nameof(LectureUnits));
@@ -140,36 +140,27 @@ namespace ConsoleAppEngine.Course
             foreach (var timeentry in TimeEntry.lists)
             {
                 while (timeentry.Teachers.Contains(entry))
+                {
                     timeentry.Teachers.Remove(entry);
+                }
             }
 
             LinkedList<ETimeTableItem> finalList = new LinkedList<ETimeTableItem>();
             foreach (var timeentry in TimeEntry.lists)
+            {
                 if (timeentry.Teachers.Count != 0)
+                {
                     finalList.AddLast(timeentry);
+                }
+            }
 
             TimeEntry.lists.Clear();
             foreach (var x in finalList)
-                TimeEntry.lists.AddLast(x);
-            /*
-            LinkedList<ETimeTableItem> temp = new LinkedList<ETimeTableItem>();
-            foreach (var x in TimeEntry.lists)
             {
-                temp.AddLast(x);
-                foreach (var y in x.Teachers)
-                {
-                    if (!TeacherEntry.lists.Contains(y))            // If teacher is not found
-                    {
-                        temp.Remove(x);
-                        break;
-                    }
-                }
+                TimeEntry.lists.AddLast(x);
             }
-            TimeEntry.lists.Clear();
-            foreach (var x in temp)
-            {
-                TimeEntry.lists.AddLast(x);
-            }*/
+
+            Globals.HDDSync.SaveCourseToHdd(this);
         }
 
         public void InitializeNavViewItem()
