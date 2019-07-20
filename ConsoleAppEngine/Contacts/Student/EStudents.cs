@@ -29,14 +29,6 @@ namespace ConsoleAppEngine.Course
 
         private AllCourses AllCourses => AllCourses.Instance;
 
-        public override void PostDeleteTasks()
-        {
-            foreach (CourseEntry s in AllCourses.CoursesList)
-            {
-                s.CTLog.lists.Remove(ItemToChange);
-            }
-        }
-
         private void SetValidId(out (int year, ExpandedBranch[] branch, int digits) val)
         {
             var Id = IdBox.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -76,6 +68,18 @@ namespace ConsoleAppEngine.Course
         protected EStudents(SerializationInfo info, StreamingContext context) : base(info, context)
         {
 
+        }
+
+        #endregion
+
+        #region ChangeTasks
+
+        public override void PostDeleteTasks(EStudentEntry element)
+        {
+            foreach (CourseEntry s in AllCourses.CoursesList)
+            {
+                s.CTLog.lists.Remove(element);
+            }
         }
 
         #endregion

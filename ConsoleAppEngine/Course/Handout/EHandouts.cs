@@ -105,9 +105,9 @@ namespace ConsoleAppEngine.Course
         protected override void ItemToChangeUpdate()
         {
             ItemToChange.UpdateDataWithViews(
-                int.Parse(LectureBox.Text), 
-                TopicBox.Text, 
-                DoneByMeBox.IsChecked == true, 
+                int.Parse(LectureBox.Text),
+                TopicBox.Text,
+                DoneByMeBox.IsChecked == true,
                 DescriptionBox.Text);
         }
 

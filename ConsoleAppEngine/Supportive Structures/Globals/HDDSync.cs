@@ -34,7 +34,7 @@ namespace ConsoleAppEngine.Globals
             {
                 return;
             }
-            
+
             using (var s = new FileStream(Path.Combine(ContactDirectoryLocation, "Teachers" + ".bin"), FileMode.OpenOrCreate, FileAccess.Read))
             {
                 if (s.Length == 0)
@@ -57,7 +57,7 @@ namespace ConsoleAppEngine.Globals
                     AllContacts.Instance.StudentEntry = new BinaryFormatter().Deserialize(s) as EStudents;
                 }
             }
-            
+
             foreach (CourseEntry course in AllCourses.Instance.lists)
             {
                 var finalteachers = new LinkedList<ETeacherEntry>();
@@ -67,7 +67,9 @@ namespace ConsoleAppEngine.Globals
                 while (tempiterator != null)
                 {
                     while (tempiterator.Value.Name != mainiterator.Value.Name)
+                    {
                         mainiterator = mainiterator.Next;
+                    }
 
                     finalteachers.AddLast(mainiterator.Value);
 
@@ -77,7 +79,9 @@ namespace ConsoleAppEngine.Globals
                 }
                 course.TeacherEntry.lists.Clear();
                 foreach (var x in finalteachers)
+                {
                     course.TeacherEntry.lists.AddLast(x);
+                }
             }
 
         }

@@ -3,12 +3,8 @@ using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading;
-using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -37,7 +33,7 @@ namespace ConsoleAppEngine.Course
         private ComboBox ICBox;
 
         #endregion
-        
+
         #region Serialization
 
         private AllCourses() : base()
@@ -52,7 +48,9 @@ namespace ConsoleAppEngine.Course
 
         #endregion
 
-        public override void PostAddTasks()
+        #region ChangeTasks
+
+        public override void PostAddTasks(CourseEntry e)
         {
             var list = NavView.MenuItems.ToArray();
             NavView.MenuItems.Clear();
@@ -71,6 +69,8 @@ namespace ConsoleAppEngine.Course
                 NavView.MenuItems.Add(list[i]);
             }
         }
+
+        #endregion
     }
 
     public partial class AllCourses : EElementBase<CourseEntry>

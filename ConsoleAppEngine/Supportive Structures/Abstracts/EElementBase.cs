@@ -6,7 +6,6 @@ using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace ConsoleAppEngine.Abstracts
@@ -39,6 +38,24 @@ namespace ConsoleAppEngine.Abstracts
         #endregion
     }
 
+    public abstract partial class EElementBase<T> where T: EElementItemBase
+    {
+        public virtual void PostAddTasks(T element)
+        {
+
+        }
+
+        public virtual void PreDeleteTasks(T element, out bool ToDelete)
+        {
+            ToDelete = true;
+        }
+
+        public virtual void PostDeleteTasks(T element)
+        {
+
+        }
+    }
+
     public abstract partial class EElementBase<T> where T : EElementItemBase
     {
         public readonly LinkedList<T> lists;
@@ -66,7 +83,6 @@ namespace ConsoleAppEngine.Abstracts
         protected abstract void SetContentDialog();
         protected abstract void SetAddGrid_ItemToChange();
         protected abstract IOrderedEnumerable<T> OrderList();
-
         public virtual void DestructViews()
         {
             ViewGrid.Children.Clear();
@@ -81,18 +97,11 @@ namespace ConsoleAppEngine.Abstracts
             AddCommand = null;
 
             foreach (var x in lists)
+            {
                 x.DestructViews();
+            }
 
             ItemToChange = null;
-        }
-
-        public virtual void PostDeleteTasks()
-        {
-
-        }
-        public virtual void PostAddTasks()
-        {
-
         }
 
         public void InitializeViews(Grid viewGrid, Grid addGrid, AppBarButton viewCommand, AppBarButton addCommand, params FrameworkElement[] AddViewGridControls)
@@ -109,7 +118,10 @@ namespace ConsoleAppEngine.Abstracts
             };
 
             foreach (var x in lists)
+            {
                 x.InitializeViews();
+            }
+
             InitializeViews(AddViewGridControls);
             FillViewGrid();
             SetEvents();
@@ -155,7 +167,7 @@ namespace ConsoleAppEngine.Abstracts
                     val.InitializeViews();
                     lists.AddLast(val);
                     UpdateList();
-                    PostAddTasks();
+                    PostAddTasks(val);
                 }
                 else if (AddButton.Content.ToString() == "Modify")
                 {
@@ -193,9 +205,6 @@ namespace ConsoleAppEngine.Abstracts
                 // Unselect the selected item
                 ViewList.SelectedItem = null;
 
-                // PointerOverObject checking 
-                
-
                 // Update ContentDialog
                 SetContentDialog();
 
@@ -204,12 +213,15 @@ namespace ConsoleAppEngine.Abstracts
                     // DELETE
                     case ContentDialogResult.Secondary:
                         // Remove Selected item
+                        PreDeleteTasks(ItemToChange, out bool todelete);
+                        if (!todelete)
+                            break;
                         ViewList.Items.Remove(ItemToChange.GetView);
                         lists.Remove(ItemToChange);
                         ItemToChange.IsDeleted = true;
 
                         // Call for operations after deleting
-                        PostDeleteTasks();
+                        PostDeleteTasks(ItemToChange);
                         ItemToChange = null;
                         break;
 
