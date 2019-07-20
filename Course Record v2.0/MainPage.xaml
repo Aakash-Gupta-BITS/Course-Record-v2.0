@@ -45,7 +45,7 @@
                 <StackPanel>
                     <NavigationViewItem Content="FeedBack" x:Name="FeedBack" Tapped="FeedBack_Tapped">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE89C;">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED15;">
                             </FontIcon>
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
