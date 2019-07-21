@@ -52,10 +52,10 @@ namespace DriveQuickstart
     {
         static void Main(string[] args)
         {
-
-            EngineManager manager = new EngineManager("pyt.py");
-            manager.CreateObject("Calculator");
-            Console.WriteLine(manager.ExecuteClassOperation<int>("sample", 4, 5));
+            var engine = Python.CreateEngine();
+            dynamic py = engine.ExecuteFile("pyt.py");
+            dynamic calc = py.add(4.5, 6.7);
+            Console.WriteLine(calc);
         }
     }
 }
