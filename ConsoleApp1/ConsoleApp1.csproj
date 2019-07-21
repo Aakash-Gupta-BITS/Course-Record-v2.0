@@ -50,22 +50,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="client_secret.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Google.Apis">
+      <Version>1.40.2</Version>
+    </PackageReference>
+    <PackageReference Include="Google.Apis.Auth">
+      <Version>1.40.2</Version>
+    </PackageReference>
+    <PackageReference Include="Google.Apis.Core">
+      <Version>1.40.2</Version>
+    </PackageReference>
     <PackageReference Include="Google.Apis.Drive.v3">
       <Version>1.40.2.1649</Version>
+    </PackageReference>
+    <PackageReference Include="Google.Apis.Oauth2.v2">
+      <Version>1.40.2.1602</Version>
     </PackageReference>
     <PackageReference Include="IronPython">
       <Version>2.7.9</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="pyt.py">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

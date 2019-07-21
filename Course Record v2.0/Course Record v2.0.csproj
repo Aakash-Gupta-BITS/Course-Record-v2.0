@@ -323,8 +323,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth">
+      <Version>1.40.2</Version>
+    </PackageReference>
     <PackageReference Include="Google.Apis.Drive.v3">
       <Version>1.40.2.1649</Version>
+    </PackageReference>
+    <PackageReference Include="Google.Apis.Oauth2.v2">
+      <Version>1.40.2.1602</Version>
+    </PackageReference>
+    <PackageReference Include="MetroLog">
+      <Version>1.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
@@ -336,7 +345,6 @@
       <Name>ConsoleAppEngine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

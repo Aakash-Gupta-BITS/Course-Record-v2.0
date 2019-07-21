@@ -14,6 +14,20 @@ namespace Course_Record_v2._0
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
+        /*
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            string argment = "OnActivated";
+            if (args.Kind == ActivationKind.CommandLineLaunch)
+            {
+                var commandLine = args as CommandLineActivatedEventArgs;
+                if (commandLine != null)
+                {
+                    var operation = commandLine.Operation;
+                }
+            }
+        }
+        */
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.

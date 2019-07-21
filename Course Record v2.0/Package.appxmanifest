@@ -2,6 +2,7 @@
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"  
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   IgnorableNamespaces="uap mp">
@@ -45,6 +46,17 @@
         </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+        <Extensions>  
+            <uap5:Extension   
+              Category="windows.appExecutionAlias"   
+              Executable="Course Records.exe"   
+              EntryPoint="Course Records.App">  
+              <uap5:AppExecutionAlias>  
+                <uap5:ExecutionAlias Alias="Open.exe" />  
+              </uap5:AppExecutionAlias>  
+            </uap5:Extension>  
+          </Extensions>  
+
     </Application>
   </Applications>
 

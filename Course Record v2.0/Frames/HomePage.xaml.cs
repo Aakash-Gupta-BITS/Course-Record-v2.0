@@ -1,10 +1,17 @@
 ﻿using ConsoleAppEngine.Log;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Oauth2.v2;
+using Google.Apis.Oauth2.v2.Data;
+using Google.Apis.Services;
+
+
 
 
 namespace Course_Record_v2._0.Frames
@@ -74,6 +81,37 @@ namespace Course_Record_v2._0.Frames
             {
                 LoggingServices.Instance.WriteLine<MainPage>("The WebPage " + WebsiteBox.SelectedItem.ToString() + " was not opened");
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string[] scopes = new string[] { Oauth2Service.Scope.UserinfoEmail };
+            UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                new ClientSecrets
+                {
+                    ClientId = @"99450014535-93f37a216juu2jtenue0ikintb74pal1.apps.googleusercontent.com",
+                    ClientSecret = @"DG8dQkcGyb-71YJW-u_ABGRB"
+                },
+                scopes,
+                "user",
+                CancellationToken.None).Result;
+            LoggingServices.Instance.WriteLine<MainPage>("Done");
+            if (credential.Token.IsExpired(credential.Flow.Clock))
+            {
+                LoggingServices.Instance.WriteLine<MainPage>("Access Token is expired. Refreshing it.");
+                if (credential.RefreshTokenAsync(CancellationToken.None).Result)
+                    LoggingServices.Instance.WriteLine<MainPage>("Access Token is now refreshed.");
+                else
+                    LoggingServices.Instance.WriteLine<MainPage>("Access Token is expired but we couldn't refresh it.");
+            }
+            else
+                LoggingServices.Instance.WriteLine<MainPage>("Access token is Ok. Continuing");
+
+            Oauth2Service oauth2Service = new Oauth2Service(
+                new BaseClientService.Initializer { HttpClientInitializer = credential });
+            Userinfoplus userinfo = oauth2Service.Userinfo.Get().ExecuteAsync().Result;
+            (sender as Button).Content = ("Email : " + userinfo.Email);
+            credential.RevokeTokenAsync(CancellationToken.None).Wait();
         }
     }
 }
