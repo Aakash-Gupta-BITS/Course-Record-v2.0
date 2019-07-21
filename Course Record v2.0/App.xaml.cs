@@ -48,12 +48,10 @@ namespace Course_Record_v2._0
 
                 if (e.PreviousExecutionState != ApplicationExecutionState.Running)
                 {
-                    bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
-                    ExtendedSplash extendedSplash = new ExtendedSplash(e.SplashScreen, loadState);
-                    rootFrame.Content = extendedSplash;
                     Window.Current.Content = rootFrame;
                 }
             }
+            rootFrame.Navigate(typeof(ExtendedSplash));
             Window.Current.Activate();
         }
 
