@@ -70,7 +70,7 @@ namespace ConsoleAppEngine.Course
             UpdateViews();
         }
 
-        internal override void InitializeViews() 
+        internal override void InitializeViews()
         {
             FrameworkElement[] controls = GenerateViews(ref GetView, (typeof(string), 2), (typeof(string), 1), (typeof(string), 1));
 

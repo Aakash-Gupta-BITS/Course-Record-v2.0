@@ -60,7 +60,7 @@
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="About" FontSize="20"/>
                                 <TextBlock/>
-                                <TextBlock Text="Course Record 1.0.0.0"/>
+                                <TextBlock Text="Course Record 1.0.1.0"/>
                                 <TextBlock Text="© 2019 Aakash All Rights Reserved"/>
                             </StackPanel>
                         </Flyout>

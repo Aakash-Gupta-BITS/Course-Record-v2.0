@@ -35,6 +35,25 @@ namespace ConsoleAppEngine.Course
         }
 
         #endregion
+
+        #region ChangeTasks
+
+        public override void PostAddTasks(EHandoutItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostModifyTasks(EHandoutItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostDeleteTasks(EHandoutItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        #endregion
     }
 
     public partial class EHandouts : EElementBase<EHandoutItem>
@@ -105,9 +124,9 @@ namespace ConsoleAppEngine.Course
         protected override void ItemToChangeUpdate()
         {
             ItemToChange.UpdateDataWithViews(
-                int.Parse(LectureBox.Text), 
-                TopicBox.Text, 
-                DoneByMeBox.IsChecked == true, 
+                int.Parse(LectureBox.Text),
+                TopicBox.Text,
+                DoneByMeBox.IsChecked == true,
                 DescriptionBox.Text);
         }
 

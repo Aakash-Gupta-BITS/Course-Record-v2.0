@@ -36,6 +36,25 @@ namespace ConsoleAppEngine.Course
         }
 
         #endregion
+
+        #region ChangeTasks
+
+        public override void PostAddTasks(EEventItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostModifyTasks(EEventItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        public override void PostDeleteTasks(EEventItem element)
+        {
+            Globals.HDDSync.SaveSelectedCourse();
+        }
+
+        #endregion
     }
 
     public partial class EEvents : EElementBase<EEventItem>
@@ -65,18 +84,18 @@ namespace ConsoleAppEngine.Course
                 LocationBox.Text,
                 DescriptionBox.Text);
         }
-        
+
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
             Controls.AddLast(TitleBox);
             Controls.AddLast(LocationBox);
 
-            if(TitleBox.Text == "")
+            if (TitleBox.Text == "")
             {
                 ErrorWaale.AddLast(TitleBox);
             }
-            
-            if(LocationBox.Text == "")
+
+            if (LocationBox.Text == "")
             {
                 ErrorWaale.AddLast(LocationBox);
             }
@@ -84,11 +103,11 @@ namespace ConsoleAppEngine.Course
                                where a != ItemToChange
                                select a))
             {
-                if(LocationBox.Text == x.Location && DateBox.Date == x.Timing.Date && TimeBox.Time == x.Timing.TimeOfDay )
+                if (LocationBox.Text == x.Location && DateBox.Date == x.Timing.Date && TimeBox.Time == x.Timing.TimeOfDay)
                 {
                     ErrorWaale.AddLast(LocationBox);
                 }
-                if(TitleBox.Text == x.Title)
+                if (TitleBox.Text == x.Title)
                 {
                     ErrorWaale.AddLast(TitleBox);
                 }

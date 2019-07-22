@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Course;
+using ConsoleAppEngine.Globals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,10 @@ namespace Course_Record_v2._0.Frames.Course
             this.Unloaded += (object sender, RoutedEventArgs e) =>
             {
                 foreach (var x in CourseTeachers.lists)
+                {
                     x.DestroyTeacherViews();
+                }
+
                 ViewList.Items.Clear();
             };
         }
@@ -91,9 +95,14 @@ namespace Course_Record_v2._0.Frames.Course
                     foreach (var a in CourseTeachers.lists)
                     {
                         if (a.GetView == null)
+                        {
                             a.InitializeTeacher();
+                        }
+
                         ViewList.Items.Add(a.GetView);
                     }
+
+                    HDDSync.SaveSelectedCourse();
 
                     break;
             }
@@ -154,6 +163,7 @@ namespace Course_Record_v2._0.Frames.Course
                     CourseTeachers.lists.Remove(SelectedTeacher);
                     SelectedTeacher.DestroyTeacherViews();
                     SelectedCourse.RemoveTeacherFromCourse(SelectedTeacher);
+                    HDDSync.SaveSelectedCourse();
                     break;
             }
         }
@@ -162,10 +172,13 @@ namespace Course_Record_v2._0.Frames.Course
         {
             SelectedCourse = e.Parameter as CourseEntry;
 
-            foreach (var x in  CourseTeachers.lists)
+            foreach (var x in CourseTeachers.lists)
             {
                 if (x.GetView == null)
+                {
                     x.InitializeTeacher();
+                }
+
                 ViewList.Items.Add(x.GetView);
             }
         }

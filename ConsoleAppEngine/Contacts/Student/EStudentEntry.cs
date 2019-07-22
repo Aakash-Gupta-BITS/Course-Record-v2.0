@@ -37,24 +37,33 @@ namespace ConsoleAppEngine.Contacts
 
         protected EStudentEntry(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            Name = (string)info.GetValue(nameof(Name), typeof(string));
-            Year = (int)info.GetValue(nameof(Year), typeof(int));
-            Branch = (info.GetValue(nameof(Branch), typeof(List<ExpandedBranch>)) as List<ExpandedBranch>).ToArray();
-            Digits = (int)info.GetValue(nameof(Digits), typeof(int));
-            Phone = (info.GetValue(nameof(Phone), typeof(List<string>)) as List<string>).ToArray();
-            PersonalMail = (string)info.GetValue(nameof(PersonalMail), typeof(string));
-            Hostel = (string)info.GetValue(nameof(Hostel), typeof(string));
-            Room = (int)info.GetValue(nameof(Room), typeof(int));
-            OtherInfo = (string)info.GetValue(nameof(OtherInfo), typeof(string));
+            Name = (string)
+                info.GetValue(nameof(Name), typeof(string));
+            Year = (int)
+                info.GetValue(nameof(Year), typeof(int));
+            Branch = (ExpandedBranch[])
+                info.GetValue(nameof(Branch), typeof(ExpandedBranch[]));
+            Digits = (int)
+                info.GetValue(nameof(Digits), typeof(int));
+            Phone = (string[])
+                info.GetValue(nameof(Phone), typeof(string[]));
+            PersonalMail = (string)
+                info.GetValue(nameof(PersonalMail), typeof(string));
+            Hostel = (string)
+                info.GetValue(nameof(Hostel), typeof(string));
+            Room = (int)
+                info.GetValue(nameof(Room), typeof(int));
+            OtherInfo = (string)
+                info.GetValue(nameof(OtherInfo), typeof(string));
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue(nameof(Name), Name, typeof(string));
             info.AddValue(nameof(Year), Year, typeof(int));
-            info.AddValue(nameof(Branch), new List<ExpandedBranch>(Branch), typeof(List<ExpandedBranch>));
+            info.AddValue(nameof(Branch), Branch, typeof(ExpandedBranch[]));
             info.AddValue(nameof(Digits), Digits, typeof(int));
-            info.AddValue(nameof(Phone), new List<string>(Phone), typeof(List<string>));
+            info.AddValue(nameof(Phone), Phone, typeof(string[]));
             info.AddValue(nameof(PersonalMail), PersonalMail, typeof(string));
             info.AddValue(nameof(Hostel), Hostel, typeof(string));
             info.AddValue(nameof(Room), Room, typeof(int));

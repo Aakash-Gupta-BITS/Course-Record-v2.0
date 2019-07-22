@@ -22,7 +22,10 @@ namespace Course_Record_v2._0.Frames.Course
             this.Unloaded += (object sender, RoutedEventArgs e) =>
             {
                 foreach (var x in AllStudents.lists)
+                {
                     x.DestroyStudentViews();
+                }
+
                 ViewList.Items.Clear();
             };
         }
@@ -90,7 +93,10 @@ namespace Course_Record_v2._0.Frames.Course
                     foreach (var a in ctLog.lists)
                     {
                         if (a.GetView == null)
+                        {
                             a.InitializeStudent();
+                        }
+
                         ViewList.Items.Add(a.GetView);
                     }
 
@@ -164,7 +170,10 @@ namespace Course_Record_v2._0.Frames.Course
             foreach (var x in ctLog.lists)
             {
                 if (x.GetView == null)
+                {
                     x.InitializeStudent();
+                }
+
                 ViewList.Items.Add(x.GetView);
             }
         }
