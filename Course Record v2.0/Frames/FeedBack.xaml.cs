@@ -35,20 +35,20 @@ namespace Course_Record_v2._0.Frames
               
             if(webView1.Source.ToString() == uriForm.ToString())
             {
-                char ch;
+                
                 string html = await webView1.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
                 int index1 = html.IndexOf("freebirdFormviewerViewResponseLinksContainer");
                 int index2 = html.IndexOf("https", index1);
                 string uriE="";
                 int i = index2;
-                for(i=index2; html[i+1] != 34; ++i)
+                for(i=index2; html[i] != 34; ++i)
                 {         
-                    ch = html[i];
                     uriE = uriE + html[i];
-                    if (ch == 63)
+                    if (html[i] == 63)
                     { i = i + 21; }
                 }
                 combo.Items.Add(uriE);
+                LoggingServices.Instance.WriteLine<FeedBack>(uriE);
             }
         }
     }
