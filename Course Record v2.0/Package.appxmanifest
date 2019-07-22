@@ -50,9 +50,9 @@
             <uap5:Extension   
               Category="windows.appExecutionAlias"   
               Executable="Course Records.exe"   
-              EntryPoint="Course Records.App">  
+              EntryPoint="Course_Record_v2._0.App">  
               <uap5:AppExecutionAlias>  
-                <uap5:ExecutionAlias Alias="Open.exe" />  
+                <uap5:ExecutionAlias Alias="OpenMyCourses.exe" />  
               </uap5:AppExecutionAlias>  
             </uap5:Extension>  
           </Extensions>  

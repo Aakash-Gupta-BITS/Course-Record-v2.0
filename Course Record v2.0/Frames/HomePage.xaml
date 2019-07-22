@@ -23,6 +23,5 @@
         <ComboBox x:Name="WebsiteBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,10,5,5" Header="Destination WebSite"/>
         <HyperlinkButton Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,10,5,5"  x:Name="Link1" Click="HyperlinkButton_Click" Content="Intranet (Inside Campus)"/>
         <HyperlinkButton Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,10,5,5"  x:Name="Link2" Click="HyperlinkButton_Click" Content="Internet (Outside Campus)"/>
-        <Button Grid.Row="2" Content="Register with gmail" Click="Button_Click"/>
     </Grid>
 </Page>
