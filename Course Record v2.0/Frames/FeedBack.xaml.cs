@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleAppEngine.Log;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace Course_Record_v2._0.Frames
         public FeedBack()
         {
             this.InitializeComponent();
+            
             webView1.NavigationStarting += (sender, args) =>
             {
                 Progress.IsActive = true;
@@ -32,7 +34,19 @@ namespace Course_Record_v2._0.Frames
             webView1.NavigationCompleted += (sender, args) =>
             {
                 Progress.IsActive = false;
+               
             };
+           
+        }
+        public void Update()
+        {
+            bool flag = false;
+            Uri uriForm = new Uri("https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/formResponse");
+            if (webView1.Source == uriForm)
+            {
+                flag = true;
+                LoggingServices.Instance.WriteLine<FeedBack>("\"" + flag as string + "\" .");
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Course_Record_v2._0
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
             #region ContactsAdd
-           /* AllContacts.Instance.TeacherEntry.lists.AddLast(new ETeacherEntry(
+            AllContacts.Instance.TeacherEntry.lists.AddLast(new ETeacherEntry(
                 "Dr. Manoj Kannan",
                 new string[] { @"+91-1596-515-855", "" },
                 new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
@@ -42,7 +42,7 @@ namespace Course_Record_v2._0
                   @"uchanahome1@gmail.com",
                   "RAM",
                   4136,
-                  "Developer of this App"));*/
+                  "Developer of this App"));
             #endregion
         }
 
