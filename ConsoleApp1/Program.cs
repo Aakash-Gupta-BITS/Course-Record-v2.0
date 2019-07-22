@@ -13,6 +13,11 @@ namespace DriveQuickstart
     {
         static void Main(params string[] args)
         {
+            if (TokenExists())
+            {
+                GenerateKeyToConsole();
+                return;
+            }
             Console.WriteLine("Login using BITS ID only. Other Logins will not be considered.");
 
             string[] scopes = new string[] { Oauth2Service.Scope.UserinfoEmail };
@@ -31,19 +36,32 @@ namespace DriveQuickstart
                 new BaseClientService.Initializer { HttpClientInitializer = credential });
             Userinfoplus userinfo = oauth2Service.Userinfo.Get().ExecuteAsync().Result;
             Console.WriteLine("Email : " + userinfo.Email);
-            credential.RevokeTokenAsync(CancellationToken.None).Wait();
+
             if (!userinfo.Email.EndsWith(@"@pilani.bits-pilani.ac.in"))
             {
+                credential.RevokeTokenAsync(CancellationToken.None).Wait();
                 Console.WriteLine("Invalid BITS ID\n\n");
                 Main();
                 return;
             }
 
+            GenerateKeyToConsole();
+        }
+
+        static bool TokenExists()
+        {
+            string path = System.IO.Path.Combine(Environment.ExpandEnvironmentVariables("%AppData%"), @"Google.Apis.Auth", @"Google.Apis.Auth.OAuth2.Responses.TokenResponse-user");
+            if (System.IO.File.Exists(path))
+                return true;
+            return false;
+        }
+
+        static void GenerateKeyToConsole()
+        {
             Console.WriteLine("Enter Id : ");
             string hash1 = Console.ReadLine();
             Console.WriteLine("Paste the key to App : {0}\n", ComputeSha256Hash(hash1));
             Console.ReadKey();
-
         }
 
         static string ComputeSha256Hash(string rawData)
