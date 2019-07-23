@@ -1,4 +1,6 @@
 ﻿using ConsoleAppEngine.Log;
+using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -9,66 +11,20 @@ namespace Course_Record_v2._0
 {
     public sealed partial class MainPage
     {
-        public delegate void GetDelegate();
+        LinkedList<(NavigationViewItem item, Type type, string header, Frame frame)> list = new LinkedList<(NavigationViewItem, Type, string, Frame)>();
+
+        bool Load1 = true;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-
-            #region ContactsAdd
-            /* AllContacts.Instance.TeacherEntry.lists.AddLast(new ETeacherEntry(
-                 "Dr. Manoj Kannan",
-                 new string[] { @"+91-1596-515-855", "" },
-                 new string[] { @"manojkannan@pilani.bits-pilani.ac.in", "" },
-                 @"#3270, New Science Block
-     Faculty Division III
-     BITS Pilani, Pilani Campus
-     Vidya Vihar, Pilani 333031 (Rajasthan)",
-                 @"https://www.bits-pilani.ac.in/pilani/manojkannan/Contact",
-                 "Katayi Bdia Master"));
-
-
-             AllContacts.Instance.StudentEntry.lists.AddLast(new EStudentEntry(
-                   "Aakash Gupta",
-                   (2018,
-                   new ExpandedBranch[] { ExpandedBranch.Mathematics, ExpandedBranch.ComputerScience },
-                   887),
-                   new string[] { "7496811413", "" },
-                   @"uchanahome1@gmail.com",
-                   "RAM",
-                   4136,
-                   "Developer of this App"));*/
-            #endregion
-        }
-
-        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-        {
-            if (sender.SelectedItem == null)
-            {
-                return;
-            }
-
-            NavigationViewItem SelectedItem = sender.SelectedItem as NavigationViewItem;
-
-            LoggingServices.Instance.WriteLine<MainPage>("\"" + SelectedItem.Content as string + "\" is selected at initial Main Page.");
-
-            if (SelectedItem == HomeMenu)
-            {
-                ContentFrame.Navigate(typeof(Frames.HomePage));
-            }
-            else if (SelectedItem == TimeMenu)
-            {
-                ContentFrame.Navigate(typeof(Frames.OverallTimeTableView));
-            }
-            else if (SelectedItem == CourseMenu)
-            {
-                this.Frame.Navigate(typeof(Frames.Course.MainPage));
-            }
-            else if (SelectedItem == ContactMenu)
-            {
-                this.Frame.Navigate(typeof(Frames.Contacts.MainPage));
-            }
+            
+            list.AddLast((HomeMenu, typeof(Frames.HomePage), "Home", ContentFrame));
+            list.AddLast((CourseMenu, typeof(Frames.Course.MainPage), "Courses", this.Frame));
+            list.AddLast((ContactMenu, typeof(Frames.Contacts.MainPage), "Contacts", this.Frame));
+            list.AddLast((TimeMenu, typeof(Frames.OverallTimeTableView), "Time Table", ContentFrame));
+            list.AddLast((FeedBack, typeof(Frames.FeedBack), "FeedBack", ContentFrame));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -79,6 +35,29 @@ namespace Course_Record_v2._0
             this.Frame.ForwardStack.Clear();
             ContentFrame.ForwardStack.Clear();
             ContentFrame.BackStack.Clear();
+
+            ContentFrame.Navigate(typeof(Frames.HomePage));
+            NavView.Header = "Home";
+            LoggingServices.Instance.WriteLine<MainPage>(string.Format(@"Home is selected at initial Main Page."));
+
+            if (Load1)
+            {
+                Load1 = !Load1;
+                foreach (var (item, type, header, frame) in list)
+                {
+                    item.Tapped += (sender, abcd) =>
+                    {
+                        if (frame != null)
+                            frame.Navigate(type);
+                        else
+                            this.Frame.Navigate(type);
+                        NavView.Header = header;
+                        LoggingServices.Instance.WriteLine<MainPage>(string.Format(@"""{0}"" is selected at initial Main Page.", header));
+                        NavView.SelectedItem = sender;
+
+                    };
+                }
+            }
         }
 
         private void ShowAbout(object sender, TappedRoutedEventArgs e)
@@ -86,10 +65,5 @@ namespace Course_Record_v2._0
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
-        private void FeedBack_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            NavView.SelectedItem = FeedBack;
-            ContentFrame.Navigate(typeof(Frames.FeedBack));
-        }
     }
 }

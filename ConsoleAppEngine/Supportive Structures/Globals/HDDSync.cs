@@ -58,6 +58,7 @@ namespace ConsoleAppEngine.Globals
                 }
             }
 
+
             foreach (CourseEntry course in AllCourses.Instance.lists)
             {
                 // Course IC
@@ -149,6 +150,23 @@ namespace ConsoleAppEngine.Globals
             using (Stream m = new FileStream(Path.Combine(ContactDirectoryLocation, "Students" + ".bin"), FileMode.Create, FileAccess.Write))
             {
                 new BinaryFormatter().Serialize(m, AllContacts.Instance.StudentEntry);
+            }
+        }
+
+        public static void SaveFeedBackToHDD(LinkedList<string> finallist)
+        {
+            using (var s = new FileStream(Path.Combine(ApplicationData.Current.LocalFolder.Path, "feedbacks.bin"), FileMode.Create, FileAccess.Write))
+                new BinaryFormatter().Serialize(s, finallist);
+        }
+
+        public static LinkedList<string> GetFeedBackFromHdd()
+        {
+            string file = Path.Combine(ApplicationData.Current.LocalFolder.Path, "feedbacks.bin");
+            if (!File.Exists(file) || File.ReadAllText(file).Length == 0)
+                return new LinkedList<string>();
+            using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                return (new BinaryFormatter().Deserialize(s) as LinkedList<string>);
             }
         }
     }

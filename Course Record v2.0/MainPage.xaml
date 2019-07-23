@@ -11,7 +11,7 @@
     <Grid>
         <NavigationView PaneDisplayMode="LeftCompact" IsBackButtonVisible="Collapsed" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False"
                         x:Name="NavView" IsPaneOpen="False"
-                        SelectionChanged="NavView_SelectionChanged" HorizontalAlignment="Stretch" Margin="0,0,0.2,0" VerticalAlignment="Stretch">
+                        HorizontalAlignment="Stretch" Margin="0,0,0.2,0" VerticalAlignment="Stretch">
             <NavigationView.MenuItems>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItem Content="Home" x:Name="HomeMenu" Icon="Home"/>
@@ -43,7 +43,7 @@
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <StackPanel>
-                    <NavigationViewItem Content="FeedBack" x:Name="FeedBack" Tapped="FeedBack_Tapped">
+                    <NavigationViewItem Content="FeedBack" x:Name="FeedBack">
                         <NavigationViewItem.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED15;">
                             </FontIcon>
