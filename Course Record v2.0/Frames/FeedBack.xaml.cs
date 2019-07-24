@@ -39,7 +39,7 @@ namespace Course_Record_v2._0.Frames
                 else if (combo.SelectedIndex == 1)
                     webView1.Navigate(new Uri(@"https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/viewform"));
                 else
-                    webView1.Navigate(new Uri(FeedBackLinks.ToArray()[combo.SelectedIndex - 12]));
+                    webView1.Navigate(new Uri(FeedBackLinks.ToArray()[combo.SelectedIndex - 2]));
             };
         }
 
