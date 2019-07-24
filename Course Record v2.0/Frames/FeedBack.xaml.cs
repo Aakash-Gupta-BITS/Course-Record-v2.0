@@ -4,80 +4,92 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Course_Record_v2._0.Frames
 {
     public sealed partial class FeedBack : Page
     {
         public static LinkedList<string> FeedBackLinks = null;
+        string FeedbackAddedLink => @"https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/formResponse";
+
+        readonly Uri HomePageUri = new Uri(@"ms-appx-web:///Assets/index.html");
+        readonly Uri NewFeedBackUri = new Uri(@"https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/viewform");
 
         public FeedBack()
         {
             this.InitializeComponent();
-            FeedBackInitialize();
-            webView1.Navigate(new Uri(@"ms-appx-web:///Assets/FeedbackComplete.html"));
-            combo.SelectedIndex = 0;
-            FeedBackLinks = HDDSync.GetFeedBackFromHdd();
+
             webView1.NavigationStarting += (sender, args) =>
             {
                 Progress.IsActive = true;
             };
-            webView1.NavigationCompleted += (sender, args) =>
+
+            webView1.NavigationCompleted += async (sender, args) =>
             {
                 Progress.IsActive = false;
-                Update();
-                
+                if (args.Uri.ToString() == FeedbackAddedLink)
+                {
+                    await AddFeedbackToList();
+                    UpdateComboBox();
+                    combo.SelectedIndex = 0;
+                }
+                else if (args.Uri.ToString().Contains(FeedbackAddedLink))
+                    combo.SelectedIndex = 0;
             };
+
             combo.SelectionChanged += (sender, e) =>
             {
                 if (combo.SelectedIndex == -1)
-                {
                     return;
-                }
-                if(combo.SelectedIndex == 0)
-                    webView1.Navigate(new Uri(@"ms-appx-web:///Assets/FeedbackComplete.html"));
-                else if (combo.SelectedIndex == 1)
-                    webView1.Navigate(new Uri(@"https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/viewform"));
-                else
-                    webView1.Navigate(new Uri(FeedBackLinks.ToArray()[combo.SelectedIndex - 2]));
+                webView1.Navigate(GetUriFromComboIndex(combo.SelectedIndex));
             };
         }
 
-        public void Update()
-        {
-            Uri uriForm = new Uri("https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/formResponse");
-
-            if (webView1.Source.ToString() == uriForm.ToString())
-            {
-                AddNewFeedBack();
-                FeedBackInitialize();
-                for (int i = 0; i < FeedBackLinks.Count; ++i)
-                    combo.Items.Add("Feedback " + (i + 1));
-            }
-            if(webView1.Source.ToString().Contains(@"https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/formResponse"))
-            {
-                combo.SelectedIndex = -1;
-                webView1.Navigate(new Uri(@"ms-appx-web:///Assets/FeedbackComplete.html"));
-            }
-            
-        }
-        private void FeedBackInitialize()
+        private void UpdateComboBox()
         {
             combo.Items.Clear();
             combo.Items.Add("Homepage");
             combo.Items.Add("New Feedback");
-            
+            for (int i = 0; i < FeedBackLinks.Count; ++i)
+                combo.Items.Add("Feedback #" + (i + 1));
         }
-        private async void AddNewFeedBack()
+
+        private Uri GetUriFromComboIndex(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return HomePageUri;
+                case 1:
+                    return NewFeedBackUri;
+            }
+            return new Uri(FeedBackLinks.ToArray()[index - 2]);
+        }
+
+        private async System.Threading.Tasks.Task AddFeedbackToList()
         {
             string html = await webView1.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
+
             int TextIndex = html.LastIndexOf("Edit your response");
             int linkstartindex = html.Substring(0, TextIndex).LastIndexOf(@"https://");
+
             string link = html.Substring(linkstartindex, TextIndex - linkstartindex - 2);
             link = link.Replace(@"usp=form_confirm&amp;", "");
-            LoggingServices.Instance.WriteLine<FeedBack>(link);
+
             FeedBackLinks.AddLast(link);
+
+            LoggingServices.Instance.WriteLine<FeedBack>(string.Format("{0} link is added to feedbacks", link));
+
             HDDSync.SaveFeedBackToHDD(FeedBackLinks);
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            FeedBackLinks = HDDSync.GetFeedBackFromHdd();
+
+            UpdateComboBox();
+            combo.SelectedIndex = 0;
         }
     }
 }

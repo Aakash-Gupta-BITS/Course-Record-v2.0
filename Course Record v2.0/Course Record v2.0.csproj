@@ -195,7 +195,7 @@
   <ItemGroup>
     <Content Include="Assets\BITS Splash.jpg" />
     <Content Include="Assets\css\index.css" />
-    <Content Include="Assets\FeedbackComplete.html" />
+    <Content Include="Assets\index.html" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />
