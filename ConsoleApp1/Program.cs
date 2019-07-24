@@ -13,13 +13,50 @@ namespace DriveQuickstart
     {
         static void Main(params string[] args)
         {
+            // if mail exists
+            CheckMailExistence();
+
+            //register
+            RegisterYourself();
+
+            // id check
+
+
+            // Generate keys
+            GenerateKeyToConsole();
+
+            /* #region Restricted
+             // Unregister
+             GenerateKeyToConsole();
+
+             // Delete All Data
+             if (System.IO.File.Exists(System.IO.Path.Combine(Environment.ExpandEnvironmentVariables("%AppData%"), @"Google.Apis.Auth", @"Google.Apis.Auth.OAuth2.Responses.TokenResponse-user")))
+             {
+                 System.IO.File.Delete(System.IO.Path.Combine(Environment.ExpandEnvironmentVariables("%AppData%"), @"Google.Apis.Auth", @"Google.Apis.Auth.OAuth2.Responses.TokenResponse-user"));
+                 // Call to unregister email
+             }
+             #endregion*/
+        }
+
+        static bool TokenExists()
+        {
+            string path = System.IO.Path.Combine(Environment.ExpandEnvironmentVariables("%AppData%"), @"Google.Apis.Auth", @"Google.Apis.Auth.OAuth2.Responses.TokenResponse-user");
+            if (System.IO.File.Exists(path))
+                return true;
+            return false;
+        }
+        static void CheckMailExistence()
+        {
             if (TokenExists())
             {
                 GenerateKeyToConsole();
                 return;
             }
             Console.WriteLine("Login using BITS ID only. Other Logins will not be considered.");
+        }
 
+        static void RegisterYourself()
+        {
             string[] scopes = new string[] { Oauth2Service.Scope.UserinfoEmail };
             Console.WriteLine("Requesting Authentication");
             UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -36,7 +73,10 @@ namespace DriveQuickstart
                 new BaseClientService.Initializer { HttpClientInitializer = credential });
             Userinfoplus userinfo = oauth2Service.Userinfo.Get().ExecuteAsync().Result;
             Console.WriteLine("Email : " + userinfo.Email);
-
+            IdCheck(credential, userinfo);
+        }
+        static void IdCheck(UserCredential credential, Userinfoplus userinfo)
+        {
             if (!userinfo.Email.EndsWith(@"@pilani.bits-pilani.ac.in"))
             {
                 credential.RevokeTokenAsync(CancellationToken.None).Wait();
@@ -44,16 +84,6 @@ namespace DriveQuickstart
                 Main();
                 return;
             }
-
-            GenerateKeyToConsole();
-        }
-
-        static bool TokenExists()
-        {
-            string path = System.IO.Path.Combine(Environment.ExpandEnvironmentVariables("%AppData%"), @"Google.Apis.Auth", @"Google.Apis.Auth.OAuth2.Responses.TokenResponse-user");
-            if (System.IO.File.Exists(path))
-                return true;
-            return false;
         }
 
         static void GenerateKeyToConsole()
