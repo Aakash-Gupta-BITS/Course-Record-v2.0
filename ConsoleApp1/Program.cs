@@ -11,16 +11,33 @@ namespace DriveQuickstart
 {
     class Program
     {
+         
         static void Main(params string[] args)
         {
             // if mail exists
             CheckMailExistence();
 
             //register
-            RegisterYourself();
+            #region Register
+            string[] scopes = new string[] { Oauth2Service.Scope.UserinfoEmail };
+            Console.WriteLine("Requesting Authentication");
+            UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    new ClientSecrets
+                    {
+                        ClientId = @"99450014535-bel11jg1ft872p8qvt84nk3qoij5bh5q.apps.googleusercontent.com",
+                        ClientSecret = @"aTaj6A8kq38r5FkKogPAZb5q"
+                    },
+                    scopes,
+                    "user",
+                    CancellationToken.None).Result;
+            Oauth2Service oauth2Service = new Oauth2Service(
+                new BaseClientService.Initializer { HttpClientInitializer = credential });
+            Userinfoplus userinfo = oauth2Service.Userinfo.Get().ExecuteAsync().Result;
+            Console.WriteLine("Email : " + userinfo.Email);
+            #endregion
 
             // id check
-
+            IdCheck(credential, userinfo);
 
             // Generate keys
             GenerateKeyToConsole();
@@ -55,26 +72,7 @@ namespace DriveQuickstart
             Console.WriteLine("Login using BITS ID only. Other Logins will not be considered.");
         }
 
-        static void RegisterYourself()
-        {
-            string[] scopes = new string[] { Oauth2Service.Scope.UserinfoEmail };
-            Console.WriteLine("Requesting Authentication");
-            UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                new ClientSecrets
-                {
-                    ClientId = @"99450014535-bel11jg1ft872p8qvt84nk3qoij5bh5q.apps.googleusercontent.com",
-                    ClientSecret = @"aTaj6A8kq38r5FkKogPAZb5q"
-                },
-                scopes,
-                "user",
-                CancellationToken.None).Result;
-
-            Oauth2Service oauth2Service = new Oauth2Service(
-                new BaseClientService.Initializer { HttpClientInitializer = credential });
-            Userinfoplus userinfo = oauth2Service.Userinfo.Get().ExecuteAsync().Result;
-            Console.WriteLine("Email : " + userinfo.Email);
-            IdCheck(credential, userinfo);
-        }
+        
         static void IdCheck(UserCredential credential, Userinfoplus userinfo)
         {
             if (!userinfo.Email.EndsWith(@"@pilani.bits-pilani.ac.in"))

@@ -65,7 +65,8 @@
                             </StackPanel>
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
-                </NavigationViewItem>
+                    </NavigationViewItem>
+                    
                 </StackPanel>
             </NavigationView.PaneFooter>
 
