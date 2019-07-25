@@ -6,7 +6,6 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-
 namespace Course_Record_v2._0.Frames
 {
     public sealed partial class HomePage : Page
