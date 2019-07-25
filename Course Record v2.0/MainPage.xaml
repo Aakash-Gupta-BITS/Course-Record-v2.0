@@ -65,7 +65,14 @@
                             </StackPanel>
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
-                </NavigationViewItem>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="LogOut" >
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7E8;">
+
+                            </FontIcon>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
                 </StackPanel>
             </NavigationView.PaneFooter>
 
