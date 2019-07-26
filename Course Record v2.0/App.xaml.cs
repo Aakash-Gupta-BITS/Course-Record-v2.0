@@ -1,7 +1,9 @@
 ﻿using System;
+using ConsoleAppEngine.Globals;
 using ConsoleAppEngine.Log;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -10,6 +12,8 @@ namespace Course_Record_v2._0
 {
     public sealed partial class App : Application
     {
+        readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
         public App()
         {
             this.InitializeComponent();
@@ -18,9 +22,7 @@ namespace Course_Record_v2._0
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame rootFrame))
             {
                 rootFrame = new Frame();
 
@@ -31,7 +33,26 @@ namespace Course_Record_v2._0
                     Window.Current.Content = rootFrame;
                 }
             }
-            rootFrame.Navigate(typeof(SignIn));
+
+            ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)localSettings.Values["RegistrationComposites"];
+            localSettings.Values["IsRegistered"] = false;
+            if (composite != null)
+            {
+                string idhash = composite["Id"] as string;
+                string KeyHash = composite["Key"] as string;
+                string UnRegister = composite["Unregister"] as string;
+
+                if (KeyHash == Hash.ComputeSha256Hash(idhash) && UnRegister == Hash.ComputeSha256Hash(KeyHash))
+                {
+                    localSettings.Values["IsRegistered"] = true;
+                }
+            }
+
+            if ((bool)localSettings.Values["IsRegistered"])
+                rootFrame.Navigate(typeof(ExtendedSplash));
+            else
+                rootFrame.Navigate(typeof(Registration));
+
             Window.Current.Activate();
         }
 

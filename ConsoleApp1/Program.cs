@@ -13,7 +13,7 @@ namespace DriveQuickstart
     {
          
         static void Main(params string[] args)
-        {
+        {/*
             // if mail exists
             CheckMailExistence();
 
@@ -53,6 +53,9 @@ namespace DriveQuickstart
                  // Call to unregister email
              }
              #endregion*/
+
+            while (true)
+                GenerateKeyToConsole();
         }
 
         static bool TokenExists()

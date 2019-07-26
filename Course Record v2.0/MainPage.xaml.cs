@@ -25,6 +25,7 @@ namespace Course_Record_v2._0
             list.AddLast((ContactMenu, typeof(Frames.Contacts.MainPage), "Contacts", this.Frame));
             list.AddLast((TimeMenu, typeof(Frames.OverallTimeTableView), "Time Table", ContentFrame));
             list.AddLast((FeedBack, typeof(Frames.FeedBack), "FeedBack", ContentFrame));
+            list.AddLast((LogOut, typeof(Registration), "Unregister App", ContentFrame));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

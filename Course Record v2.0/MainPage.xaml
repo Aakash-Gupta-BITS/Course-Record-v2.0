@@ -11,7 +11,7 @@
     <Grid>
         <NavigationView PaneDisplayMode="LeftCompact" IsBackButtonVisible="Collapsed" Visibility="Visible" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False"
                         x:Name="NavView" IsPaneOpen="False"
-                        HorizontalAlignment="Stretch" Margin="0,0,0.2,0" VerticalAlignment="Stretch">
+                        HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
             <NavigationView.MenuItems>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItem Content="Home" x:Name="HomeMenu" Icon="Home"/>
@@ -60,15 +60,15 @@
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="About" FontSize="20"/>
                                 <TextBlock/>
-                                <TextBlock Text="Course Record 1.0.1.0"/>
+                                <TextBlock Text="Course Record 1.0.2.0"/>
                                 <TextBlock Text="© 2019 Aakash All Rights Reserved"/>
                             </StackPanel>
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="LogOut" >
+                    <NavigationViewItem Content="Unregister App" x:Name="LogOut">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7E8;">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF3B1;">
 
                             </FontIcon>
                         </NavigationViewItem.Icon>

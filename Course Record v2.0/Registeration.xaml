@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="Course_Record_v2._0.Registration"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Course_Record_v2._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="1">
+            <TextBox x:Name="Id" Margin="5,10,10,5" Header="Id" IsReadOnly="True"/>
+            <TextBox x:Name="Key" Margin="5,10,10,5" Header="Key"/>
+            <TextBox x:Name="UnregisterId" Margin="5,10,10,5" Header="Unregiser Key" Visibility="Collapsed"/>
+            <Button x:Name="button" Margin="10,10,10,10" HorizontalAlignment="Stretch"/>
+        </StackPanel>
+    </Grid>
+</Page>
