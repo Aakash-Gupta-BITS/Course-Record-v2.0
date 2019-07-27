@@ -90,9 +90,6 @@ namespace Course_Record_v2._0.Frames.Course
                 case "Tests":
                     ContentFrame.Navigate(typeof(Tests), SelectedCourse.TestEntry);
                     break;
-                case "Files":
-                    ContentFrame.Navigate(typeof(Files));
-                    break;
             }
         }
 

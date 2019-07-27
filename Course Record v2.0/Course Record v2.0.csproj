@@ -152,9 +152,6 @@
     <Compile Include="Frames\Course\Events.xaml.cs">
       <DependentUpon>Events.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Frames\Course\Files.xaml.cs">
-      <DependentUpon>Files.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Frames\Course\Handout.xaml.cs">
       <DependentUpon>Handout.xaml</DependentUpon>
     </Compile>
@@ -281,10 +278,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Frames\Course\Events.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Frames\Course\Files.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

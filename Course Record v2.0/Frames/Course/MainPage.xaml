@@ -19,6 +19,7 @@
 
         <NavigationView x:Name="SecNav" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="False" Grid.Row="1" SelectionChanged="SecNav_SelectionChanged">
             <NavigationView.MenuItems>
+                <NavigationViewItemSeparator/>
                 <NavigationViewItem Content="Overview" x:Name="OverViewItem"/>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItem Content="Books"/>
@@ -31,7 +32,6 @@
                 <NavigationViewItem Content="Time Table"/>
                 <NavigationViewItem Content="Events"/>
                 <NavigationViewItemSeparator/>
-                <NavigationViewItem Content="Files"/>
             </NavigationView.MenuItems>
         </NavigationView>
 
