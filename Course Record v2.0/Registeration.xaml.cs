@@ -45,7 +45,8 @@ namespace Course_Record_v2._0
                         };
 
                         localSettings.Values["RegistrationComposites"] = composite;
-                        this.Frame.Navigate(typeof(ExtendedSplash));
+                        localSettings.Values["IsRegistered"] = true;
+                        (Window.Current.Content as Frame).Navigate(typeof(ExtendedSplash));
                     }
                     else
                         Key.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
@@ -63,7 +64,7 @@ namespace Course_Record_v2._0
                     {
                         localSettings.Values["RegistrationComposites"] = null;
                         localSettings.Values["IsRegistered"] = false;
-                        button.Content = "Successfully Unregistered";
+                        (Window.Current.Content as Frame).Navigate(typeof(Registration));
                     }
                     else
                         UnregisterId.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);

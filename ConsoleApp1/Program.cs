@@ -16,6 +16,8 @@ namespace CourseRecordAuthenticator
 
         static void Main()
         {
+            GenerateKeyToConsole();
+            Main();
             UserCredential credential;
 
             if (!IsAuthenticated())
