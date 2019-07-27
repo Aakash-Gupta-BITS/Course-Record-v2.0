@@ -16,6 +16,7 @@ namespace CourseRecordAuthenticator
 
         private static void Main()
         {
+            Console.Title = "Course Records Authenticator";
             UserCredential credential;
 
             if (!IsAuthenticated())

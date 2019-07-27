@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course Record v2.0", "Cours
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppEngine", "ConsoleAppEngine\ConsoleAppEngine.csproj", "{282FFBED-BB88-4EAF-858D-C9479BD1E9E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{B4DCEA1A-CB81-48B5-ABCB-25E1B64B4367}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course Record Authenticator", "ConsoleApp1\Course Record Authenticator.csproj", "{B4DCEA1A-CB81-48B5-ABCB-25E1B64B4367}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
