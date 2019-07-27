@@ -1,17 +1,17 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
-using ConsoleAppEngine.Globals;
 using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.Globals;
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ConsoleAppEngine.Course
 {
@@ -87,11 +87,13 @@ namespace ConsoleAppEngine.Course
             string[] Finalfiles = Array.ConvertAll(Instance.lists.ToArray(), a => Path.Combine(HDDSync.CourseDirectoryLocation, a.Title + ".bin"));
 
             foreach (var file in files)
+            {
                 if (!Finalfiles.Contains(file))
                 {
                     File.Delete(file);
                     break;
                 }
+            }
 
             using (Stream m = new FileStream(Path.Combine(HDDSync.CourseDirectoryLocation, element.Title + ".bin"), FileMode.Create, FileAccess.Write))
             {

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace ConsoleAppEngine.Globals
 {
@@ -9,7 +9,7 @@ namespace ConsoleAppEngine.Globals
         private static readonly Hash _Instance = new Hash();
         public static Hash Instance => _Instance;
 
-        string hash1 = "";
+        private string hash1 = "";
 
         public string DisplayHash => hash1;
 
@@ -26,7 +26,10 @@ namespace ConsoleAppEngine.Globals
         public bool VerifyHashFromConsole(string outerHash)
         {
             if (ComputeSha256Hash(hash1) == outerHash)
+            {
                 return true;
+            }
+
             return false;
         }
 

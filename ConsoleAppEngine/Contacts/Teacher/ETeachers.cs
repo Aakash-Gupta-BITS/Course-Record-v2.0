@@ -47,7 +47,9 @@ namespace ConsoleAppEngine.Course
             foreach (CourseEntry course in AllCourses.Instance.lists)
             {
                 if (course.TeacherEntry.lists.Contains(entry) || course.IC == entry)
+                {
                     HDDSync.SaveCourseToHdd(course);
+                }
             }
 
             HDDSync.SaveTeachersToHdd();
@@ -62,11 +64,13 @@ namespace ConsoleAppEngine.Course
         {
             ToDelete = true;
             foreach (CourseEntry e in AllCourses.Instance.lists)
+            {
                 if (e.IC == element)
                 {
                     ToDelete = false;
                     break;
                 }
+            }
         }
 
         public override void PostDeleteTasks(ETeacherEntry element)

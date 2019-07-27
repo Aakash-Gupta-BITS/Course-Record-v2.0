@@ -1,6 +1,5 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

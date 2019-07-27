@@ -38,7 +38,7 @@ namespace ConsoleAppEngine.Abstracts
         #endregion
     }
 
-    public abstract partial class EElementBase<T> where T: EElementItemBase
+    public abstract partial class EElementBase<T> where T : EElementItemBase
     {
         public virtual void PostAddTasks(T element)
         {
@@ -221,7 +221,10 @@ namespace ConsoleAppEngine.Abstracts
                         // Remove Selected item
                         PreDeleteTasks(ItemToChange, out bool todelete);
                         if (!todelete)
+                        {
                             break;
+                        }
+
                         ViewList.Items.Remove(ItemToChange.GetView);
                         lists.Remove(ItemToChange);
                         ItemToChange.IsDeleted = true;

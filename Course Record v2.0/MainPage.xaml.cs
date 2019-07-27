@@ -11,15 +11,14 @@ namespace Course_Record_v2._0
 {
     public sealed partial class MainPage
     {
-        LinkedList<(NavigationViewItem item, Type type, string header, Frame frame)> list = new LinkedList<(NavigationViewItem, Type, string, Frame)>();
-
-        bool Load1 = true;
+        private readonly LinkedList<(NavigationViewItem item, Type type, string header, Frame frame)> list = new LinkedList<(NavigationViewItem, Type, string, Frame)>();
+        private bool Load1 = true;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            
+
             list.AddLast((HomeMenu, typeof(Frames.HomePage), "Home", ContentFrame));
             list.AddLast((CourseMenu, typeof(Frames.Course.MainPage), "Courses", this.Frame));
             list.AddLast((ContactMenu, typeof(Frames.Contacts.MainPage), "Contacts", this.Frame));
@@ -49,9 +48,14 @@ namespace Course_Record_v2._0
                     item.Tapped += (sender, abcd) =>
                     {
                         if (frame != null)
+                        {
                             frame.Navigate(type);
+                        }
                         else
+                        {
                             this.Frame.Navigate(type);
+                        }
+
                         NavView.Header = header;
                         LoggingServices.Instance.WriteLine<MainPage>(string.Format(@"""{0}"" is selected at initial Main Page.", header));
                         NavView.SelectedItem = sender;

@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using ConsoleAppEngine.Globals;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using ConsoleAppEngine.Globals;
 
 namespace Course_Record_v2._0
 {
     public sealed partial class Registration : Page
     {
-        readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public Registration()
         {
@@ -49,7 +39,9 @@ namespace Course_Record_v2._0
                         (Window.Current.Content as Frame).Navigate(typeof(ExtendedSplash));
                     }
                     else
+                    {
                         Key.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+                    }
                 };
             }
             else
@@ -67,7 +59,9 @@ namespace Course_Record_v2._0
                         (Window.Current.Content as Frame).Navigate(typeof(Registration));
                     }
                     else
+                    {
                         UnregisterId.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+                    }
                 };
             }
         }

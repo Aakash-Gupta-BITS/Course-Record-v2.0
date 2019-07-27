@@ -1,8 +1,8 @@
-﻿using ConsoleAppEngine.Log;
-using ConsoleAppEngine.Globals;
+﻿using ConsoleAppEngine.Globals;
+using ConsoleAppEngine.Log;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -11,10 +11,11 @@ namespace Course_Record_v2._0.Frames
     public sealed partial class FeedBack : Page
     {
         public static LinkedList<string> FeedBackLinks = null;
-        string FeedbackAddedLink => @"https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/formResponse";
 
-        readonly Uri HomePageUri = new Uri(@"ms-appx-web:///Assets/index.html");
-        readonly Uri NewFeedBackUri = new Uri(@"https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/viewform");
+        private string FeedbackAddedLink => @"https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/formResponse";
+
+        private readonly Uri HomePageUri = new Uri(@"ms-appx-web:///Assets/index.html");
+        private readonly Uri NewFeedBackUri = new Uri(@"https://docs.google.com/forms/d/e/1FAIpQLSexBkTA-zBSAeQPd3M24wXCIJPXc31YAJ61U2uusFSegF-VzA/viewform");
 
         public FeedBack()
         {
@@ -35,13 +36,18 @@ namespace Course_Record_v2._0.Frames
                     combo.SelectedIndex = 0;
                 }
                 else if (args.Uri.ToString().Contains(FeedbackAddedLink))
+                {
                     combo.SelectedIndex = 0;
+                }
             };
 
             combo.SelectionChanged += (sender, e) =>
             {
                 if (combo.SelectedIndex == -1)
+                {
                     return;
+                }
+
                 webView1.Navigate(GetUriFromComboIndex(combo.SelectedIndex));
             };
         }
@@ -52,7 +58,9 @@ namespace Course_Record_v2._0.Frames
             combo.Items.Add("Homepage");
             combo.Items.Add("New Feedback");
             for (int i = 0; i < FeedBackLinks.Count; ++i)
+            {
                 combo.Items.Add("Feedback #" + (i + 1));
+            }
         }
 
         private Uri GetUriFromComboIndex(int index)

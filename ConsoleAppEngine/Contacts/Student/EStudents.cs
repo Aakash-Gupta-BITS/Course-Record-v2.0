@@ -1,7 +1,7 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using ConsoleAppEngine.AllEnums;
-using ConsoleAppEngine.Globals;
 using ConsoleAppEngine.Contacts;
+using ConsoleAppEngine.Globals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,8 +81,13 @@ namespace ConsoleAppEngine.Course
         public override void PostModifyTasks(EStudentEntry element)
         {
             foreach (CourseEntry course in AllCourses.Instance.lists)
+            {
                 if (course.CTLog.lists.Contains(element))
+                {
                     HDDSync.SaveCourseToHdd(course);
+                }
+            }
+
             HDDSync.SaveStudentsToHdd();
         }
 

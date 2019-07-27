@@ -1,6 +1,5 @@
-﻿using System;
-using ConsoleAppEngine.Globals;
-using ConsoleAppEngine.Log;
+﻿using ConsoleAppEngine.Globals;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
@@ -12,7 +11,7 @@ namespace Course_Record_v2._0
 {
     public sealed partial class App : Application
     {
-        readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App()
         {
@@ -49,9 +48,13 @@ namespace Course_Record_v2._0
             }
 
             if ((bool)localSettings.Values["IsRegistered"])
+            {
                 rootFrame.Navigate(typeof(ExtendedSplash));
+            }
             else
+            {
                 rootFrame.Navigate(typeof(Registration));
+            }
 
             Window.Current.Activate();
         }

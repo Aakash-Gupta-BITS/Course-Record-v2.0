@@ -1,20 +1,20 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using System.Text;
-using System.Security.Cryptography;
-using Google.Apis.Auth.OAuth2;
+﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
+using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
 
 namespace CourseRecordAuthenticator
 {
-    static class Program
+    internal static class Program
     {
-        static readonly string LocalStoragePath = Path.Combine(Environment.ExpandEnvironmentVariables("%AppData%"), @"Google.Apis.Auth");
+        private static readonly string LocalStoragePath = Path.Combine(Environment.ExpandEnvironmentVariables("%AppData%"), @"Google.Apis.Auth");
 
-        static void Main()
+        private static void Main()
         {
             UserCredential credential;
 
@@ -35,8 +35,9 @@ namespace CourseRecordAuthenticator
             }
 
             if (!File.Exists(Path.Combine(LocalStoragePath, "Hash.bin")))
+            {
                 GenerateKeyToConsole();
-
+            }
 
         Menu:
 
@@ -68,14 +69,17 @@ namespace CourseRecordAuthenticator
             goto Menu;
         }
 
-        static bool IsAuthenticated()
+        private static bool IsAuthenticated()
         {
             if (File.Exists(Path.Combine(LocalStoragePath, @"Google.Apis.Auth.OAuth2.Responses.TokenResponse-user")))
+            {
                 return true;
+            }
+
             return false;
         }
 
-        static UserCredential Authenticate()
+        private static UserCredential Authenticate()
         {
             Console.WriteLine("Requesting Authentication");
             string[] scopes = new string[] { Oauth2Service.Scope.UserinfoEmail };
@@ -99,21 +103,27 @@ namespace CourseRecordAuthenticator
             return credential;
         }
 
-        static void UpdateTokens(UserCredential credential)
+        private static void UpdateTokens(UserCredential credential)
         {
             if (credential.Token.IsExpired(credential.Flow.Clock))
             {
                 Console.WriteLine("Access Token is expired. Refreshing it.");
                 if (credential.RefreshTokenAsync(CancellationToken.None).Result)
+                {
                     Console.WriteLine("Access Token is now refreshed.");
+                }
                 else
+                {
                     Console.WriteLine("Access Token is expired but we couldn't refresh it.");
+                }
             }
             else
+            {
                 Console.WriteLine("Access token is Ok. Continuing");
+            }
         }
 
-        static void GenerateKeyToConsole()
+        private static void GenerateKeyToConsole()
         {
             Console.Write("Enter Id : ");
             string hash1 = Console.ReadLine();
@@ -133,7 +143,7 @@ namespace CourseRecordAuthenticator
             Console.ReadKey();
         }
 
-        static string ComputeSha256Hash(string rawData)
+        private static string ComputeSha256Hash(string rawData)
         {
             // Create a SHA256   
             using (SHA256 sha256Hash = SHA256.Create())

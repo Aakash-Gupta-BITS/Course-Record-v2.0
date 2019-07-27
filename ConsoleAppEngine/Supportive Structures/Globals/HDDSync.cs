@@ -64,11 +64,13 @@ namespace ConsoleAppEngine.Globals
                 // Course IC
 
                 foreach (var teacher in AllContacts.Instance.TeacherEntry.lists)
+                {
                     if (course.IC.Name == teacher.Name)
                     {
                         course.IC = teacher;
                         break;
                     }
+                }
 
                 // Course Teachers
                 var finalteachers = new LinkedList<ETeacherEntry>();
@@ -110,8 +112,10 @@ namespace ConsoleAppEngine.Globals
 
         public static void SaveSelectedCourse()
         {
-            if (SelectedCourse != null) 
+            if (SelectedCourse != null)
+            {
                 SaveCourseToHdd(SelectedCourse);
+            }
         }
 
         public static void SaveCourseToHdd(CourseEntry e)
@@ -156,14 +160,19 @@ namespace ConsoleAppEngine.Globals
         public static void SaveFeedBackToHDD(LinkedList<string> finallist)
         {
             using (var s = new FileStream(Path.Combine(ApplicationData.Current.LocalFolder.Path, "feedbacks.bin"), FileMode.Create, FileAccess.Write))
+            {
                 new BinaryFormatter().Serialize(s, finallist);
+            }
         }
 
         public static LinkedList<string> GetFeedBackFromHdd()
         {
             string file = Path.Combine(ApplicationData.Current.LocalFolder.Path, "feedbacks.bin");
             if (!File.Exists(file) || File.ReadAllText(file).Length == 0)
+            {
                 return new LinkedList<string>();
+            }
+
             using (var s = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read))
             {
                 return (new BinaryFormatter().Deserialize(s) as LinkedList<string>);
