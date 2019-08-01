@@ -13,13 +13,12 @@ namespace Course_Record_v2._0.Frames
         public HomePage()
         {
             this.InitializeComponent();
-            Directory.Text = ApplicationData.Current.LocalFolder.Path;
+            // Directory.Text = ApplicationData.Current.LocalFolder.Path;
 
             LinkedList<string> list = new LinkedList<string>();
-            list.AddLast("AUGS/AUGR");
+            list.AddLast("Academic");
             list.AddLast("SWD");
             list.AddLast("Nalanda");
-            list.AddLast("ID");
             list.AddLast("ERP");
             list.AddLast("Library");
             foreach (var s in list.OrderBy(a => a))
@@ -38,25 +37,23 @@ namespace Course_Record_v2._0.Frames
             switch (WebsiteBox.SelectedItem as string)
             {
                 case "SWD":
-                    URL1 = @"swd/";
+                    URL1 = @"http://swd/";
                     URL2 = @"http://swd.bits-pilani.ac.in";
                     break;
                 case "ERP":
-                    URL1 = @"erp/";
+                    URL1 = @"http://erp/";
                     URL2 = @"http://erp.bits-pilani.ac.in";
                     break;
                 case "Nalanda":
-                    URL1 = @"nalanda/";
+                    URL1 = @"http://nalanda/";
                     URL2 = @"http://nalanda.bits-pilani.ac.in";
                     break;
-                case "ID":
-                    URL1 = @"http://id";
-                    break;
-                case "AUGS/AUGR":
-                    URL2 = @"http://rc.bits-pilani.ac.in/";
+                case "Academic":
+                    URL1 = @"http://academic.bits-pilani.ac.in";
+                    URL2 = @"http://academic.bits-pilani.ac.in";
                     break;
                 case "Library":
-                    URL1 = @"library/";
+                    URL1 = @"http://library/";
                     URL2 = @"http://www.bits-pilani.ac.in:12354/";
                     break;
 
