@@ -31,10 +31,6 @@ namespace Course_Record_v2._0.Frames.Contacts
             {
                 ContentFrame.Navigate(typeof(StudentContacts));
             }
-            else if (SelectedItem == GoBack)
-            {
-                Frame.GoBack();
-            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -53,6 +49,11 @@ namespace Course_Record_v2._0.Frames.Contacts
         {
             ContentFrame.ForwardStack.Clear();
             ContentFrame.BackStack.Clear();
+        }
+
+        private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            this.Frame.GoBack();
         }
     }
 }

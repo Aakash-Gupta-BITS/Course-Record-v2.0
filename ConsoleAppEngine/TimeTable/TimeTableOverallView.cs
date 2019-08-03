@@ -20,56 +20,41 @@ namespace ConsoleAppEngine.TimeTable
 
         public void InitializeList()
         {
-            foreach (var x in AllCourses.Instance.CoursesList)
+            (CourseEntry Course, ETimeTableItem Time)[,] arr = new (CourseEntry, ETimeTableItem)[6, 10];
+
+            foreach (var Course in AllCourses.Instance.CoursesList)
+                foreach (var TimeEntry in Course.TimeEntry.lists)
+                    foreach (var Timing in from Hour in TimeEntry.Hours
+                                            from Day in TimeEntry.WeekDays
+                                            select (Hour, Day))
+                        arr[(int)Timing.Day - 1, Timing.Hour - 1] = (Course, TimeEntry);
+
+            for (int i = 0; i < arr.GetLength(0); ++i)
             {
-                foreach (var y in x.TimeEntry.lists)
+                for (int j = 0; j < arr.GetLength(1); )
                 {
-                    foreach (var z in y.WeekDays)
+                    if (arr[i, j] == (null, null))
                     {
-                        bool[] arr = new bool[20];
-                        foreach (var temp in y.Hours)
-                        {
-                            arr[temp - 1] = true;
-                        }
-
-                        LinkedList<int> startindexes = new LinkedList<int>();
-                        if (arr[0] == true)
-                        {
-                            startindexes.AddLast(0);
-                        }
-
-                        for (int i = 1; i < arr.Length - 1; ++i)
-                        {
-                            if (arr[i] == false && arr[i + 1] == true)
-                            {
-                                startindexes.AddLast(i + 1);
-                            }
-                        }
-
-                        var finl = startindexes.ToArray();
-                        for (int i = 0; i < finl.Length; ++i)
-                        {
-                            int Len = 0;
-                            for (int j = i; j < arr.Length; ++j)
-                            {
-                                if (arr[j] == false)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    ++Len;
-                                }
-                            }
-
-                            InitialList.AddLast((x.Title,
-                                y.EntryType,
-                                y.Teachers,
-                                z,
-                                (uint)finl[i],
-                                (uint)Len));
-                        }
+                        ++j;
+                        continue;
                     }
+                    int count = 1;
+                    for (int k = j + 1; k < arr.GetLength(1); ++k)
+                    {
+                        if (arr[i, j].Course == arr[i, k].Course && arr[i, j].Time == arr[i, k].Time)
+                            ++count;
+                        else
+                            break;
+                    }
+
+                    InitialList.AddLast((arr[i, j].Course.Title,
+                        arr[i, j].Time.EntryType,
+                        arr[i, j].Time.Teachers,
+                        (DayOfWeek)(i + 1),
+                        (uint)(j + 1),
+                        (uint)count));
+
+                    j += count;
                 }
             }
         }

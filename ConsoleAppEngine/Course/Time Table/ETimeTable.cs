@@ -144,14 +144,14 @@ namespace ConsoleAppEngine.Course
                 ErrorWaale.AddLast(TeachersBox[0]);
             }
 
-            var arr1 = ETimeTableItem.GetDaysList(DaysBox.Text);
-            var arr2 = Array.ConvertAll(HoursBox.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries), int.Parse).Distinct().ToArray();
-            if (arr1.Count == 0)
+            var entereddays = ETimeTableItem.GetDaysList(DaysBox.Text);
+            var enteredhours = Array.ConvertAll(HoursBox.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries), int.Parse).Distinct().ToArray();
+            if (entereddays.Count == 0)
             {
                 ErrorWaale.AddLast(DaysBox);
             }
 
-            if (arr2.Length == 0)
+            if (enteredhours.Length == 0)
             {
                 ErrorWaale.AddLast(HoursBox);
             }
@@ -180,36 +180,33 @@ namespace ConsoleAppEngine.Course
 
 
             var typeEntered = (TimeTableEntryType)Enum.Parse(typeof(TimeTableEntryType), EntryTypeBox.SelectedItem.ToString().Replace(" ", ""));
-            var timingArray = from days in arr1
-                              from hours in arr2
+            var timingArray = from days in entereddays
+                              from hours in enteredhours
                               select new { days, hours };
-            foreach (var entry in (from a in lists where a != ItemToChange select a))
-            {
-                if (entry.EntryType == typeEntered)
-                {
-                    ErrorWaale.AddLast(EntryTypeBox);
-                }
 
-                if (entry.Section == section && entry.EntryType == typeEntered)
-                {
+            foreach (var x in (from a in lists where a != ItemToChange select a))
+                if (x.EntryType == typeEntered && x.Section == int.Parse(SectionBox.Text))
                     ErrorWaale.AddLast(SectionBox);
-                }
 
-                var curtimeArray = from days in entry.WeekDays
-                                   from hours in entry.Hours
-                                   select new { days, hours };
-                foreach (var x in timingArray)
+            foreach (var course in AllCourses.Instance.lists)
+                foreach (var entry in (from a in course.TimeEntry.lists where a != ItemToChange select a))
                 {
-                    foreach (var y in curtimeArray)
+                    var curtimeArray = from days in entry.WeekDays
+                                       from hours in entry.Hours
+                                       select new { days, hours };
+                    foreach (var x in timingArray)
                     {
-                        if (x.days == y.days && x.hours == y.hours)
+                        foreach (var y in curtimeArray)
                         {
-                            ErrorWaale.AddLast(DaysBox);
-                            ErrorWaale.AddLast(HoursBox);
+                            if (x.days == y.days && x.hours == y.hours)
+                            {
+                                ErrorWaale.AddLast(DaysBox);
+                                ErrorWaale.AddLast(HoursBox);
+                            }
                         }
                     }
                 }
-            }
+
         }
 
         protected override void ClearAddGrid()

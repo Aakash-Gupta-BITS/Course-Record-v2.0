@@ -15,9 +15,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <NavigationView PaneDisplayMode="LeftCompact" IsSettingsVisible="False" IsTapEnabled="True" IsBackButtonVisible="Collapsed" Grid.Row="0" Grid.RowSpan="4"
+        <NavigationView PaneDisplayMode="LeftMinimal" IsSettingsVisible="False" IsTapEnabled="True" IsBackEnabled="True" IsBackButtonVisible="Visible" Grid.Row="0" Grid.RowSpan="4"
                         x:Name="NavView"
-                        SelectionChanged="NavView_SelectionChanged">
+                        SelectionChanged="NavView_SelectionChanged"
+                        BackRequested="NavView_BackRequested">
             <NavigationView.MenuItems>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Contacts"/>
@@ -36,18 +37,8 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItemSeparator/>
-                <NavigationViewItemHeader Content="Navigation"/>
-                <NavigationViewItem Content="Go Back" x:Name="GoBack">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;">
-
-                        </FontIcon>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItemSeparator/>
             </NavigationView.MenuItems>
             <Frame x:Name="ContentFrame" Grid.Row="2" Navigated="ContentFrame_Navigated"/>
-
         </NavigationView>
 
     </Grid>

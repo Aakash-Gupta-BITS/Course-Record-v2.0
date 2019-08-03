@@ -18,7 +18,6 @@ namespace Course_Record_v2._0
 
         public async void LoadingTasks()
         {
-            Thread.Sleep(1000);
             ConsoleAppEngine.Globals.HDDSync.GetAllFromHDD();
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {

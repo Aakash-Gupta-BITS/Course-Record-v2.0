@@ -9,8 +9,6 @@ namespace Course_Record_v2._0.Frames.Course
 {
     public sealed partial class MainPage : Page
     {
-        private readonly NavigationViewItem GoBack = new NavigationViewItem() { Content = "Go Back", Icon = new FontIcon() { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = string.Format("{0}", (char)0xE72B) } };
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -29,10 +27,6 @@ namespace Course_Record_v2._0.Frames.Course
             {
                 ContentFrame.Navigate(typeof(AllCoursesView));
                 SecNav.Visibility = Visibility.Collapsed;
-            }
-            else if (SelectedItem == GoBack)
-            {
-                this.Frame.GoBack();
             }
             else
             {
@@ -106,9 +100,6 @@ namespace Course_Record_v2._0.Frames.Course
             }
 
             NavView.MenuItems.Add(new NavigationViewItemSeparator());
-            NavView.MenuItems.Add(new NavigationViewItemHeader() { Content = "Navigation" });
-            NavView.MenuItems.Add(GoBack);
-            NavView.MenuItems.Add(new NavigationViewItemSeparator());
 
             if (AllCourses.Instance.CoursesList.Count == 0)
             {
@@ -133,6 +124,11 @@ namespace Course_Record_v2._0.Frames.Course
         {
             ContentFrame.ForwardStack.Clear();
             ContentFrame.BackStack.Clear();
+        }
+
+        private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            this.Frame.GoBack();
         }
     }
 }

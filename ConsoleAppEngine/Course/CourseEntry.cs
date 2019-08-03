@@ -3,6 +3,7 @@ using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,6 +11,7 @@ using Windows.UI.Xaml.Controls;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
+    [DebuggerDisplay("Name : {Title}")]
     public class CourseEntry : EElementItemBase, ISerializable
     {
         #region Properties

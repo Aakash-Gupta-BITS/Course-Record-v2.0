@@ -35,9 +35,10 @@
             </NavigationView.MenuItems>
         </NavigationView>
 
-        <NavigationView PaneDisplayMode="LeftMinimal" IsSettingsVisible="False" IsTapEnabled="True" IsBackButtonVisible="Collapsed" Grid.Row="0" Grid.RowSpan="4"
+        <NavigationView PaneDisplayMode="LeftMinimal" IsBackEnabled="True" IsSettingsVisible="False" IsTapEnabled="True" Grid.Row="0" Grid.RowSpan="4"
                         x:Name="NavView"
-                        SelectionChanged="NavView_SelectionChanged">
+                        SelectionChanged="NavView_SelectionChanged"
+                        BackRequested="NavView_BackRequested">
             <NavigationView.MenuItems>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Modify"/>
