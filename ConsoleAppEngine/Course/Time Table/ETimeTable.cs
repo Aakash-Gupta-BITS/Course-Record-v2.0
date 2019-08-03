@@ -185,10 +185,15 @@ namespace ConsoleAppEngine.Course
                               select new { days, hours };
 
             foreach (var x in (from a in lists where a != ItemToChange select a))
+            {
                 if (x.EntryType == typeEntered && x.Section == int.Parse(SectionBox.Text))
+                {
                     ErrorWaale.AddLast(SectionBox);
+                }
+            }
 
             foreach (var course in AllCourses.Instance.lists)
+            {
                 foreach (var entry in (from a in course.TimeEntry.lists where a != ItemToChange select a))
                 {
                     var curtimeArray = from days in entry.WeekDays
@@ -206,7 +211,7 @@ namespace ConsoleAppEngine.Course
                         }
                     }
                 }
-
+            }
         }
 
         protected override void ClearAddGrid()

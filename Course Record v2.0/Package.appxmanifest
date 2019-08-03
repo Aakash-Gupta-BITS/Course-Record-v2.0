@@ -2,7 +2,6 @@
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"  
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   IgnorableNamespaces="uap mp">
@@ -10,7 +9,7 @@
   <Identity
     Name="29706c81-1395-4425-9412-343e404d70bd"
     Publisher="CN=29706c81-1395-4425-9412-343e404d70bd"
-    Version="1.0.1.0" />
+    Version="1.0.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="29706c81-1395-4425-9412-343e404d70bd" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -45,17 +44,7 @@
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
-      </uap:VisualElements>
-        <Extensions>  
-            <uap5:Extension   
-              Category="windows.appExecutionAlias"   
-              Executable="Course Records.exe"   
-              EntryPoint="Course_Record_v2._0.App">  
-              <uap5:AppExecutionAlias>  
-                <uap5:ExecutionAlias Alias="OpenMyCourses.exe" />  
-              </uap5:AppExecutionAlias>  
-            </uap5:Extension>  
-          </Extensions>  
+      </uap:VisualElements> 
 
     </Application>
   </Applications>

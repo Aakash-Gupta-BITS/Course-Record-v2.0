@@ -23,15 +23,21 @@ namespace ConsoleAppEngine.TimeTable
             (CourseEntry Course, ETimeTableItem Time)[,] arr = new (CourseEntry, ETimeTableItem)[6, 10];
 
             foreach (var Course in AllCourses.Instance.CoursesList)
+            {
                 foreach (var TimeEntry in Course.TimeEntry.lists)
+                {
                     foreach (var Timing in from Hour in TimeEntry.Hours
-                                            from Day in TimeEntry.WeekDays
-                                            select (Hour, Day))
+                                           from Day in TimeEntry.WeekDays
+                                           select (Hour, Day))
+                    {
                         arr[(int)Timing.Day - 1, Timing.Hour - 1] = (Course, TimeEntry);
+                    }
+                }
+            }
 
             for (int i = 0; i < arr.GetLength(0); ++i)
             {
-                for (int j = 0; j < arr.GetLength(1); )
+                for (int j = 0; j < arr.GetLength(1);)
                 {
                     if (arr[i, j] == (null, null))
                     {
@@ -42,9 +48,13 @@ namespace ConsoleAppEngine.TimeTable
                     for (int k = j + 1; k < arr.GetLength(1); ++k)
                     {
                         if (arr[i, j].Course == arr[i, k].Course && arr[i, j].Time == arr[i, k].Time)
+                        {
                             ++count;
+                        }
                         else
+                        {
                             break;
+                        }
                     }
 
                     InitialList.AddLast((arr[i, j].Course.Title,
