@@ -1,6 +1,7 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using Windows.UI;
@@ -11,6 +12,7 @@ using Windows.UI.Xaml.Media;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
+    [DebuggerDisplay("Handouts")]
     public partial class EHandouts : ISerializable
     {
         #region DisplayBoxes

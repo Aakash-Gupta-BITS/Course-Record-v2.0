@@ -4,6 +4,7 @@ using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Globals;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using Windows.UI;
@@ -14,6 +15,7 @@ using Windows.UI.Xaml.Media;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
+    [DebuggerDisplay("Student Contacts")]
     public partial class EStudents : ISerializable
     {
         #region DisplayBoxes
@@ -95,10 +97,13 @@ namespace ConsoleAppEngine.Course
         {
             foreach (CourseEntry s in AllCourses.Instance.CoursesList)
             {
-                s.CTLog.lists.Remove(element);
-                HDDSync.SaveCourseToHdd(s);
+                if (s.CTLog.lists.Contains(element))
+                {
+                    s.CTLog.lists.Remove(element);
+                    HDDSync.SaveCourseToHdd(s);
+                }
             }
-            HDDSync.SaveSelectedCourse();
+            HDDSync.SaveStudentsToHdd();
         }
 
         #endregion

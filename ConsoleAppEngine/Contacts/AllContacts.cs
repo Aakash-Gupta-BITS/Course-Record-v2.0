@@ -1,7 +1,9 @@
 ﻿using ConsoleAppEngine.Course;
+using System.Diagnostics;
 
 namespace ConsoleAppEngine.Contacts
 {
+    [DebuggerDisplay("All Contacts")]
     public class AllContacts
     {
         public static AllContacts Instance = new AllContacts();

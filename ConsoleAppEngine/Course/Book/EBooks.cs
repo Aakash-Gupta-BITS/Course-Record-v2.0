@@ -2,6 +2,7 @@
 using ConsoleAppEngine.AllEnums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using Windows.UI;
@@ -12,6 +13,7 @@ using Windows.UI.Xaml.Media;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
+    [DebuggerDisplay("Books")]
     public partial class EBooks : EElementBase<EBookItem>, ISerializable
     {
         #region DisplayBoxes

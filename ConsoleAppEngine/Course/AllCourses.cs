@@ -4,6 +4,7 @@ using ConsoleAppEngine.Contacts;
 using ConsoleAppEngine.Globals;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml.Media;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
+    [DebuggerDisplay("All Courses")]
     public partial class AllCourses : EElementBase<CourseEntry>, ISerializable
     {
         public static AllCourses Instance = new AllCourses();

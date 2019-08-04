@@ -3,6 +3,7 @@ using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using Windows.UI;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Media;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
+    [DebuggerDisplay("Time Table")]
     public partial class ETimeTable : ISerializable
     {
         #region DisplayBoxes

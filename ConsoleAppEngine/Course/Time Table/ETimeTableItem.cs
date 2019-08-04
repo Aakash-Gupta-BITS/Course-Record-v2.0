@@ -3,6 +3,7 @@ using ConsoleAppEngine.AllEnums;
 using ConsoleAppEngine.Contacts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using Windows.UI.Xaml;
@@ -11,6 +12,7 @@ using Windows.UI.Xaml.Controls;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
+    [DebuggerDisplay("{EntryType}")]
     public class ETimeTableItem : EElementItemBase, ISerializable
     {
         #region Properties

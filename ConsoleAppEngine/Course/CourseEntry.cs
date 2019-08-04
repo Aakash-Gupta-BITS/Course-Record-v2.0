@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
-    [DebuggerDisplay("Name : {Title}")]
+    [DebuggerDisplay("{Title}")]
     public class CourseEntry : EElementItemBase, ISerializable
     {
         #region Properties

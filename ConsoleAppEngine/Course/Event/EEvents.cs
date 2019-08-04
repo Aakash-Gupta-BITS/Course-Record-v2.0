@@ -1,6 +1,7 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using Windows.UI;
@@ -11,6 +12,7 @@ using Windows.UI.Xaml.Media;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
+    [DebuggerDisplay("Events")]
     public partial class EEvents : EElementBase<EEventItem>, ISerializable
     {
         #region DisplayBoxes

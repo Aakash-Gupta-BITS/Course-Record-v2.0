@@ -1,5 +1,6 @@
 ﻿using ConsoleAppEngine.Abstracts;
 using System;
+using System.Diagnostics;
 using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -7,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 namespace ConsoleAppEngine.Course
 {
     [Serializable]
+    [DebuggerDisplay("{Title}")]
     public class EEventItem : EElementItemBase, ISerializable
     {
         #region Properties
