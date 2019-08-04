@@ -3,6 +3,7 @@ using ConsoleAppEngine.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -75,7 +76,7 @@ namespace Course_Record_v2._0.Frames
             return new Uri(FeedBackLinks.ToArray()[index - 2]);
         }
 
-        private async System.Threading.Tasks.Task AddFeedbackToList()
+        private async Task AddFeedbackToList()
         {
             string html = await webView1.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
 
@@ -86,8 +87,8 @@ namespace Course_Record_v2._0.Frames
             link = link.Replace(@"usp=form_confirm&amp;", "");
 
             FeedBackLinks.AddLast(link);
-
-            LoggingServices.Instance.WriteLine<FeedBack>(string.Format("{0} link is added to feedbacks", link));
+            
+            LoggingServices.Instance.WriteLine<FeedBack>(string.Format("{0} link is added to Feedback #{1}", link, FeedBackLinks.Count));
 
             HDDSync.SaveFeedBackToHDD(FeedBackLinks);
         }
