@@ -13,10 +13,8 @@ namespace ConsoleAppEngine.TimeTable
 {
     public class TimeTableOverallView
     {
-        internal LinkedList<(string Title, TimeTableEntryType Type, LinkedList<ETeacherEntry> Teachers, DayOfWeek WeekDay, uint Hour, uint hours)> InitialList =
-            new LinkedList<(string Title, TimeTableEntryType Type, LinkedList<ETeacherEntry> Teachers, DayOfWeek WeekDay, uint Hour, uint hours)>();
-
-        public LinkedList<ListViewItem> ViewItems = new LinkedList<ListViewItem>();
+        public readonly LinkedList<(string Title, TimeTableEntryType Type, LinkedList<ETeacherEntry> Teachers, DayOfWeek WeekDay, uint Hour, uint hours, string Room)> InitialList =
+            new LinkedList<(string Title, TimeTableEntryType Type, LinkedList<ETeacherEntry> Teachers, DayOfWeek WeekDay, uint Hour, uint hours, string Room)>();
 
         public void InitializeList()
         {
@@ -62,13 +60,15 @@ namespace ConsoleAppEngine.TimeTable
                         arr[i, j].Time.Teachers,
                         (DayOfWeek)(i + 1),
                         (uint)(j + 1),
-                        (uint)count));
+                        (uint)count,
+                        arr[i, j].Time.Room));
 
                     j += count;
                 }
             }
         }
-
+        
+        /*
         public void Sort()
         {
             var list = InitialList.OrderBy(a => a.WeekDay).ThenBy(a => a.Hour).ToArray();
@@ -77,28 +77,6 @@ namespace ConsoleAppEngine.TimeTable
             {
                 InitialList.AddLast(x);
             }
-        }
-
-        public void InitializeViews()
-        {
-            DayOfWeek currentday = DayOfWeek.Sunday;
-            foreach (var x in InitialList)
-            {
-                if (currentday != x.WeekDay)
-                {
-                    ViewItems.AddLast(new NavigationViewItemSeparator());
-                    ViewItems.AddLast(new ListViewItem { Content = new TextBlock { Text = x.WeekDay.ToString(), FontWeight = new FontWeight { Weight = 5 } } });
-                }
-                currentday = x.WeekDay;
-                ListViewItem item = new ListViewItem() { HorizontalContentAlignment = HorizontalAlignment.Stretch };
-                FrameworkElement[] controls = EElementItemBase.GenerateViews(ref item, (typeof(string), 1), (typeof(string), 1), (typeof(string), 1), (typeof(string), 1));
-                (controls[0] as TextBlock).Text = x.Title;
-                (controls[1] as TextBlock).Text = x.Type.ToString();
-                (controls[2] as TextBlock).Text = string.Join(", ", (from a in x.Teachers where a != null select a.Name).ToArray());
-                (controls[3] as TextBlock).Text = string.Format("{0} {1}:00 - {2}:50", x.WeekDay, 7 + x.Hour, 6 + x.Hour + x.hours);
-                ViewItems.AddLast(item);
-            }
-            ViewItems.AddLast(new NavigationViewItemSeparator());
-        }
+        }*/
     }
 }

@@ -59,7 +59,6 @@ namespace Course_Record_v2._0
                         NavView.Header = header;
                         LoggingServices.Instance.WriteLine<MainPage>(string.Format(@"""{0}"" is selected at initial Main Page.", header));
                         NavView.SelectedItem = sender;
-
                     };
                 }
             }

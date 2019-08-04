@@ -123,7 +123,7 @@ namespace ConsoleAppEngine.Course
 
         protected override void CheckInputs(LinkedList<Control> Controls, LinkedList<Control> ErrorWaale)
         {
-            const int MaxHour = 12;
+            const int MaxHour = 10;
             Controls.AddLast(EntryTypeBox);
             Controls.AddLast(SectionBox);
             Controls.AddLast(TeachersBox[0]);
@@ -302,7 +302,7 @@ namespace ConsoleAppEngine.Course
                 "Room\t: {2}\n" +
                 "Timing\t: {3}",
                 ItemToChange.Section,
-                string.Join(", ", (from a in ItemToChange.Teachers where a != null select a.Name).ToArray()),
+                string.Join(", ", from a in ItemToChange.Teachers where a != null select a.Name),
                 ItemToChange.Room,
                 ETimeTableItem.GetDayListString(ItemToChange.WeekDays) + "\t" + ItemToChange.HourViewBlock.Text);
         }
