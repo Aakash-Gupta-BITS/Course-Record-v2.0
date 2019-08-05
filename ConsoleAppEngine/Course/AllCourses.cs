@@ -69,10 +69,7 @@ namespace ConsoleAppEngine.Course
                 NavView.MenuItems.Add(item.CourseNavigationItem);
             }
 
-            for (int i = list.Length - 4; i < list.Length; ++i)
-            {
-                NavView.MenuItems.Add(list[i]);
-            }
+            NavView.MenuItems.Add(list[list.Length - 1]);
 
             HDDSync.SaveCourseToHdd(e);
         }
