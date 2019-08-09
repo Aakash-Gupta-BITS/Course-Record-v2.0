@@ -1,2 +1,4 @@
 # Course-Record-v2.0
-No known issues known in the current build and planning to distribute
+This app will keep record of all courses in BITS PILANI, with student and teache contacts.
+
+Overall Time Table visualizer is also available.
