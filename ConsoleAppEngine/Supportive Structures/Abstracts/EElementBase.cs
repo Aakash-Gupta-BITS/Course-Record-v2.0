@@ -115,12 +115,6 @@ namespace ConsoleAppEngine.Abstracts
             AddGrid = addGrid;
             ViewCommand = viewCommand;
             AddCommand = addCommand;
-            contentDialog = new ContentDialog()
-            {
-                PrimaryButtonText = "Modify",
-                SecondaryButtonText = "Delete",
-                CloseButtonText = "Ok"
-            };
 
             foreach (var x in lists)
             {
@@ -212,6 +206,12 @@ namespace ConsoleAppEngine.Abstracts
                 ViewList.SelectedItem = null;
 
                 // Update ContentDialog
+                contentDialog = new ContentDialog()
+                {
+                    PrimaryButtonText = "Modify",
+                    SecondaryButtonText = "Delete",
+                    CloseButtonText = "Ok"
+                };
                 SetContentDialog();
 
                 switch (await contentDialog.ShowAsync())
