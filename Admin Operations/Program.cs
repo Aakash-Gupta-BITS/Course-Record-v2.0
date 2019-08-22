@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -8,63 +9,155 @@ using SautinSoft;
 
 namespace Admin_Operations
 {
-
-    class PDFParse
+    class Page
     {
-        readonly PdfFocus pdfFocus;
-        readonly Application xlApp;
+        public static string DirLocation => PDFLocation.Substring(0, PDFLocation.LastIndexOf("\\"));
+        public static string PDFLocation { get; set; }
 
-        public PDFParse(string location)
+        public int PageNumber { get; set; }
+
+        public string BinExportLocation => Path.Combine(DirLocation, "Bin Files", PageNumber + ".bin");
+        public string ExcelExportLocation => Path.Combine(DirLocation, "Excel Files", PageNumber + ".xls");
+
+        public LinkedList<string[]> Contents { get; private set; }
+
+        public void GenerateExcel(PdfFocus pdfFocus)
         {
-            Console.WriteLine("Opening PDF from " + location);
-            pdfFocus = new PdfFocus();
-            pdfFocus.OpenPdf(location);
-
-            Console.WriteLine("Creating Excel Object");
-            xlApp = new Application();
-
-            if (xlApp == null)
-                throw new Exception("Excel not installed!!");
+            Console.WriteLine("Saving Contents to {0}.xls", PageNumber);
+            pdfFocus.ToExcel(ExcelExportLocation, PageNumber, PageNumber);
         }
 
-        public string[,] GetPage(int PageNumber, string exportDir, string Format)
+        public void LoadInMemory(Application xlApp)
         {
-            string fileloc = string.Format(Path.Combine(exportDir, string.Format(Format, PageNumber)));
-            Console.WriteLine("Parsing Page {0} to excel...", PageNumber);
-            pdfFocus.ToExcel(fileloc, PageNumber, PageNumber);
-            Console.WriteLine("Parsing Page {0} Completed...", PageNumber);
-
-            Console.WriteLine("Loading Page {0} to memory", PageNumber);
-
-            Workbook xlWorkBook = xlApp.Workbooks.Open(fileloc);
-
-            string[,] Output = null;
+            Console.WriteLine("Loading {0}.xls in memory", PageNumber);
+            Workbook xlWorkBook = xlApp.Workbooks.Open(ExcelExportLocation);
 
             int count = 0;
 
             foreach (Worksheet xlWorkSheet in xlWorkBook.Sheets)
             {
+                // Process only one page
                 if (count != 0)
                     break;
                 ++count;
-                Console.WriteLine("Opening Worksheet");
+
                 Range xlRange = xlWorkSheet.UsedRange;
                 int totalRows = xlRange.Rows.Count;
                 int totalColumns = xlRange.Columns.Count;
 
-                Output = new string[totalRows, totalColumns];
+                Contents = new LinkedList<string[]>();
 
+                // Row 1 to 6 are extra rows
                 for (int i = 7; i <= totalRows; i++)
+                {
+                    string[] output = new string[totalColumns];
                     for (int j = 1; j <= totalColumns; ++j)
-                        Output[i - 7, j - 1] = (xlRange.Cells[i, j] as Range).Text.ToString().Replace("\n", "");
+                        output[j - 1] = (xlRange.Cells[i, j] as Range).Text.ToString().Replace("\n", "");
 
+                    bool NonEmpty = false;
+                    foreach (var x in output)
+                        if (x != "")
+                        {
+                            NonEmpty = true;
+                            break;
+                        }
+
+                    if (NonEmpty)
+                        Contents.AddLast(output);
+                }
                 Marshal.ReleaseComObject(xlWorkSheet);
             }
 
             xlWorkBook.Close();
             Marshal.ReleaseComObject(xlWorkBook);
+        }
 
-            return Output;
+        public void SaveBin()
+        {
+            Console.WriteLine("Saving {0}.bin to Storage", PageNumber);
+            using (Stream m = new FileStream(BinExportLocation, FileMode.Create, FileAccess.Write))
+                new BinaryFormatter().Serialize(m, Contents);
+        }
+    }
+
+    class PDFParse
+    {
+        readonly string DirLocation;
+        readonly PdfFocus pdfFocus;
+        readonly Application xlApp;
+
+        Page[] CompleteList { get; set; }
+        string[][] Table;
+
+        public PDFParse(string PDFLocation, int FromPage, int ToPage)
+        {
+            Console.WriteLine("Loading Parsers");
+
+            pdfFocus = new PdfFocus();
+            pdfFocus.OpenPdf(PDFLocation);
+
+            xlApp = new Application();
+
+            if (xlApp == null)
+                throw new Exception("Excel not installed!!");
+
+
+            // Creating Directories
+            DirLocation = PDFLocation.Substring(0, PDFLocation.LastIndexOf("\\"));
+            string loc1 = Path.Combine(DirLocation, "Bin Files");
+            string loc2 = Path.Combine(DirLocation, "Excel Files");
+            if (!Directory.Exists(loc1))
+                Directory.CreateDirectory(loc1);
+            if (!Directory.Exists(loc2))
+                Directory.CreateDirectory(loc2);
+
+            
+            // Initialize Pages
+            CompleteList = new Page[ToPage - FromPage + 1];
+            Page.PDFLocation = PDFLocation;
+
+            for (int i = FromPage; i <= ToPage; ++i)
+                CompleteList[i - FromPage] = new Page { PageNumber = i };
+
+            Console.WriteLine("Parsers Loaded");
+        }
+
+        public void A_SaveExcel()
+        {
+            foreach (var x in CompleteList)
+                x.GenerateExcel(pdfFocus);
+        }
+
+        public void B_LoadExcel()
+        {
+            foreach (var x in CompleteList)
+                x.LoadInMemory(xlApp);
+        }
+
+        public void C_SaveBins()
+        {
+            foreach (var x in CompleteList)
+                x.SaveBin();
+        }
+
+        public void D_MergePages()
+        {
+            int Rows = 0;
+            foreach (Page p in CompleteList)
+                Rows += p.Contents.Count;
+
+            Table = new string[Rows][];
+
+            int i = 0;
+            foreach (Page p in CompleteList)
+                foreach (string[] row in p.Contents)
+                    Table[i++] = row;
+        }
+
+        public void E_SaveFinalTable()
+        {
+            using (Stream m = new FileStream(Path.Combine(DirLocation, "final.bin"), FileMode.Create, FileAccess.Write))
+                new BinaryFormatter().Serialize(m, Table);
         }
 
         public void End()
@@ -78,35 +171,21 @@ namespace Admin_Operations
     {
         static void Main()
         {
-            string DirLoc = "";
             string FileLoc;
             do
             {
                 Console.Write("Enter File Location : ");
                 FileLoc = Console.ReadLine();
-                if (FileLoc.Contains("\\"))
-                    DirLoc = FileLoc.Substring(0, FileLoc.LastIndexOf("\\"));
 
             } while (!File.Exists(FileLoc) || !FileLoc.EndsWith(".pdf"));
 
-            string ExcelExportLocation = Path.Combine(DirLoc, "Excel Files");
-            string BinExportLocation = Path.Combine(DirLoc, "Bin Files");
+            PDFParse p = new PDFParse(FileLoc, 1, 48);
 
-
-            if (!Directory.Exists(ExcelExportLocation))
-                Directory.CreateDirectory(ExcelExportLocation);
-            if (!Directory.Exists(BinExportLocation))
-                Directory.CreateDirectory(BinExportLocation);
-
-            PDFParse p = new PDFParse(FileLoc);
-
-            for (int i = 1; i <= 48; ++i)
-            {
-                using (Stream m = new FileStream(Path.Combine(BinExportLocation, i + ".bin"), FileMode.Create, FileAccess.Write))
-                {
-                    new BinaryFormatter().Serialize(m, p.GetPage(i, ExcelExportLocation, "{0}.xls"));
-                }
-            }
+            p.A_SaveExcel();
+            p.B_LoadExcel();
+            p.C_SaveBins();
+            p.D_MergePages();
+            p.E_SaveFinalTable();
 
             p.End();
         }
