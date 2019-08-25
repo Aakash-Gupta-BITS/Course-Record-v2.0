@@ -8,6 +8,8 @@ namespace Admin_Operations.Iterators
 {
     public partial class MainIterator
     {
+        public static string[][] AllData;
+
         public LinkedList<Course> CourseIterationList { get; internal set; }
         
 

@@ -197,6 +197,18 @@ namespace Admin_Operations
     {
         static void Main()
         {
+            Iterators.MainIterator.AllData = new string[][]
+            {
+                new string[] {"", "", "A", "", ""},
+                new string[] {"", "", "", "", ""},
+                new string[] {"", "", "A", "", ""},
+                new string[] {"", "", "", "", ""},
+                new string[] {"", "", "", "", ""},
+            };
+
+            Course s = new Course(0, 4);
+
+            /*
             string FileLoc;
             do
             {
@@ -215,7 +227,7 @@ namespace Admin_Operations
 
             p.F_LoadFinalTable();
             p.SaveTxt();
-            p.End();
+            p.End();*/
         }
     }
 }
