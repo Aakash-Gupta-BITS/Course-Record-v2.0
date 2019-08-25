@@ -160,6 +160,32 @@ namespace Admin_Operations
                 new BinaryFormatter().Serialize(m, Table);
         }
 
+        public void F_LoadFinalTable()
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            using (var s = new FileStream(Path.Combine(DirLocation, "final.bin"), FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                Table = formatter.Deserialize(s) as string[][];
+            }
+        }
+
+        public void SaveTxt()
+        {
+            string output = "";
+
+            foreach (var x in Table)
+            {
+                foreach (var y in x)
+                {
+                    output += y + "\t";
+                }
+                output += "\n";
+            }
+
+            File.WriteAllText(Path.Combine(DirLocation, "output.txt"), output);
+        }
+
         public void End()
         {
             xlApp.Quit();
@@ -181,12 +207,14 @@ namespace Admin_Operations
 
             PDFParse p = new PDFParse(FileLoc, 1, 48);
 
-            p.A_SaveExcel();
-            p.B_LoadExcel();
-            p.C_SaveBins();
-            p.D_MergePages();
-            p.E_SaveFinalTable();
+            // p.A_SaveExcel();
+            // p.B_LoadExcel();
+            // p.C_SaveBins();
+            // p.D_MergePages();
+            // p.E_SaveFinalTable();
 
+            p.F_LoadFinalTable();
+            p.SaveTxt();
             p.End();
         }
     }
