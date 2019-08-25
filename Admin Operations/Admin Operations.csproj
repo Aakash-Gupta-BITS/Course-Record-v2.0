@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bin Loader.cs" />
+    <Compile Include="Iterators\Main Iterator\MainIterator_Enumerator.cs" />
+    <Compile Include="Iterators\Main Iterator\MainIterator_Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
