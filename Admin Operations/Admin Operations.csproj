@@ -44,8 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bin Loader.cs" />
-    <Compile Include="Iterators\Main Iterator\MainIterator_Enumerator.cs" />
-    <Compile Include="Iterators\Main Iterator\MainIterator_Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +57,10 @@
     <PackageReference Include="sautinsoft.pdffocus">
       <Version>7.0.3.29</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Iterators\" />
+    <Folder Include="PDF Tasks\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

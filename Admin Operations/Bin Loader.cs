@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using Main = Admin_Operations.Iterators.MainIterator;
 
 namespace Admin_Operations
 {
@@ -23,13 +22,15 @@ namespace Admin_Operations
         PM
     }
 
+    [DebuggerDisplay("{SectionNo}")]
     public class Section
     {
-        public static string[][] AllData => Main.AllData;
+        public static string[][] AllData => MainIterator.AllData;
         public int FromIndex { get; private set; }
         public int ToIndex { get; private set; }
 
-        public CourseSubDivisions CourseSubDivisions { get; internal set; }
+        public CourseSubDivisions ParentCourseSubDivisions { get; internal set; }
+
         public int SectionNo => int.Parse(AllData[FromIndex][7]);
         public string Room => AllData[FromIndex][11];
         public LinkedList<DayOfWeek> Days
@@ -94,16 +95,23 @@ namespace Admin_Operations
             }
         }
 
-
+        public Section(int from, int to, CourseSubDivisions Parent)
+        {
+            FromIndex = from;
+            ToIndex = to;
+            ParentCourseSubDivisions = Parent;
+        }
     }
 
+    [DebuggerDisplay("{Class}")]
     public class CourseSubDivisions
     {
-        public static string[][] AllData => Main.AllData;
+        public static string[][] AllData => MainIterator.AllData;
         public int FromIndex { get; private set; }
         public int ToIndex { get; private set; }
 
         public Course ParentCourse { get; internal set; }
+
         public ClassType Class { get; private set; }
         public LinkedList<Section> Sections = new LinkedList<Section>();
 
@@ -123,14 +131,31 @@ namespace Admin_Operations
                     Class = ct; 
                     break;
             }
+            
+            // Not tested completely
+            LinkedList<(int start, int end)> Ranges = new LinkedList<(int start, int end)>();
+
+            Ranges.AddLast((FromIndex, FromIndex));
+
+            for (int i = FromIndex + 1; i <= ToIndex; ++i)
+                if (AllData[i][7] != "")
+                    Ranges.AddLast((i, i));
+                else
+                    Ranges.Last.Value = (Ranges.Last.Value.start, Ranges.Last.Value.end + 1);
+
+            foreach (var (start, end) in Ranges)
+                Sections.AddLast(new Section(start, end, this));
         }
     }
 
+    [DebuggerDisplay("{Title}")]
     public class Course
     {
-        public static string[][] AllData => Main.AllData;
+        public static string[][] AllData => MainIterator.AllData;
         public int FromIndex { get; private set; }
         public int ToIndex { get; private set; }
+
+        public MainIterator ParentMainIterator { get; private set; }
 
         public string COM_COD => AllData[FromIndex][0];
         public string Number => AllData[FromIndex][1];
@@ -157,11 +182,11 @@ namespace Admin_Operations
             }
         }
 
-
-        public Course(int from, int to)
+        public Course(int from, int to, MainIterator iter)
         {
             FromIndex = from;
             ToIndex = to;
+            ParentMainIterator = iter;
 
             // Not tested completely
             LinkedList<(int start, int end)> Ranges = new LinkedList<(int start, int end)>();
@@ -169,15 +194,39 @@ namespace Admin_Operations
             Ranges.AddLast((FromIndex, FromIndex));
 
             for (int i = FromIndex + 1; i <= ToIndex; ++i)
-            {
                 if (AllData[i][2] != "")
                     Ranges.AddLast((i, i));
                 else
                     Ranges.Last.Value = (Ranges.Last.Value.start, Ranges.Last.Value.end + 1);
-            }
 
             foreach (var (start, end) in Ranges)
                 Divisons.AddLast(new CourseSubDivisions(start, end, this));
+        }
+    }
+
+    public partial class MainIterator
+    {
+        public static string[][] AllData;
+
+        public LinkedList<Course> CourseIterationList { get; internal set; } = new LinkedList<Course>();
+
+        public MainIterator(string[][] data)
+        {
+            AllData = data;
+
+            // Not tested completely
+            LinkedList<(int start, int end)> Ranges = new LinkedList<(int start, int end)>();
+
+            Ranges.AddLast((0, 0));
+
+            for (int i = 1; i < data.Length; ++i)
+                if (AllData[i][0] != "")
+                    Ranges.AddLast((i, i));
+                else
+                    Ranges.Last.Value = (Ranges.Last.Value.start, Ranges.Last.Value.end + 1);
+
+            foreach (var (start, end) in Ranges)
+                CourseIterationList.AddLast(new Course(start, end, this));
         }
     }
 }

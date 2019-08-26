@@ -87,7 +87,7 @@ namespace Admin_Operations
         readonly Application xlApp;
 
         Page[] CompleteList { get; set; }
-        string[][] Table;
+        public string[][] Table;
 
         public PDFParse(string PDFLocation, int FromPage, int ToPage)
         {
@@ -197,18 +197,6 @@ namespace Admin_Operations
     {
         static void Main()
         {
-            Iterators.MainIterator.AllData = new string[][]
-            {
-                new string[] {"", "", "A", "", ""},
-                new string[] {"", "", "", "", ""},
-                new string[] {"", "", "A", "", ""},
-                new string[] {"", "", "", "", ""},
-                new string[] {"", "", "", "", ""},
-            };
-
-            Course s = new Course(0, 4);
-
-            /*
             string FileLoc;
             do
             {
@@ -226,8 +214,10 @@ namespace Admin_Operations
             // p.E_SaveFinalTable();
 
             p.F_LoadFinalTable();
-            p.SaveTxt();
-            p.End();*/
+
+            MainIterator iter = new MainIterator(p.Table);
+
+            p.End();
         }
     }
 }
