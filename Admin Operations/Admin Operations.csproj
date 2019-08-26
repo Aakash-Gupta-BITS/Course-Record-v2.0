@@ -43,7 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bin Loader.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Iterators\CourseDivisions_Enumerator.cs" />
+    <Compile Include="Iterators\CourseDivisons_Main.cs" />
+    <Compile Include="Iterators\Course_Enumerator.cs" />
+    <Compile Include="Iterators\Course_Main.cs" />
+    <Compile Include="Iterators\MainIterator_Enumerator.cs" />
+    <Compile Include="Iterators\MainIterator_Main.cs" />
+    <Compile Include="Iterators\Section_Main.cs" />
+    <Compile Include="PDF Tasks\Page.cs" />
+    <Compile Include="PDF Tasks\PDFParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,9 +67,6 @@
       <Version>7.0.3.29</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Iterators\" />
-    <Folder Include="PDF Tasks\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
