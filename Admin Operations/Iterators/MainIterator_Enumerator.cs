@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace Admin_Operations.Iterators
 {
-    public partial class MainIterator : IEnumerable
+    public partial class MainIterator : IEnumerable<Course>
     {
-        public IEnumerator GetEnumerator()
+        public IEnumerator<Course> GetEnumerator()
         {
-            return CourseIterationList.GetEnumerator();
+            return ((IEnumerable<Course>)CourseIterationList).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<Course>)CourseIterationList).GetEnumerator();
         }
     }
 }

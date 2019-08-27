@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Collections;
 
 namespace Admin_Operations.Iterators
 {
@@ -25,6 +27,23 @@ namespace Admin_Operations.Iterators
 
             foreach (var (start, end) in Ranges)
                 CourseIterationList.AddLast(new Course(start, end, this));
+        }
+
+        public bool[,] RoomBookings(string room)
+        {
+            bool[,] Output = new bool[6, 10];
+
+            foreach (var c in CourseIterationList)
+                foreach (var x in c)
+                    foreach (var s in x)
+                        if (s.Room == room)
+                            foreach (var a in from hr in s.Hours
+                                              from day in s.Days
+                                              select ((int)day - 1, hr - 1))
+
+                                Output[a.Item1, a.Item2] = true;
+                       
+            return Output;
         }
     }
 }

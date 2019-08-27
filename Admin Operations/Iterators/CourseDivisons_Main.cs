@@ -11,7 +11,6 @@ namespace Admin_Operations.Iterators
         public int FromIndex { get; private set; }
         public int ToIndex { get; private set; }
 
-        public Course ParentCourse { get; internal set; }
 
         public ClassType Class { get; private set; }
         public LinkedList<Section> Sections = new LinkedList<Section>();
@@ -20,9 +19,8 @@ namespace Admin_Operations.Iterators
         {
             FromIndex = from;
             ToIndex = to;
-            ParentCourse = c;
 
-            switch (FromIndex == ParentCourse.FromIndex)
+            switch (FromIndex == c.FromIndex)
             {
                 case true:
                     Class = ClassType.Main;

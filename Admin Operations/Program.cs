@@ -13,9 +13,9 @@ namespace Admin_Operations
             do
             {
                 Console.Write("Enter File Location : ");
-                FileLoc = Console.ReadLine();
+                FileLoc = Console.ReadLine().ToLower();
             } while (!File.Exists(FileLoc) || !FileLoc.EndsWith(".pdf"));
-            
+
 
         Start1:
             Console.Write("From Page : ");
@@ -38,10 +38,6 @@ namespace Admin_Operations
 
 
             MainIterator iter = new MainIterator(p.Table);
-            foreach (Course c in iter)
-            {
-                Console.WriteLine("{0}\t{1}", c.Number, c.Title);
-            }
 
             p.End();
         }
